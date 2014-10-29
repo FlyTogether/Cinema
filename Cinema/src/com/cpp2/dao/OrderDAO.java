@@ -3,6 +3,7 @@ package com.cpp2.dao;
 import java.util.List;
 
 import com.cpp2.domain.Order;
+import com.cpp2.domain.User;
 
 public interface OrderDAO
 {
@@ -24,7 +25,7 @@ public interface OrderDAO
 	 * 获取所有订单
 	 * @return
 	 */
-	public abstract List<Order> getAll();
+	public abstract List<Order> getAll(boolean state);
 
 	/**
 	 * 更新
@@ -32,6 +33,10 @@ public interface OrderDAO
 	 */
 	public abstract void update(Order order);
 
-	public abstract void delete();
+	public abstract void delete(Order order);
+
+	public abstract int getTotalRecord();
+
+	public abstract List<Order> getAllOrderPageDate(int beginIndex, int everyPage,String state);
 
 }

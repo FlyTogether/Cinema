@@ -61,12 +61,12 @@ public class MovieServlet extends HttpServlet {
 			Movie movie = doUpload(request);
 			BusinessServiceImpl businessService = new BusinessServiceImpl();
 			businessService.addMovie(movie);
-			request.setAttribute("message", "影片添加成功！");
+			request.setAttribute("msg", "影片添加成功！");
 		}catch(Exception e){
 			e.printStackTrace();
-			request.setAttribute("message", "影片添加失败！");
+			request.setAttribute("msg", "影片添加失败！");
 		}
-		request.getRequestDispatcher("/message.jsp").forward(request, response);
+		request.getRequestDispatcher("/msg.jsp").forward(request, response);
 	}
 	/**
 	 * 对上传文件进行处理
@@ -141,14 +141,14 @@ public class MovieServlet extends HttpServlet {
 			}else{
 				currentPage = Integer.parseInt(request.getParameter("currentPage"));
 			}
-			int everyPage = 2;
+			int everyPage = 5;
 			Result result = businessService.getAllMoviePageData(currentPage, everyPage);
 			request.setAttribute("result", result);
 			request.getRequestDispatcher("/manager/showAllMovie.jsp").forward(request, response);
 		}catch(Exception e){
 			e.printStackTrace();
-			request.setAttribute("message", "查询失败，请重试！");
-			request.getRequestDispatcher("/message.jsp").forward(request, response);
+			request.setAttribute("msg", "查询失败，请重试！");
+			request.getRequestDispatcher("/msg.jsp").forward(request, response);
 		}
 	}
 	/**
@@ -168,7 +168,7 @@ public class MovieServlet extends HttpServlet {
 			request.getRequestDispatcher("/manager/showMovieDetail.jsp").forward(request, response);
 		}catch(Exception e){
 			e.printStackTrace();
-			request.setAttribute("message", "查看失败，请重试！");
+			request.setAttribute("msg", "查看失败，请重试！");
 		}
 	}
 	/**

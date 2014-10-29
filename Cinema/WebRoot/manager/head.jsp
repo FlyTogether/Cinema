@@ -11,7 +11,7 @@
    	<div class="head">
    		<div class="logo"></div>
    		<div class="logout">
-   			<a href="${pageContext.request.contextPath }/manager/LogoutServlet">* 退出系统</a>
+   			<a href="${pageContext.request.contextPath }/manager/LogoutServlet" target="_parent">* 退出系统</a>
    		</div>
    	</div>
   </body>

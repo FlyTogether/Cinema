@@ -8,12 +8,42 @@ import java.util.Date;
  */
 public class User
 {
-	private int user_id;
+	private int id;
 	private String username;
 	private String phone;
 	private String gender;
 	private String vip;
 	private String password;
+	private String state;
+	private Date birthday;
+	private String email;
+	private double consumption;					//  保存用户的总消费,用于判断vip级别
+	
+	public int getId()
+	{
+		return id;
+	}
+	public void setId(int id)
+	{
+		this.id = id;
+	}
+	public String getState()
+	{
+		return state;
+	}
+	public void setState(String state)
+	{
+		this.state = state;
+	}
+	public double getConsumption()
+	{
+		return consumption;
+	}
+	public void setConsumption(double consumption)
+	{
+		this.consumption = consumption;
+	}
+	
 	public String getPassword()
 	{
 		return password;
@@ -38,17 +68,7 @@ public class User
 	{
 		this.birthday = birthday;
 	}
-	private String email;
-	private Date birthday;
 	
-	public int getUser_id()
-	{
-		return user_id;
-	}
-	public void setUser_id(int user_id)
-	{
-		this.user_id = user_id;
-	}
 	public String getUsername()
 	{
 		return username;

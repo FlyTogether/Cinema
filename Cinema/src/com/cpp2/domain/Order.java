@@ -11,19 +11,19 @@ import java.util.Set;
 public class Order
 {
 	private int id;
-	private Date orderTime;
+	private Date ordertime;
 	private double price;
-	private boolean state;													// 标识发货状态
+	private String state;													// 标识发货状态
 	private User user;
-	private Set<OrderItem> orderItem = new HashSet(); 	// 订单项
+	private Set<OrderItem> orderitem = new HashSet(); 	// 订单项
 	
-	public Date getOrderTime()
+	public Date getOrdertime()
 	{
-		return orderTime;
+		return ordertime;
 	}
-	public void setOrderTime(Date orderTime)
+	public void setOrdertime(Date orderTime)
 	{
-		this.orderTime = orderTime;
+		this.ordertime = orderTime;
 	}
 	public User getUser()
 	{
@@ -33,13 +33,13 @@ public class Order
 	{
 		this.user = user;
 	}
-	public Set<OrderItem> getOrderItem()
+	public Set<OrderItem> getOrderitem()
 	{
-		return orderItem;
+		return orderitem;
 	}
-	public void setOrderItem(Set<OrderItem> orderItem)
+	public void setOrderitem(Set<OrderItem> orderItem)
 	{
-		this.orderItem = orderItem;
+		this.orderitem = orderItem;
 	}
 	public int getId()
 	{
@@ -57,11 +57,11 @@ public class Order
 	{
 		this.price = price;
 	}
-	public boolean isState()
+	public String getState()
 	{
 		return state;
 	}
-	public void setState(boolean state)
+	public void setState(String state)
 	{
 		this.state = state;
 	}

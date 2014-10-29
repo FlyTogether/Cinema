@@ -12,13 +12,13 @@ import com.cpp2.domain.User;
 import com.cpp2.utils.JDBCUtils;
 
 /**
- * ÓÃ»§µÄDAOÊµÏÖÀà
+ * ç”¨æˆ·çš„DAOå®ç°ç±»
  * @author Rose
  */
 public class UserDAOImpl implements UserDAO
 {
 	/**
-	 * Ïòtb_user Ôö¼ÓÒ»Ìõ¼ÇÂ¼
+	 * å‘tb_user å¢åŠ ä¸€æ¡è®°å½•
 	 * @param user
 	 */
 	@Override
@@ -26,8 +26,8 @@ public class UserDAOImpl implements UserDAO
 	{
 		try{
 			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
-			String sql = "insert into tb_user(User_id,Username,Phone,Gender,VIP,password,email,birthday) values(?,?,?,?,?,?,?,?) ";
-			Object params[] = {user.getUser_id(),user.getUsername(),user.getPhone(),user.getGender(),user.getVip(),user.getPassword(),user.getEmail(),user.getBirthday()};
+			String sql = "insert into tb_user(Username,Phone,Gender,Vip,Password,Email,Birthday) values(?,?,?,?,?,?,?) ";
+			Object params[] = {user.getUsername(),user.getPhone(),user.getGender(),user.getVip(),user.getPassword(),user.getEmail(),user.getBirthday()};
 			qr.update(sql, params);
 		}catch(Exception e){
 			throw new RuntimeException(e);
@@ -35,7 +35,7 @@ public class UserDAOImpl implements UserDAO
 	}
 	
 	/**
-	 * ¸ù¾İidÉ¾³ıtb_userµÄÒ»Ìõ¼ÇÂ¼
+	 * æ ¹æ®idåˆ é™¤tb_userçš„ä¸€æ¡è®°å½•
 	 * @param id
 	 */
 	@Override
@@ -43,7 +43,7 @@ public class UserDAOImpl implements UserDAO
 	{
 		try{
 			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
-			String sql = "";
+			String sql = "delete from tb_user where id=?";
 			qr.update(sql, id);
 		}catch(Exception e){
 			throw new RuntimeException(e);
@@ -60,8 +60,9 @@ public class UserDAOImpl implements UserDAO
 		try
 		{
 			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
-			String sql = "UPDATE TB_User SET Username=?,Password=?,Phone=?,Gender=?,VIP=?,Email=?,Birthday=?";
-			Object params[] = {user.getUsername(), user.getPassword(), user.getPhone(), user.getGender(), user.getVip(), user.getEmail(), user.getBirthday().toLocaleString()};
+			String sql = "UPDATE tb_user SET Username=?,Password=?,Phone=?,Gender=?,Vip=?,Email=?,Birthday=?,Consumption=?,State=? WHERE id=?";
+			Object params[] = {user.getUsername(), user.getPassword(), user.getPhone(), user.getGender(), user.getVip(), 
+					user.getEmail(), user.getBirthday().toLocaleString(),user.getConsumption(),user.getState(),user.getId()};
 			qr.update(sql, params);
 		} catch (Exception e)
 		{
@@ -70,7 +71,7 @@ public class UserDAOImpl implements UserDAO
 	}
 	
 	/**
-	 * ¸ù¾İid²éÕÒÓÃ»§
+	 * æ ¹æ®idæŸ¥æ‰¾ç”¨æˆ·
 	 * @param id
 	 * @return
 	 */
@@ -79,7 +80,7 @@ public class UserDAOImpl implements UserDAO
 	{
 		try{
 			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
-			String sql = "select  * from tb_user where User_id=?";
+			String sql = "select  * from tb_user where id=?";
 			return (User)qr.query(sql, id, new BeanHandler(User.class));
 		}catch(Exception e){
 			throw new RuntimeException(e);
@@ -87,7 +88,7 @@ public class UserDAOImpl implements UserDAO
 	}
 	
 	/**
-	 * ¸ù¾İÓÃ»§ÃûºÍÃÜÂë²éÕÒÓÃ»§
+	 * æ ¹æ®ç”¨æˆ·åå’Œå¯†ç æŸ¥æ‰¾ç”¨æˆ·
 	 * @param username
 	 * @param password
 	 * @return
@@ -103,12 +104,14 @@ public class UserDAOImpl implements UserDAO
 			return (User)qr.query(sql, params, new BeanHandler(User.class));
 		} catch (Exception e)
 		{
-			throw new RuntimeException(e);
+			e.printStackTrace();
 		}
+		return null;
 	}
 	
+	
 	/**
-	 * »ñÈ¡ËùÓĞÓÃ»§
+	 * è·å–æ‰€æœ‰ç”¨æˆ·
 	 * @return
 	 */
 	@Override
@@ -122,10 +125,12 @@ public class UserDAOImpl implements UserDAO
 			throw new RuntimeException(e);
 		}
 	}
+	
 	/**
-	 * »ñÈ¡ËùÓĞÓÃ»§ÔÚÊı¾İ¿âÖĞµÄ×ÜÊı¾İ
+	 * è·å–æ€»è®°å½•æ•°
 	 * @return
 	 */
+	@Override
 	public int getTotalRecord(){
 		try{
 			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
@@ -136,12 +141,14 @@ public class UserDAOImpl implements UserDAO
 			throw new RuntimeException(e);
 		}
 	}
+	
 	/**
-	 * »ñµÃÓÃ»§·ÖÒ³Êı¾İ
+	 * è·å–Userçš„åˆ†é¡µæ•°æ®
 	 * @param beginIndex
 	 * @param everyPage
 	 * @return
 	 */
+	@Override
 	public List<User> getAllUserPageDate(int beginIndex,int everyPage){
 		try{
 			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
@@ -152,12 +159,14 @@ public class UserDAOImpl implements UserDAO
 			throw new RuntimeException(e);
 		}
 	}
+	
 	/**
-	 * ÓÃ»§ĞŞ¸ÄÃÜÂë
+	 * æ›´æ–°å¯†ç 
 	 * @param newpassword
 	 * @param id
 	 */
-	public void changePassword(String newpassword , int id){
+	@Override
+	public void updatePassword(String newpassword , int id){
 		try{
 			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
 			String sql = "update TB_User set Password=? where User_id=?";

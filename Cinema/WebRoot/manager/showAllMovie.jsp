@@ -15,25 +15,33 @@
     		margin-top: 100px;
     		margin-left: 100px;
     	}
+    	
+    	#page{
+    		margin-left:43%;
+    		margin-top:20px;
+    	}
     </style>
     
+    <link href="${pageContext.request.contextPath }/css/tablestyle.css" rel="stylesheet" type="text/css" />
+	<script language="javascript" type="text/javascript" src="${pageContext.request.contextPath }/js/tablejquery.js"></script>
+	<script language="javascript" type="text/javascript" src="${pageContext.request.contextPath }/js/bstablecrosshair.js"></script>
 
   </head>
   
   <body>
   	<div id="containter">
-  		<table>
+  		<table style="border:2px solid #444;border-collapse:collapse; margin-left:15%;" id="mytable">
   			<tr>
   				<th>片名</th>
   				<th>上映时间</th>
-  				<th>片场</th>
+  				<th>时长</th>
   				<th>查看详情</th>
   				<th>修改</th>
   			</tr>
   			<c:forEach items="${result.list}" var="movie" >
   				<tr>
-  					<td>${movie.moviename }</td>
-  					<td>${movie.showtimes }</td>
+  					<td>${movie.name }</td>
+  					<td>${movie.showtime }</td>
   					<td>${movie.runtime }</td>
   					<td><a href="${pageContext.request.contextPath }/manager/MovieServlet?method=showMovieDetail&id=${movie.id}">查看详情</a></td>
   					<td><a href="${pageContext.request.contextPath }/manager/MovieServlet?method=showEditableMovieDetail&id=${movie.id}">修改</a></td>

@@ -18,6 +18,9 @@
     		margin-left: 150px;
     	}
     </style>
+	<link href="${pageContext.request.contextPath }/css/tablestyle.css" rel="stylesheet" type="text/css" />
+	<script language="javascript" type="text/javascript" src="${pageContext.request.contextPath }/js/tablejquery.js"></script>
+	<script language="javascript" type="text/javascript" src="${pageContext.request.contextPath }/js/bstablecrosshair.js"></script>
 
   </head>
   
@@ -25,14 +28,14 @@
   	<div id="container">
   		<h3>请输入您要添加的影片的详细信息：</h3>
     	<form action="${pageContext.request.contextPath }/manager/MovieServlet?method=add" method="post" enctype="multipart/form-data" >
-    		<table>
+    		<table style="border:2px solid #444;border-collapse:collapse;" id="mytable">
     			<tr>
-    				<td>影片名：</td><td ><input type="text" name="moviename" class="input"></td>
-    				<td>上映时间：</td><td><input type="text" name=showtimes onfocus="HS_setDate(this)"></td>
+    				<td>影片名：</td><td ><input type="text" name="name" ></td>
+    				<td>上映时间：</td><td><input type="text" name=showtime onfocus="HS_setDate(this)"></td>
     			</tr>
     			<tr>
-    				<td>导演：</td><td><input type="text" name="director" class="input"></td>
-    				<td>片场：</td><td><input type="text" name="runtime"></td>
+    				<td>导演：</td><td><input type="text" name="director" ></td>
+    				<td>时长：</td><td><input type="text" name="runtime"></td>
     			</tr>
     			<tr>
     				<td>主演：</td><td colspan="3" ><input type="text" name="castActor" class="input" id="item_castActor"></td>
@@ -111,7 +114,7 @@
     			</tr>
     			<tr>
     				<td></td>
-    				<td colspan="3">
+    				<td colspan="3" >
     					<input type="checkbox" name="type" value="古装" >古装
     					<input type="checkbox" name="type" value="歌舞" >歌舞
     					<input type="checkbox" name="type" value="纪录" >纪录
@@ -124,15 +127,15 @@
     				</td>
     			</tr>
     			<tr>
-    				<td>剧情介绍：</td><td colspan="3"><textarea   name="introduction"></textarea></td>
+    				<td>剧情介绍：</td><td colspan="3"><textarea  cols="100" rows="5" name="introduction"></textarea></td>
     			</tr>
     			
     			<tr>
-    				<td>图片：</td><td><input type="file"  name="image"></td>
+    				<td >图片：</td><td colspan="3"><input type="file"  name="image"></td>
     			</tr>
     		</table>
     		<div>
-    			<input type="submit" name="submit" value="提交" >
+    			<input type="submit" name="submit"  value="提交" >
     			<input type="reset" name="reset" value="重置" >
     		</div>
     	</form>

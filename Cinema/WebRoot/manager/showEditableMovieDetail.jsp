@@ -20,16 +20,20 @@
     	}
     </style>
 
+	<link href="${pageContext.request.contextPath }/css/tablestyle.css" rel="stylesheet" type="text/css" />
+	<script language="javascript" type="text/javascript" src="${pageContext.request.contextPath }/js/tablejquery.js"></script>
+	<script language="javascript" type="text/javascript" src="${pageContext.request.contextPath }/js/bstablecrosshair.js"></script>
+
   </head>
   
   <body>
   	<div id="container">
-  		<h3>请输入您要添加的影片的详细信息：</h3>
+  		<h3>在这里你可以修改影片数据：</h3>
     	<form action="${pageContext.request.contextPath }/manger/MovieServlet?method=changeMovieDetail&id=${movie.id}" method="post" enctype="multipart/form-data" >
-    		<table>
+    		<table style="border:2px solid #444;border-collapse:collapse;" id="mytable">
     			<tr>
-    				<td>影片名：</td><td ><input type="text" name="moviename"  value=${movie.moviename }></td>
-    				<td>上映时间：</td><td><input type="text" name=showtimes onfocus="HS_setDate(this) value=${movie.showtimes}"></td>
+    				<td>影片名：</td><td ><input type="text" name="moviename"  value=${movie.name }></td>
+    				<td>上映时间：</td><td><input type="text" name=showtimes onfocus="HS_setDate(this) value=${movie.showtime}"></td>
     			</tr>
     			<tr>
     				<td>导演：</td><td><input type="text" name="director"  value=${director }></td>
@@ -57,8 +61,8 @@
     				<td>制式：</td>
     				<td>
     					<select  name="style">
-    					<option <c:if test="${movie.movieSY eq '2D'}">selected="selected"</c:if>>2D</option>
-    					<option <c:if test="${movie.movieSY eq '3D'}">selected="selected"</c:if>>3D</option>
+    					<option <c:if test="${movie.style eq '2D'}">selected="selected"</c:if>>2D</option>
+    					<option <c:if test="${movie.style eq '3D'}">selected="selected"</c:if>>3D</option>
     					</select>
     				</td>
     			</tr>
@@ -86,48 +90,48 @@
     			<tr >
     				<td>类型：</td>
     				<td colspan="3">
-    					<input type="checkbox" name="movieType" value="剧情" <c:if test="${fn:contains( movie.movieType , '剧情')}">checked="ckecked"</c:if>>剧情
-    					<input type="checkbox" name="movieType" value="爱情" <c:if test="${fn:contains( movie.movieType , '爱情')}">checked="ckecked"</c:if>>爱情
-    					<input type="checkbox" name="movieType" value="喜剧" <c:if test="${fn:contains( movie.movieType , '喜剧')}">checked="ckecked"</c:if>>喜剧
-    					<input type="checkbox" name="movieType" value="动作" <c:if test="${fn:contains( movie.movieType , '动作')}">checked="ckecked"</c:if>>动作
-    					<input type="checkbox" name="movieType" value="恐怖" <c:if test="${fn:contains( movie.movieType , '恐怖')}">checked="ckecked"</c:if>>恐怖
-    					<input type="checkbox" name="movieType" value="惊悚" <c:if test="${fn:contains( movie.movieType , '惊悚')}">checked="ckecked"</c:if>>惊悚
-    					<input type="checkbox" name="movieType" value="犯罪" <c:if test="${fn:contains( movie.movieType , '犯罪')}">checked="ckecked"</c:if>>犯罪
-    					<input type="checkbox" name="movieType" value="悬疑" <c:if test="${fn:contains( movie.movieType , '悬疑')}">checked="ckecked"</c:if>>悬疑
+    					<input type="checkbox" name="type" value="剧情" <c:if test="${fn:contains( movie.type , '剧情')}">checked="ckecked"</c:if>>剧情
+    					<input type="checkbox" name="type" value="爱情" <c:if test="${fn:contains( movie.type , '爱情')}">checked="ckecked"</c:if>>爱情
+    					<input type="checkbox" name="type" value="喜剧" <c:if test="${fn:contains( movie.type , '喜剧')}">checked="ckecked"</c:if>>喜剧
+    					<input type="checkbox" name="type" value="动作" <c:if test="${fn:contains( movie.type , '动作')}">checked="ckecked"</c:if>>动作
+    					<input type="checkbox" name="type" value="恐怖" <c:if test="${fn:contains( movie.type , '恐怖')}">checked="ckecked"</c:if>>恐怖
+    					<input type="checkbox" name="type" value="惊悚" <c:if test="${fn:contains( movie.type , '惊悚')}">checked="ckecked"</c:if>>惊悚
+    					<input type="checkbox" name="type" value="犯罪" <c:if test="${fn:contains( movie.type , '犯罪')}">checked="ckecked"</c:if>>犯罪
+    					<input type="checkbox" name="type" value="悬疑" <c:if test="${fn:contains( movie.type , '悬疑')}">checked="ckecked"</c:if>>悬疑
     				</td>
     			</tr>
     			<tr>
     				<td></td>
     				<td colspan="3">
-    					<input type="checkbox" name="movieType" value="科幻" <c:if test="${fn:contains( movie.movieType , '科幻')}">checked="ckecked"</c:if>>科幻
-    					<input type="checkbox" name="movieType" value="伦理" <c:if test="${fn:contains( movie.movieType , '伦理')}">checked="ckecked"</c:if>>伦理
-    					<input type="checkbox" name="movieType" value="战争" <c:if test="${fn:contains( movie.movieType , '战争')}">checked="ckecked"</c:if>>战争
-    					<input type="checkbox" name="movieType" value="动画" <c:if test="${fn:contains( movie.movieType , '动画')}">checked="ckecked"</c:if>>动画
-    					<input type="checkbox" name="movieType" value="文艺" <c:if test="${fn:contains( movie.movieType , '文艺')}">checked="ckecked"</c:if>>文艺
-    					<input type="checkbox" name="movieType" value="历史" <c:if test="${fn:contains( movie.movieType , '历史')}">checked="ckecked"</c:if>>历史
-    					<input type="checkbox" name="movieType" value="传记" <c:if test="${fn:contains( movie.movieType , '传记')}">checked="ckecked"</c:if>>传记
-    					<input type="checkbox" name="movieType" value="奇幻" <c:if test="${fn:contains( movie.movieType , '奇幻')}">checked="ckecked"</c:if>>奇幻
+    					<input type="checkbox" name="type" value="科幻" <c:if test="${fn:contains( movie.type , '科幻')}">checked="ckecked"</c:if>>科幻
+    					<input type="checkbox" name="type" value="伦理" <c:if test="${fn:contains( movie.type , '伦理')}">checked="ckecked"</c:if>>伦理
+    					<input type="checkbox" name="type" value="战争" <c:if test="${fn:contains( movie.type , '战争')}">checked="ckecked"</c:if>>战争
+    					<input type="checkbox" name="type" value="动画" <c:if test="${fn:contains( movie.type , '动画')}">checked="ckecked"</c:if>>动画
+    					<input type="checkbox" name="type" value="文艺" <c:if test="${fn:contains( movie.type , '文艺')}">checked="ckecked"</c:if>>文艺
+    					<input type="checkbox" name="type" value="历史" <c:if test="${fn:contains( movie.type , '历史')}">checked="ckecked"</c:if>>历史
+    					<input type="checkbox" name="type" value="传记" <c:if test="${fn:contains( movie.type , '传记')}">checked="ckecked"</c:if>>传记
+    					<input type="checkbox" name="type" value="奇幻" <c:if test="${fn:contains( movie.type , '奇幻')}">checked="ckecked"</c:if>>奇幻
     				</td>
     			</tr>
     			<tr>
     				<td></td>
     				<td colspan="3">
-    					<input type="checkbox" name="movieType" value="古装" <c:if test="${fn:contains( movie.movieType , '武装')}">checked="ckecked"</c:if>>古装
-    					<input type="checkbox" name="movieType" value="歌舞" <c:if test="${fn:contains( movie.movieType , '歌舞')}">checked="ckecked"</c:if>>歌舞
-    					<input type="checkbox" name="movieType" value="纪录" <c:if test="${fn:contains( movie.movieType , '记录')}">checked="ckecked"</c:if>>纪录
-    					<input type="checkbox" name="movieType" value="家庭" <c:if test="${fn:contains( movie.movieType , '家庭')}">checked="ckecked"</c:if>>家庭
-    					<input type="checkbox" name="movieType" value="冒险" <c:if test="${fn:contains( movie.movieType , '冒险')}">checked="ckecked"</c:if>>冒险
-    					<input type="checkbox" name="movieType" value="灾难" <c:if test="${fn:contains( movie.movieType , '灾难')}">checked="ckecked"</c:if>>灾难
-    					<input type="checkbox" name="movieType" value="武侠" <c:if test="${fn:contains( movie.movieType , '武侠')}">checked="ckecked"</c:if>>武侠
-    					<input type="checkbox" name="movieType" value="青春" <c:if test="${fn:contains( movie.movieType , '青春')}">checked="ckecked"</c:if>>青春
-    					<input type="checkbox" name="movieType" value="其他" <c:if test="${fn:contains( movie.movieType , '其他')}">checked="ckecked"</c:if>>其他
+    					<input type="checkbox" name="type" value="古装" <c:if test="${fn:contains( movie.type , '武装')}">checked="ckecked"</c:if>>古装
+    					<input type="checkbox" name="type" value="歌舞" <c:if test="${fn:contains( movie.type , '歌舞')}">checked="ckecked"</c:if>>歌舞
+    					<input type="checkbox" name="type" value="纪录" <c:if test="${fn:contains( movie.type , '记录')}">checked="ckecked"</c:if>>纪录
+    					<input type="checkbox" name="type" value="家庭" <c:if test="${fn:contains( movie.type , '家庭')}">checked="ckecked"</c:if>>家庭
+    					<input type="checkbox" name="type" value="冒险" <c:if test="${fn:contains( movie.type , '冒险')}">checked="ckecked"</c:if>>冒险
+    					<input type="checkbox" name="type" value="灾难" <c:if test="${fn:contains( movie.type , '灾难')}">checked="ckecked"</c:if>>灾难
+    					<input type="checkbox" name="type" value="武侠" <c:if test="${fn:contains( movie.type , '武侠')}">checked="ckecked"</c:if>>武侠
+    					<input type="checkbox" name="type" value="青春" <c:if test="${fn:contains( movie.type , '青春')}">checked="ckecked"</c:if>>青春
+    					<input type="checkbox" name="type" value="其他" <c:if test="${fn:contains( movie.type , '其他')}">checked="ckecked"</c:if>>其他
     				</td>
     			</tr>
     			<tr>
-    				<td>剧情介绍：</td><td colspan="3"><textarea   name="introduction" >${movie.introduction }</textarea></td>
+    				<td>剧情介绍：</td><td colspan="3"><textarea cols="100" rows="5"   name="introduction" >${movie.introduction }</textarea></td>
     			</tr>
     			<tr>
-    				<td>图片：</td><td><a><img src="${pageContext.request.contextPath }/upload/${movie.image}"></a></td>
+    				<td>图片：</td><td colspan="3"><a><img src="${pageContext.request.contextPath }/upload/${movie.image}"></a></td>
     			</tr>
     		</table>
     		<div>

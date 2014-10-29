@@ -160,7 +160,7 @@ function HS_calender() {
 				+ CalenderTitle
 				+ "</div><div class='calenderBody'><ul class='day'><li>日</li><li>一</li><li>二</li><li>三</li><li>四</li><li>五</li><li>六</li></ul><ul class='date' id='thisMonthDate'>"
 				+ lis
-				+ "</ul></div><div class='calenderBottom'><a href='javascript:void(0)' class='closeCalender' onclick='closeCalender(this)'>×</a><span><span><a href=javascript:void(0) onclick='_selectThisDay(this)' title='"
+				+ "</ul></div><div class='calenderBottom'><a href='javascript:void(0)' class='closeCalender' onclick='closeCalender(this)'></a><span><span><a href=javascript:void(0) onclick='_selectThisDay(this)' title='"
 				+ todayString + "'>Today</a></span></span></div></div>";
 		return CalenderBox;
 	}

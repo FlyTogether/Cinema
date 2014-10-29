@@ -3,6 +3,7 @@ package com.cpp2.filter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
+import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
-public class CharacterEncodingFilter
+public class CharacterEncodingFilter implements Filter
 {
 	public void init(FilterConfig filterConfig) throws ServletException {
 		 

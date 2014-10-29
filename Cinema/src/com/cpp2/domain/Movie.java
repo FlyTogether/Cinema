@@ -6,43 +6,32 @@ import java.util.Date;
 public class Movie {
 	
 	private int id;
-	private String moviename;
+	private String name;
 	private String director;
-	private Date showtimes;
-	private String runtime;
-	private String castActor;
+	private Date showtime;					// 播映时间
+	private String runtime;					// 片长
+	private String castActor;					// 主演
 	private String language;
-	private String style;
+	private String style;							// 电影的制式 2d/3d
 	private String area;
-	private String type;
+	private String type;							// 电影类型
 	private String introduction;
 	private double price;
-	private String status;
+	private String state;							// 标识影片是否下架
 	private String image;
-	private int popularity;
+	private double popularity;				// 影片热度
+	
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getMoviename() {
-		return moviename;
-	}
-	public void setMoviename(String moviename) {
-		this.moviename = moviename;
-	}
 	public String getDirector() {
 		return director;
 	}
 	public void setDirector(String diretor) {
 		this.director = diretor;
-	}
-	public Date getShowtimes() {
-		return showtimes;
-	}
-	public void setShowtimes(Date showtimes) {
-		this.showtimes = showtimes;
 	}
 	public String getRuntime() {
 		return runtime;
@@ -92,23 +81,41 @@ public class Movie {
 	public void setPrice(double price) {
 		this.price = price;
 	}
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
 	public String getImage() {
 		return image;
 	}
 	public void setImage(String image) {
 		this.image = image;
 	}
-	public int getPopularity() {
+	public double getPopularity() {
 		return popularity;
 	}
-	public void setPopularity(int popularity) {
+	public void setPopularity(double popularity) {
 		this.popularity = popularity;
+	}
+	public String getName()
+	{
+		return name;
+	}
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+	public Date getShowtime()
+	{
+		return showtime;
+	}
+	public void setShowtime(Date showtime)
+	{
+		this.showtime = showtime;
+	}
+	public String getState()
+	{
+		return state;
+	}
+	public void setState(String state)
+	{
+		this.state = state;
 	}
 	
 	

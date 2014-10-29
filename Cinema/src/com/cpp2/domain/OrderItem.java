@@ -7,7 +7,7 @@ package com.cpp2.domain;
 public class OrderItem
 {
 	private int id;
-//	private Movie movie;
+	private Movie movie;
 	private int  quantity;				// 保存用户购买票数
 	private double price;
 	public int getId()
@@ -34,4 +34,13 @@ public class OrderItem
 	{
 		this.price = price;
 	}
+	public Movie getMovie()
+	{
+		return movie;
+	}
+	public void setMovie(Movie movie)
+	{
+		this.movie = movie;
+	}
+	
 }

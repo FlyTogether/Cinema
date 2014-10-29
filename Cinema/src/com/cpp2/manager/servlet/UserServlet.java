@@ -2,6 +2,8 @@ package com.cpp2.manager.servlet;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -16,17 +18,58 @@ import net.sf.json.JSONObject;
 import com.cpp2.domain.User;
 import com.cpp2.service.impl.BusinessServiceImpl;
 
-public class UserLoginServlet extends HttpServlet
+/**
+ * 用户管理模块, 处理用户的登录, 注册,忘记密码
+ * @author Rose
+ */
+public class UserServlet extends HttpServlet
 {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException
 	{
-		doPost(request, response);
+		/* 根据用户的url参数, 判断用户的操作 */
+		String method = request.getParameter("method");
+		if("login".equals(method))										// 登录操作
+		{
+			login(request,response);
+		}
+		else if("register".equals(method))							// 注册操作
+		{
+			register(request, response);
+		}
 	}
 
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException
+	/**
+	 * 注册
+	 * @param request
+	 * @param response
+	 */
+	private void register(HttpServletRequest request,
+			HttpServletResponse response)
+	{
+		/* 获取移动端 post提交的数据 */
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		String phone = request.getParameter("phone");
+		String gender = request.getParameter("gender");
+		String email = request.getParameter("email");
+		String birthday = request.getParameter("birthday");
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+		birthday = format.format(new Date(birthday));						// 格式化日期对象
+		
+		/* 业务逻辑处理: 先校验,通过则往数据库添加记录 */
+		
+		
+	}
+
+	/**
+	 * 用户登录
+	 * @param request
+	 * @param response
+	 * @throws IOException 
+	 */
+	private void login(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
 		DataOutputStream out = new DataOutputStream(response.getOutputStream());
 		try
@@ -54,9 +97,9 @@ public class UserLoginServlet extends HttpServlet
 				/* 封装Json对象 并用字符流输出*/
 				JSONObject jsonObject = JSONObject.fromObject(user);
 				
-				Iterator<String> i = jsonObject.keys();
+			/*	Iterator<String> i = jsonObject.keys();
 				while(i.hasNext())
-						System.out.println("the key of json -- "+i.next());
+						System.out.println("the key of json -- "+i.next());*/
 				
 				Map<String, Object> resultMap = new HashMap<String, Object>();
 				resultMap.put("user", jsonObject);
@@ -83,7 +126,12 @@ public class UserLoginServlet extends HttpServlet
 		{
 			out.close();																				// 关闭资源
 		}
-		
+	}
+
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException
+	{
+		doGet(request,response);
 	}
 
 }

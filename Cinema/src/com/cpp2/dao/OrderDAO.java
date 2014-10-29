@@ -39,4 +39,6 @@ public interface OrderDAO
 
 	public abstract List<Order> getAllOrderPageDate(int beginIndex, int everyPage,String state);
 
+	int getUnsendRecord();
+
 }

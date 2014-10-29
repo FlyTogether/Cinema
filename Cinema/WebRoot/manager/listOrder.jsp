@@ -43,15 +43,15 @@
   			</c:forEach>
   		</table>
   			<c:if test="${result.page.currentPage-1>0}">
-  				<a href="${pageContext.request.contextPath }/manager/OrderServlet?method=${order.state=='unsend'?'showUnsend':'showSend' }&currentPage=${result.page.currentPage-1}">[上一页]</a>
+  				<a href="${pageContext.request.contextPath }/manager/OrderServlet?method=${state=='未发货'?'showUnsend':'showSend' }&currentPage=${result.page.currentPage-1}">[上一页]</a>
   			</c:if>
   			
 			<c:forEach begin="${result.page.startPage }" end="${result.page.endPage }" var="currentPage">
-				[<a href="${pageContext.request.contextPath }/manager/OrderServlet?method=${order.state=='unsend'?'showUnsend':'showSend' }&currentPage=${currentPage}">${currentPage }</a>]
+				[<a href="${pageContext.request.contextPath }/manager/OrderServlet?method=${state=='未发货'?'showUnsend':'showSend' }&currentPage=${currentPage}">${currentPage }</a>]
 			</c:forEach>
 			
-  			<c:if test="${result.page.currentPage+1<=result.page.totalPage}">
-				<a href="${pageContext.request.contextPath }/manager/MovieServlet?method=${order.state=='unsend'?'showUnsend':'showSend' }&currentPage=${result.page.currentPage+1}">[下一页]</a>
+  			<c:if test="${result.page.currentPage+1 <= result.page.totalPage}">
+				<a href="${pageContext.request.contextPath }/manager/OrderServlet?method=${state=='未发货'?'showUnsend':'showSend' }&currentPage=${result.page.currentPage+1}">[下一页]</a>
   			</c:if>
   		<script type="text/javascript">
 			$.bstablecrosshair('mytable',{color:'#444',background:'#aaa','foreground':'#fff'});

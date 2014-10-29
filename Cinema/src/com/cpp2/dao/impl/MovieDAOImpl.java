@@ -12,7 +12,7 @@ import com.cpp2.dao.MovieDAO;
 import com.cpp2.domain.Movie;
 import com.cpp2.utils.JDBCUtils;
 
-public class MovieDAOImpl implements MovieDAO{
+public class MovieDAOImpl implements MovieDAO {
 	/**
 	 * Ìí¼ÓÒ»²¿Ó°Æ¬
 	 * @param movie
@@ -41,14 +41,27 @@ public class MovieDAOImpl implements MovieDAO{
 		}
 	}
 	/**
+	 * »Ö¸´ÒÑÉ¾³ýµÄµçÓ°
+	 * @param id
+	 */
+	public void restore(int id){
+		try{
+			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
+			String sql = "update tb_movie set State='Î´É¾³ý' where id=?";
+			qr.update(sql, id);
+		}catch(Exception e){
+			throw new RuntimeException(e);
+		}
+	}
+	/**
 	 * ¸üÐÂÓ°Æ¬ÐÅÏ¢
 	 * @param movie
 	 */
 	public void update(Movie movie){
 		try{
 			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
-			String sql = "update tb_movie set Name=?,Director=?,Showtime=?,Runtime=?,CastActor=?,Language=?,Style=?,Area=?,Type=?,Introduction=?,Price=?,Image=? where id=?";
-			Object params[] = {movie.getName(),movie.getDirector(),movie.getShowtime(),movie.getRuntime(),movie.getCastActor(),movie.getLanguage(),movie.getStyle(),movie.getArea(),movie.getType(),movie.getIntroduction(),movie.getPrice(),movie.getImage(),movie.getId()};
+			String sql = "update tb_movie set Name=?,Director=?,Showtime=?,Runtime=?,CastActor=?,Language=?,Style=?,Area=?,Type=?,Introduction=?,Price=? where id=?";
+			Object params[] = {movie.getName(),movie.getDirector(),movie.getShowtime(),movie.getRuntime(),movie.getCastActor(),movie.getLanguage(),movie.getStyle(),movie.getArea(),movie.getType(),movie.getIntroduction(),movie.getPrice(),movie.getId()};
 			qr.update(sql, params);
 		}catch(Exception e){
 			throw new RuntimeException(e);
@@ -90,7 +103,7 @@ public class MovieDAOImpl implements MovieDAO{
 		try{
 			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
 			Date currentTime = new Date();
-			String sql = "select count(*) from tb_movie where Showtimes<=? and State='Î´É¾³ý'";
+			String sql = "select count(*) from tb_movie where Showtime<=? and State='Î´É¾³ý'";
 			long l = (Long)qr.query(sql, currentTime, new ScalarHandler());
 			return (int)l;
 		}catch(Exception e){
@@ -105,7 +118,7 @@ public class MovieDAOImpl implements MovieDAO{
 		try{
 			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
 			Date currentTime = new Date();
-			String sql = "select count(*) from tb_movie where Showtimes>? and State='Î´É¾³ý'";
+			String sql = "select count(*) from tb_movie where Showtime>? and State='Î´É¾³ý'";
 			long l = (Long)qr.query(sql, currentTime, new ScalarHandler());
 			return (int)l;
 		}catch(Exception e){
@@ -158,6 +171,21 @@ public class MovieDAOImpl implements MovieDAO{
 			String sql = "select * from tb_movie where Showtime>? and State='Î´É¾³ý' order by Showtime limit ?,?";
 			Object params[] = {currentTime,beginIndex,everyPage};
 			return (List<Movie>)qr.query(sql, params, new BeanListHandler(Movie.class));
+		}catch(Exception e){
+			throw new RuntimeException(e);
+		}
+	}
+	/**
+	 * ÐÞ¸ÄÓ°Æ¬Í¼Æ¬
+	 * @param image
+	 * @param id
+	 */
+	public void changeImage(String image,int id){
+		try{
+			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
+			String sql = "update tb_movie set image=? where id=?";
+			Object params[] = {image,id};
+			qr.update(sql, params);
 		}catch(Exception e){
 			throw new RuntimeException(e);
 		}

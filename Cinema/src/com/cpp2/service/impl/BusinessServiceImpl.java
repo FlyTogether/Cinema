@@ -105,6 +105,13 @@ public class BusinessServiceImpl
 		movieDAO.delete(id);
 	}
 	/**
+	 * 恢复已删除的电影
+	 * @param id
+	 */
+	public void restoreMovie(int id){
+		movieDAO.restore(id);
+	}
+	/**
 	 * 根据id查找一部电影
 	 * @param id
 	 * @return
@@ -164,6 +171,14 @@ public class BusinessServiceImpl
 		result.setList(list);
 		result.setPage(page);
 		return result;
+	}
+	/**
+	 * 修改影片的图片
+	 * @param image
+	 * @param id
+	 */
+	public void changeMovieImage(String image,int id){
+		movieDAO.changeImage(image, id);
 	}
 	/**
 	 * 新增订单

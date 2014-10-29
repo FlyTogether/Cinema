@@ -251,7 +251,15 @@ public class BusinessServiceImpl
 		cart.create(movie);
 	}
 	
-	public Result getAllOrderageData(int currentPage,int everyPage,String state){
+	/**
+	 *  获得全部订单的分页数据
+	 *  @author Rose
+	 * @param currentPage
+	 * @param everyPage
+	 * @param state
+	 * @return
+	 */
+	public Result getAllOrderPageData(int currentPage,int everyPage,String state){
 		Result result = new Result();
 		int totalCount = oDAO.getTotalRecord();
 		Page page = PageUtil.createPage(everyPage, totalCount, currentPage);
@@ -260,4 +268,23 @@ public class BusinessServiceImpl
 		result.setList(list);
 		return result;
 	}
+	
+	/**
+	 * 获得已发货的分页数据
+	 * @author Rose
+	 * @param pageSize
+	 * @param currentPage
+	 * @return
+	 */
+	public Result getSendOrderPage(int pageSize, int currentPage)
+	{
+		int sendCount = oDAO.getTotalRecord() - oDAO.getUnsendRecord();
+		Result result = new Result();
+		Page page = PageUtil.createPage(pageSize, sendCount, currentPage);
+		List<Order> list = oDAO.getAllOrderPageDate(page.getBeginIndex(), pageSize, "send");
+		result.setPage(page);
+		result.setList(list);
+		return result;
+	}
+	
 }

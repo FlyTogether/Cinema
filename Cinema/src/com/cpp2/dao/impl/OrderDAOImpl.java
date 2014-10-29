@@ -164,7 +164,27 @@ public class OrderDAOImpl implements OrderDAO
 			throw new RuntimeException(e);
 		}
 	}
+	
+	/**
+	 * 获取未发货的总记录数
+	 * @return
+	 */
+	@Override
+	public int getUnsendRecord()
+	{
+		try
+		{
+			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
+			String sql = "SELECT COUNT(*) FROM tb_order WHERE State='unsend'";
+			long l = (Long)qr.query(sql, new ScalarHandler());
+			return (int) l;
+		} catch (Exception e)
+		{
+			throw new RuntimeException(e);
+		}
+	}
 
+	
 	/**
 	 * 获取订单分页数据
 	 */

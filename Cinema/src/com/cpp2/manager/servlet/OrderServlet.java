@@ -1,6 +1,7 @@
 package com.cpp2.manager.servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.cpp2.domain.Order;
 import com.cpp2.service.impl.BusinessServiceImpl;
+import com.cpp2.utils.Page;
 import com.cpp2.utils.Result;
 
 public class OrderServlet extends HttpServlet
@@ -21,7 +23,7 @@ public class OrderServlet extends HttpServlet
 		String method = request.getParameter("method");
 		if("showUnsend".equals(method))				// 显示未发货的订单
 		{
-			showUnsand(request, response);
+			showUnsend(request, response);
 		}
 		else if("showSend".equals(method))
 		{
@@ -95,7 +97,7 @@ public class OrderServlet extends HttpServlet
 				currentPage = Integer.parseInt(request.getParameter("currentPage"));
 			}
 			/* 业务逻辑: 获取订单的分页数据,并保存到Result */
-			Result result = service.getAllOrderageData(currentPage, pageSize, "send");
+			Result result = service.getSendOrderPage(pageSize, currentPage);
 			request.setAttribute("state", "已发货");
 			request.setAttribute("result", result);
 			request.getRequestDispatcher("/manager/listOrder.jsp").forward(request, response);		// 请求转发
@@ -108,7 +110,7 @@ public class OrderServlet extends HttpServlet
 		}
 	}
 
-	private void showUnsand(HttpServletRequest request,
+	private void showUnsend(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException
 	{
 		try
@@ -126,7 +128,7 @@ public class OrderServlet extends HttpServlet
 				currentPage = Integer.parseInt(request.getParameter("currentPage"));
 			}
 			/* 业务逻辑: 获取订单的分页数据,并保存到Result */
-			Result result = service.getAllOrderageData(currentPage, pageSize, "unsend");
+			Result result = service.getAllOrderPageData(currentPage, pageSize, "unsend");
 			request.setAttribute("state", "未发货");
 			request.setAttribute("result", result);
 			request.getRequestDispatcher("/manager/listOrder.jsp").forward(request, response);		// 请求转发

@@ -179,7 +179,7 @@ function switchTab(tabpage, tabid) {
 			"resourceOrder" : 0,
 			"resourceType" : ""
 		}, {
-			"accessPath" : "./manager/MovieServlet?method=showComingSoonMovie",
+			"accessPath" : "",
 			"checked" : false,
 			"delFlag" : 0,
 			"parentID" : 1,
@@ -191,7 +191,7 @@ function switchTab(tabpage, tabid) {
 			"resourceOrder" : 0,
 			"resourceType" : ""
 		}, {
-			"accessPath" : "./manager/MovieServlet?method=showOnNowMovie",
+			"accessPath" : "",
 			"checked" : false,
 			"delFlag" : 0,
 			"parentID" : 1,

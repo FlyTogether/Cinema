@@ -176,4 +176,23 @@ public class UserDAOImpl implements UserDAO
 			throw new RuntimeException(e);
 		}
 	}
+
+	/**
+	 * 根据用户名 查找并返回用户信息
+	 */
+	@Override
+	public User retrieve(String username)
+	{
+		try
+		{
+			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
+			String sql = "SELECT * FROM tb_user WHERE username=?";
+			return (User)qr.query(sql, username, new BeanHandler(User.class));
+		} catch (Exception e)
+		{
+			throw new RuntimeException(e);
+		}
+	}
+	
+	
 }

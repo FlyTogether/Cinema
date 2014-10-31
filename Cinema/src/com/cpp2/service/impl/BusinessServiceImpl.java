@@ -105,13 +105,6 @@ public class BusinessServiceImpl
 		movieDAO.delete(id);
 	}
 	/**
-	 * 恢复已删除的电影
-	 * @param id
-	 */
-	public void restoreMovie(int id){
-		movieDAO.restore(id);
-	}
-	/**
 	 * 根据id查找一部电影
 	 * @param id
 	 * @return
@@ -171,14 +164,6 @@ public class BusinessServiceImpl
 		result.setList(list);
 		result.setPage(page);
 		return result;
-	}
-	/**
-	 * 修改影片的图片
-	 * @param image
-	 * @param id
-	 */
-	public void changeMovieImage(String image,int id){
-		movieDAO.changeImage(image, id);
 	}
 	/**
 	 * 新增订单
@@ -285,6 +270,46 @@ public class BusinessServiceImpl
 		result.setPage(page);
 		result.setList(list);
 		return result;
+	}
+
+	/**
+	 * 注册用户
+	 * @param user
+	 */
+	public void register(User user)
+	{
+		/* 先扫描数据库, 检查是否已经存在该用户 */
+		uDAO.create(user);
+	}
+
+	/**
+	 * 根据用户的手机号码,修改密码
+	 * @param username
+	 * @param phone
+	 * @param password
+	 */
+	public boolean forgotten(String username, String phone, String password)
+	{
+		/* 先通过username找到用户 */
+		User user = uDAO.retrieve(username);
+		/* 核对信息 */
+		if(!user.getPhone().equals(phone))
+		{
+			return false;
+		}
+		/* 修改密码(update) */
+		uDAO.updatePassword(password, user.getId());
+		return true;
+	}
+
+	/**
+	 * 根据电影ID找到电影
+	 * @param movieid
+	 * @return
+	 */
+	public Movie retrieveMovie(String movieid)
+	{
+		return movieDAO.retrieve(Integer.parseInt(movieid));
 	}
 	
 }

@@ -1,11 +1,15 @@
 package com.cpp2.manager.servlet;
 
+
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -13,192 +17,111 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import com.cpp2.domain.User;
 import com.cpp2.service.impl.BusinessServiceImpl;
 
 /**
- * ÓÃ»§¹ÜÀíÄ£¿é, ´¦ÀíÓÃ»§µÄµÇÂ¼, ×¢²á,Íü¼ÇÃÜÂë
+ * ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½Äµï¿½Â¼, ×¢ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  * @author Rose
  */
 public class UserServlet extends HttpServlet
 {
-
+	
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException
 	{
-		/* ¸ù¾ÝÓÃ»§µÄurl²ÎÊý, ÅÐ¶ÏÓÃ»§µÄ²Ù×÷ */
-		String method = request.getParameter("method");
-		if("login".equals(method))										// µÇÂ¼²Ù×÷
-		{
-			login(request,response);
-		}
-		else if("register".equals(method))							// ×¢²á²Ù×÷
-		{
-			register(request, response);
-		}
-		else if("forgotten".equals(method))
-		{
-			forgotten(request, response);							// Íü¼ÇÃÜÂë
-		}
-	}
-
-	/**
-	 * Íü¼ÇÃÜÂë
-	 * @param request
-	 * @param response
-	 * @throws IOException 
-	 */
-	private void forgotten(HttpServletRequest request,
-			HttpServletResponse response) throws IOException
-	{
-		DataOutputStream out = new DataOutputStream(response.getOutputStream());
-		try
-		{
-			/* »ñÈ¡postÌá½»µÄÊý¾Ý */
-			String username = request.getParameter("username");
-			String phone = request.getParameter("phone");
-			String password = request.getParameter("password");
-			
-			/* ÒµÎñÂß¼­´¦Àí: µ±·ûºÏÒ»¶¨µÄÌõ¼þ¾ÍÐÞ¸ÄÊý¾Ý¿â */
-			BusinessServiceImpl service = new BusinessServiceImpl();
-			boolean b = service.forgotten(username,phone,password);
-			
-			if(b)
-			{
-				/* ´¦Àí³É¹¦,·µ»ØjsonÊý¾Ý¸øÒÆ¶¯¶Ë */
-				Map<String, Object> topMap = new HashMap<String, Object>();
-				topMap.put("code", "1");
-				topMap.put("message", "reset success");
-				topMap.put("result", "");
-				JSONObject jsonArray = JSONObject.fromObject(topMap);
-
-				/* Êä³ö */
-				out.writeUTF(jsonArray.toString());
-				out.writeInt(1);
-			}
-			else
-			{
-				/* ´¦ÀíÊ§°Ü*/
-				out.writeUTF("reset faiure");
-				out.writeInt(0);
-			}
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		finally
-		{
-			out.close();
-			
-		}
+		response.setContentType("text/plain");
+		response.setCharacterEncoding("utf-8");
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		JSONObject object = new JSONObject();
 		
+		
+		PrintWriter out = response.getWriter();
+		BusinessServiceImpl service = new BusinessServiceImpl();
+		User user = service.userLogin(username, password);
+		object.put("username",user.getUsername());
+		object.put("password", user.getPassword());
+		object.put("phone", user.getPhone());
+		object.put("gender", user.getGender());
+		object.put("email", user.getEmail());
+		object.put("birthday", user.getBirthday().toLocaleString());
+		System.out.println(user.getPassword()+user.getPassword());
+		if(user == null)
+		{
+			out.write(0);
+		}
+		else
+		{
+			out.write("1");	
+			out.write(object.toString());
+		}
+		request.getSession().setAttribute("user", user);
+		out.flush();
+		out.close();
 	}
-
+	
+	
 	/**
-	 * ×¢²á
+	 * ×¢ï¿½ï¿½
 	 * @param request
 	 * @param response
-	 * @throws IOException 
 	 */
 	private void register(HttpServletRequest request,
-			HttpServletResponse response) throws IOException
+			HttpServletResponse response)
 	{
-		DataOutputStream out = new DataOutputStream(response.getOutputStream());
-		try
-		{
-			/* »ñÈ¡ÒÆ¶¯¶Ë postÌá½»µÄÊý¾Ý */
-			String username = request.getParameter("username");
-			String password = request.getParameter("password");
-			String phone = request.getParameter("phone");
-			String gender = request.getParameter("gender");
-			String email = request.getParameter("email");
-			String birthday = request.getParameter("birthday");
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
-			birthday = format.format(new Date(birthday));						// ¸ñÊ½»¯ÈÕÆÚ¶ÔÏó
-			
-			/* ÒµÎñÂß¼­´¦Àí: ÏÈÐ£Ñé,Í¨¹ýÔòÍùÊý¾Ý¿âÌí¼Ó¼ÇÂ¼ */
-			validate(username, phone, email);
-			User user = new User();
-			user.setBirthday(new Date(birthday));
-			user.setConsumption(0);
-			user.setEmail(email);
-			user.setGender(gender);
-			user.setPassword(password);
-			user.setPhone(phone);
-			user.setUsername(username);
-			
-			BusinessServiceImpl service = new BusinessServiceImpl();
-			service.register(user);
-			/* Ìí¼Ó³É¹¦Ôò¸øÒÆ¶¯¶Ë´«ÊäjsonÐÅÏ¢ 
-			 * ³É¹¦code : 1 , message : register success */
-			JSONObject jsonObject = JSONObject.fromObject(user);
-			Map<String, Object> resultMap = JSONObject.fromObject(jsonObject); 
-			JSONObject resultObject = JSONObject.fromObject(resultMap);
-			
-			Map<String, Object> topMap = new HashMap<String,Object>();
-			topMap.put("code", "1");
-			topMap.put("message", "register success");
-			topMap.put("result", resultObject);
-			JSONObject jsonArray = JSONObject.fromObject(topMap);
-			
-			/* Êä³öÁ÷Ð´³ö */
-			out.writeUTF(jsonArray.toString());
-			out.flush();
-			
-		} catch (Exception e)
-		{
-			/* ×¢²áÊ§°Ü */
-			e.printStackTrace();
-			out.writeUTF("register fialure");
-			out.writeInt(0);
-		}
-		finally
-		{
-			out.close();
-		}
+		/* ï¿½ï¿½È¡ï¿½Æ¶ï¿½ï¿½ï¿½ postï¿½á½»ï¿½ï¿½ï¿½ï¿½ï¿½ */
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		String phone = request.getParameter("phone");
+		String gender = request.getParameter("gender");
+		String email = request.getParameter("email");
+		String birthday = request.getParameter("birthday");
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+		birthday = format.format(new Date(birthday));						// ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¶ï¿½ï¿½ï¿½
 		
-	}
-
-	private void validate(String username, String phone, String email)
-	{
-		/* ÓÃ»§Ãû,ÊÖ»ú,email,ÔÚÊý¾Ý¿âÖÐÒªÎ¨Ò» */
+		/* Òµï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½Ð£ï¿½ï¿½,Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½Ó¼ï¿½Â¼ */
+		
 		
 	}
 
 	/**
-	 * ÓÃ»§µÇÂ¼
+	 * ï¿½Ã»ï¿½ï¿½ï¿½Â¼
 	 * @param request
 	 * @param response
 	 * @throws IOException 
 	 */
 	private void login(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
-		DataOutputStream out = new DataOutputStream(response.getOutputStream());
+		response.setCharacterEncoding("utf-8");
+		PrintWriter out = response.getWriter();
 		try
 		{
-			/* »ñÈ¡ÒÆ¶¯¶ËpostµÄÊý¾Ý */
+			/* ï¿½ï¿½È¡ï¿½Æ¶ï¿½ï¿½ï¿½postï¿½ï¿½ï¿½ï¿½ï¿½ */
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
 			
 			
-			/* ÒµÎñÂß¼­´¦Àí: ÓÃ»§µÇÂ¼´¦Àí */
+			/* Òµï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½ï¿½ï¿½: ï¿½Ã»ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ */
 			BusinessServiceImpl service = new BusinessServiceImpl();
 			User user = service.userLogin(username, password);
 			
-			/* ´æµ½Session */
-			request.getSession().setAttribute("user", user);
+			/* ï¿½æµ½Session */
 			
-			/* Ê§°Ü·µ»Ø0ºÍ"login failure", ³É¹¦·µ»Ø1ºÍ"login success" ÒÔ¼°jsonÊý¾Ý*/
+			
+			/* Ê§ï¿½Ü·ï¿½ï¿½ï¿½0ï¿½ï¿½"login failure", ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½"login success" ï¿½Ô¼ï¿½jsonï¿½ï¿½ï¿½*/
 			if(user == null)
 			{
-				out.writeUTF("login failure");
-				out.writeInt(0);
+				out.write("login failure");
+				out.write(0);
 			}
 			else
 			{
-				/* ·â×°Json¶ÔÏó ²¢ÓÃ×Ö·ûÁ÷Êä³ö*/
+				/* ï¿½ï¿½×°Jsonï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
+				System.out.println("find user");
 				JSONObject jsonObject = JSONObject.fromObject(user);
 				
 			/*	Iterator<String> i = jsonObject.keys();
@@ -216,19 +139,20 @@ public class UserServlet extends HttpServlet
 				
 				JSONObject jsonArray = JSONObject.fromObject(topMap);
 				
-				out.writeUTF(jsonArray.toString());
+				out.write(jsonArray.toString());
 				out.flush();
+				System.out.println("json");
 			}
 			
 		} catch (Exception e)
 		{
 			e.printStackTrace();
-			out.writeUTF(e.getMessage());
+			out.write(e.getMessage());
 			out.flush();
 		}
 		finally
 		{
-			out.close();
+			out.close();																				// ï¿½Ø±ï¿½ï¿½ï¿½Ô´
 		}
 	}
 
@@ -236,6 +160,7 @@ public class UserServlet extends HttpServlet
 			throws ServletException, IOException
 	{
 		doGet(request,response);
+		
 	}
 
 }

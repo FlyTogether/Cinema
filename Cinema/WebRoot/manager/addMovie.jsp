@@ -38,7 +38,7 @@
     				<td>时长：</td><td><input type="text" name="runtime"></td>
     			</tr>
     			<tr>
-    				<td>主演：</td><td colspan="3" ><input type="text" name="castActor" class="input" id="item_castActor"></td>
+    				<td>主演：</td><td colspan="3" ><input type="text" name="castActor" style="width: 500px"></td>
     				
     			</tr>
     			<tr >

@@ -13,9 +13,8 @@
     	}
     	#containter{
     		margin-top: 100px;
-    		margin-left: 100px;
+    		margin-left: 50px;
     	}
-    	
     	#page{
     		margin-left:43%;
     		margin-top:20px;
@@ -25,7 +24,6 @@
     <link href="${pageContext.request.contextPath }/css/tablestyle.css" rel="stylesheet" type="text/css" />
 	<script language="javascript" type="text/javascript" src="${pageContext.request.contextPath }/js/tablejquery.js"></script>
 	<script language="javascript" type="text/javascript" src="${pageContext.request.contextPath }/js/bstablecrosshair.js"></script>
-
   </head>
   
   <body>
@@ -35,16 +33,23 @@
   				<th>片名</th>
   				<th>上映时间</th>
   				<th>时长</th>
+  				<th>状态</th>
   				<th>查看详情</th>
   				<th>修改</th>
+  				<th>删除/恢复</th>
   			</tr>
   			<c:forEach items="${result.list}" var="movie" >
   				<tr>
   					<td>${movie.name }</td>
   					<td>${movie.showtime }</td>
   					<td>${movie.runtime }</td>
+  					<td>${movie.state }</td>
   					<td><a href="${pageContext.request.contextPath }/manager/MovieServlet?method=showMovieDetail&id=${movie.id}">查看详情</a></td>
   					<td><a href="${pageContext.request.contextPath }/manager/MovieServlet?method=showEditableMovieDetail&id=${movie.id}">修改</a></td>
+  					<td>
+						<c:if test="${movie.state eq '已删除'}"><a href="${pageContext.request.contextPath }/manager/MovieServlet?method=restore&id=${movie.id}">恢复</a></c:if>
+						<c:if test="${movie.state eq '未删除'}"><a href="${pageContext.request.contextPath }/manager/MovieServlet?method=delete&id=${movie.id}">删除</a></c:if>
+					</td>
   				</tr>
   			</c:forEach>
   		</table>

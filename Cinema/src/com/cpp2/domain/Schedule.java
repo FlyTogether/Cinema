@@ -10,7 +10,6 @@ public class Schedule {
 	private int videoHall_id;
 	private int movie_id;
 	private int remanent;
-	
 	public int getId() {
 		return id;
 	}

@@ -14,7 +14,12 @@
     	}
     	#container{
     		margin-top: 20px;
-    		margin-left: 150px;
+    		margin-left: 50px;
+    	}
+    	#image{
+    		position: absolute;
+    		top: 50px;
+    		right: 100px;
     	}
     </style>
 

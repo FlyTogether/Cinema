@@ -8,7 +8,6 @@ import java.util.Map;
 import com.cpp2.dao.AdminDAO;
 import com.cpp2.dao.MovieDAO;
 import com.cpp2.dao.OrderDAO;
-import com.cpp2.dao.ScheduleDAO;
 import com.cpp2.dao.UserDAO;
 import com.cpp2.domain.Admin;
 import com.cpp2.domain.Cart;
@@ -16,7 +15,6 @@ import com.cpp2.domain.CartItem;
 import com.cpp2.domain.Movie;
 import com.cpp2.domain.Order;
 import com.cpp2.domain.OrderItem;
-import com.cpp2.domain.Schedule;
 import com.cpp2.domain.User;
 import com.cpp2.factory.DAOFactory;
 import com.cpp2.utils.Page;
@@ -33,7 +31,6 @@ public class BusinessServiceImpl
 	private UserDAO uDAO = DAOFactory.getInstance().createDAO("com.cpp2.dao.impl.UserDAOImpl", UserDAO.class);
 	private OrderDAO oDAO = DAOFactory.getInstance().createDAO("com.cpp2.dao.impl.OrderDAOImpl", OrderDAO.class);
 	private MovieDAO movieDAO =  DAOFactory.getInstance().createDAO("com.cpp2.dao.impl.MovieDAOImpl", MovieDAO.class);
-	private ScheduleDAO sDAO = DAOFactory.getInstance().createDAO("com.cpp2.dao.impl.ScheduleDAOImpl", ScheduleDAO.class);
 	/**
 	 * 后台登陆处理,检查数据库是否存在该管理员
 	 * @param admin
@@ -108,6 +105,13 @@ public class BusinessServiceImpl
 		movieDAO.delete(id);
 	}
 	/**
+	 * 恢复已删除的电影
+	 * @param id
+	 */
+	public void restoreMovie(int id){
+		movieDAO.restore(id);
+	}
+	/**
 	 * 根据id查找一部电影
 	 * @param id
 	 * @return
@@ -169,7 +173,6 @@ public class BusinessServiceImpl
 		return result;
 	}
 	/**
-<<<<<<< HEAD
 	 * 修改影片的图片
 	 * @param image
 	 * @param id
@@ -178,22 +181,6 @@ public class BusinessServiceImpl
 		movieDAO.changeImage(image, id);
 	}
 	/**
-	 * 获取所有正在热映的电影
-	 * @return
-	 */
-	public List<Movie> getAllOnNowMovie(){
-		return movieDAO.getAllOnNowMovie();
-	}
-	/**
-	 * 获取所有即将上映的电影
-	 * @return
-	 */
-	public List<Movie> getAllComingSoonMovie(){
-		return movieDAO.getAllComingSoonMovie();
-	}
-	/**
-=======
->>>>>>> 0f3df7a7082f4e754ee0fdb04bca8edad859af31
 	 * 新增订单
 	 * @param cart
 	 * @param user
@@ -299,109 +286,5 @@ public class BusinessServiceImpl
 		result.setList(list);
 		return result;
 	}
-<<<<<<< HEAD
-	/**
-	 * 新建排期
-	 * @param schedule
-	 */
-	public void createSchedule(Schedule schedule){
-		sDAO.createSchedule(schedule);
-	}
-	/**
-	 * 删除排期
-	 * @param id
-	 */
-	public void deleteSchedule(int id){
-		sDAO.deleteSchedule(id);
-	}
-	/**
-	 * 更新排期
-	 * @param schedule
-	 */
-	public void updateSchedule(Schedule schedule){
-		sDAO.updateSchedule(schedule);
-	}
-	/**
-	 * 获取排期的分页数据
-	 * @param everyPage
-	 * @param currentPage
-	 * @return
-	 */
-	public Result getAllSchedulePageData(int everyPage,int currentPage){
-		Result result = new Result();
-		int totalRecord = sDAO.getScheduleTotalRecord();
-		Page page = PageUtil.createPage(everyPage, totalRecord, currentPage);
-		List<Schedule> list = sDAO.getAllSchedulePageDate(page.getBeginIndex(), everyPage);
-		result.setList(list);
-		result.setPage(page);
-		return result;
-	}
-	/**
-	 * 根据电影id查找该影片的所有排期
-	 * @param id
-	 * @return
-	 */
-	public List<Schedule> getScheduleByMovieId(int id){
-		return sDAO.getScheduleByMovieId(id);
-	}
-	/**
-	 * 根据影片的id和影院的id来查找排期
-	 * @param movie_id
-	 * @param cinema_id
-	 * @return
-	 */
-	public List<Schedule> getScheduleByMovieIdAndCinemaId(int movie_id,int cinema_id){
-		return sDAO.getScheduleByMovieIdAndCinemaId(movie_id, cinema_id);
-	}
-	/**
-	 * 更新剩余票数
-	 * @param id
-	 * @param remanent
-	 */
-	public void updateRemanent(int id ,int remanent){
-		sDAO.updateRemanent(id, remanent);
-	}
-=======
-
-	/**
-	 * 注册用户
-	 * @param user
-	 */
-	public void register(User user)
-	{
-		/* 先扫描数据库, 检查是否已经存在该用户 */
-		uDAO.create(user);
-	}
-
-	/**
-	 * 根据用户的手机号码,修改密码
-	 * @param username
-	 * @param phone
-	 * @param password
-	 */
-	public boolean forgotten(String username, String phone, String password)
-	{
-		/* 先通过username找到用户 */
-		User user = uDAO.retrieve(username);
-		/* 核对信息 */
-		if(!user.getPhone().equals(phone))
-		{
-			return false;
-		}
-		/* 修改密码(update) */
-		uDAO.updatePassword(password, user.getId());
-		return true;
-	}
-
-	/**
-	 * 根据电影ID找到电影
-	 * @param movieid
-	 * @return
-	 */
-	public Movie retrieveMovie(String movieid)
-	{
-		return movieDAO.retrieve(Integer.parseInt(movieid));
-	}
 	
->>>>>>> 0f3df7a7082f4e754ee0fdb04bca8edad859af31
 }

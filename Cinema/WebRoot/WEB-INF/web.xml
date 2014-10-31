@@ -19,6 +19,15 @@
   	<url-pattern>/*</url-pattern>
   </filter-mapping>
   
+  <filter>
+  	<filter-name>HTMLCharacterFilter</filter-name>
+  	<filter-class>com.cpp2.filter.HTMLCharacterFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>HTMLCharacterFilter</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
 <!--   <filter>
   	<filter-name>CheckLoginFilter</filter-name>
   	<filter-class>com.cpp2.filter.CheckLoginFilter</filter-class>

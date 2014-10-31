@@ -86,4 +86,8 @@ public interface MovieDAO {
 	 */
 	public abstract void changeImage(String image, int id);
 
+	List<Movie> getAllOnNowMovie();
+
+	List<Movie> getAllComingSoonMovie();
+
 }

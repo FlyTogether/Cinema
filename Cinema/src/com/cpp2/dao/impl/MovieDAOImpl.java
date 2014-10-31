@@ -151,7 +151,7 @@ public class MovieDAOImpl implements MovieDAO {
 		try{
 			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
 			Date currentTime = new Date();
-			String sql = "select * from tb_movie where Showtime <=? and State='未删除' order by Showtime limit ?,?";
+			String sql = "select * from tb_movie where Showtime<=? and State='未删除' order by Showtime limit ?,?";
 			Object params[] = {currentTime,beginIndex,everyPage};
 			return (List<Movie>)qr.query(sql, params, new BeanListHandler(Movie.class));
 		}catch(Exception e){
@@ -186,6 +186,34 @@ public class MovieDAOImpl implements MovieDAO {
 			String sql = "update tb_movie set image=? where id=?";
 			Object params[] = {image,id};
 			qr.update(sql, params);
+		}catch(Exception e){
+			throw new RuntimeException(e);
+		}
+	}
+	/**
+	 * 查看所有正在热映的电影
+	 * @return
+	 */
+	public List<Movie> getAllOnNowMovie(){
+		try{
+			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
+			Date currentTime = new Date();
+			String sql = "select * from tb_movie where Showtime<=? and State='未删除' order by Showtime";
+			return (List<Movie>)qr.query(sql, currentTime, new BeanHandler(Movie.class));
+		}catch(Exception e){
+			throw new RuntimeException(e);
+		}
+	}
+	/**
+	 * 查看所有即将上映的电影
+	 * @return
+	 */
+	public List<Movie> getAllComingSoonMovie(){
+		try{
+			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
+			Date currentTime = new Date();
+			String sql = "select * from tb_movie where Showtime>? and State='未删除' order by Showtime";
+			return (List<Movie>)qr.query(sql, currentTime, new BeanHandler(Movie.class));
 		}catch(Exception e){
 			throw new RuntimeException(e);
 		}

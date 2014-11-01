@@ -18,7 +18,7 @@ import com.cpp2.utils.JDBCUtils;
 public class OrderDAOImpl implements OrderDAO
 {
 	/**
-	 * �?B_Order表添加一条数�?
+	 * 往TB_Order表添加一条数据
 	 * @param order
 	 */
 	@Override
@@ -26,13 +26,13 @@ public class OrderDAOImpl implements OrderDAO
 	{
 		try
 		{
-			/* 基本信息保存到Order�*/
+			/* 基本信息保存到Order表*/
 			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
 			String sql = "INSERT INTO TB_Order(_id,OrderTime,Price,State,User_id) values(?,?,?,?,?)";
 			Object params[] = {order.getId(), order.getOrdertime(), order.getPrice(), order.getState(), order.getUser().getId()};
 			qr.update(sql,params);
 			
-			/* 把Order表中的订单保存到OrderItem�?*/
+			/* 把Order表中的订单保存到OrderItem表 */
 			Set<OrderItem> items = order.getOrderitem();
 			for(OrderItem item : items)
 			{
@@ -47,7 +47,7 @@ public class OrderDAOImpl implements OrderDAO
 	}
 	
 	/**
-	 * genju �?��的id,在数据库中查找Order,并返�?
+	 * genju 所给的id,在数据库中查找Order,并返回
 	 * @param id
 	 * @return
 	 */
@@ -82,7 +82,7 @@ public class OrderDAOImpl implements OrderDAO
 	}
 	
 	/**
-	 * 获取�?��订单
+	 * 获取所有订单
 	 * @return
 	 */
 	@Override
@@ -148,7 +148,7 @@ public class OrderDAOImpl implements OrderDAO
 	}
 
 	/**
-	 * 获取订单的�?记录�?
+	 * 获取订单的总记录数
 	 */
 	@Override
 	public int getTotalRecord()

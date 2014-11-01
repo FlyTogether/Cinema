@@ -1,6 +1,5 @@
 package com.cpp2.dao.impl;
 
-<<<<<<< HEAD
 import java.util.List;
 
 import org.apache.commons.dbutils.QueryRunner;
@@ -133,8 +132,4 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 			throw new RuntimeException(e);
 		}
 	}
-=======
-public class ScheduleDAOImpl {
-	
->>>>>>> origin/master
 }

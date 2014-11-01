@@ -1,17 +1,11 @@
 package com.cpp2.manager.servlet;
 
-<<<<<<< HEAD
 import java.io.DataOutputStream;
-=======
->>>>>>> origin/master
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-<<<<<<< HEAD
 import java.io.OutputStream;
-=======
->>>>>>> origin/master
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.HashMap;
@@ -73,7 +67,6 @@ public class MovieServlet extends HttpServlet {
 		if("restore".equals(method)){
 			restore(request,response);
 		}
-<<<<<<< HEAD
 		if("getOnNowMovieForMobile".equals(method)){
 			getOnNowMovieForMobile(request,response);
 		}
@@ -86,10 +79,6 @@ public class MovieServlet extends HttpServlet {
 	}
 	
 
-=======
-	}
-	
->>>>>>> origin/master
 
 
 	/**
@@ -238,7 +227,6 @@ public class MovieServlet extends HttpServlet {
 	 */
 	private void changeMovieDetail(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-<<<<<<< HEAD
 		try{
 			ConvertUtils.register(new DateLocaleConverter(), Date.class);//注册日期装换器
 			BusinessServiceImpl businessService = new BusinessServiceImpl();
@@ -419,12 +407,8 @@ public class MovieServlet extends HttpServlet {
 	 */
 	private void restore(HttpServletRequest request,
 			HttpServletResponse response) {
-=======
->>>>>>> origin/master
 		try{
-			ConvertUtils.register(new DateLocaleConverter(), Date.class);//注册日期装换器
 			BusinessServiceImpl businessService = new BusinessServiceImpl();
-<<<<<<< HEAD
 			int id = Integer.parseInt(request.getParameter("id"));
 			businessService.restoreMovie(id);
 			PrintWriter out = response.getWriter();
@@ -565,198 +549,10 @@ public class MovieServlet extends HttpServlet {
 			out.flush();
 		}finally{
 			out.close();
-=======
-			Movie movie = new Movie();
-			Map map = request.getParameterMap();
-			BeanUtils.populate(movie, map);
-			businessService.changeMovieDetail(movie);
-			request.setAttribute("msg", "修改成功！");
-		}catch(Exception e){
-			e.printStackTrace();
-			request.setAttribute("msg", "修改失败，请重试！");
-		}
-		request.getRequestDispatcher("/msg.jsp").forward(request, response);
-	}
-
-	/**
-	 * 修改影片图片
-	 * @author SevenLin
-	 * @param request
-	 * @param response
-	 */
-	private void changeImage(HttpServletRequest request,
-			HttpServletResponse response) {
-		try{
-			//首先上传图片,返回图片名称
-			String image = doUpload(request,response);
-			//然后移除原来图片
-			doRemove(request,response);
-			//保存修改信息
-			BusinessServiceImpl businessService = new BusinessServiceImpl(); 
-			int id = Integer.parseInt(request.getParameter("id"));
-			businessService.changeMovieImage(image, id);
-			//回到原来页面
-			request.setAttribute("movie", businessService.findMovie(id));
-			request.setAttribute("changeImageResult", "success");
-			request.getRequestDispatcher("/manager/showEditableMovieDetail.jsp").forward(request, response);
-		}catch(Exception e){
-			e.printStackTrace();
-			request.setAttribute("msg", "修改失败请重试！");
-			request.getRequestDispatcher("/msg.jsp");
-		}
-	}
-	
-	/**
-	 * 处理修改图片时的图片上传
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	private String doUpload(HttpServletRequest request,
-			HttpServletResponse response) {
-		try{
-			DiskFileItemFactory factory = new DiskFileItemFactory();
-			ServletFileUpload upload = new ServletFileUpload(factory);
-			List<FileItem> list = upload.parseRequest(request);//对表单进行解析
-			String saveName="";
-			for(FileItem item : list ){
-				if(!item.isFormField()){//如果不是普通输入项，就是图片
-					String fileName = item.getName();
-					saveName= makeFileName(fileName);
-					String savePath = this.getServletContext().getRealPath("\\upload");
-					InputStream in = item.getInputStream();
-					FileOutputStream out = new FileOutputStream(savePath+"\\"+saveName);
-					int len = 0;
-					byte [] buffer = new byte[1024];
-					while((len=in.read(buffer))>0){
-						out.write(buffer, 0, len);
-					}
-					out.close();
-					in.close();
-					item.delete();
-				}
-			}
-			return saveName;
-		}catch(Exception e){
-			throw new RuntimeException(e);
-		}
-	}
-	/**
-	 * 移除原来的图片
-	 * @param request
-	 * @param response
-	 */
-	private void doRemove(HttpServletRequest request,
-			HttpServletResponse response) {
-		String oldImageName = request.getParameter("imageName");
-		String savePath = this.getServletContext().getRealPath("/upload");
-		String realPath = savePath + "\\" + oldImageName;
-		File file = new File(realPath);
-		file.delete();
-	}
-
-	/**
-	 * 查看正在热映的电影，并分页
-	 * @param request
-	 * @param response
-	 * @throws IOException 
-	 * @throws ServletException 
-	 */
-	private void showOnNowMovie(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		try{
-			BusinessServiceImpl businessService = new BusinessServiceImpl();
-			int currentPage = 0;
-			if(request.getParameter("currentPage")==null){
-				currentPage = 1;
-			}else{
-				currentPage = Integer.parseInt(request.getParameter("currentPage"));
-			}
-			int everyPage = 5;
-			Result result = businessService.getOnNowMoviePageData(currentPage, everyPage);
-			request.setAttribute("result", result);
-			request.getRequestDispatcher("/manager/showAllOnNowMovie.jsp").forward(request, response);
-		}catch(Exception e){
-			e.printStackTrace();
-			request.setAttribute("msg", "查询失败，请重试！");
-			request.getRequestDispatcher("/msg.jsp").forward(request, response);
-		}
-	}
-	/**
-	 * 查看即将上映的电影
-	 * @param request
-	 * @param response
-	 * @throws IOException 
-	 * @throws ServletException 
-	 */
-	private void showComingSoonMovie(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		try{
-			BusinessServiceImpl businessService = new BusinessServiceImpl();
-			int currentPage = 0;
-			if(request.getParameter("currentPage")==null){
-				currentPage = 1;
-			}else{
-				currentPage = Integer.parseInt(request.getParameter("currentPage"));
-			}
-			int everyPage = 5;
-			Result result = businessService.getComingSoonMoviePageData(currentPage, everyPage);
-			request.setAttribute("result", result);
-			request.getRequestDispatcher("/manager/showAllComingSoonMovie.jsp").forward(request, response);
-		}catch(Exception e){
-			e.printStackTrace();
-			request.setAttribute("msg", "查询失败，请重试！");
-			request.getRequestDispatcher("/msg.jsp").forward(request, response);
-		}
-	}
-	/**
-	 * 根据id删除影片
-	 * @param request
-	 * @param response
-	 */
-	private void delete(HttpServletRequest request, HttpServletResponse response) {
-		try{
-			BusinessServiceImpl businessService = new BusinessServiceImpl();
-			int id = Integer.parseInt(request.getParameter("id"));
-			businessService.deleteMovie(id);
-			PrintWriter out = response.getWriter();
-			out.println("<script language='javascript'>self.location=document.referrer; </script>");
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	}
-	/**
-	 * 恢复已删除的电影
-	 * @param request
-	 * @param response
-	 */
-	private void restore(HttpServletRequest request,
-			HttpServletResponse response) {
-		try{
-			BusinessServiceImpl businessService = new BusinessServiceImpl();
-			int id = Integer.parseInt(request.getParameter("id"));
-			businessService.restoreMovie(id);
-			PrintWriter out = response.getWriter();
-			out.println("<script language='javascript'>self.location=document.referrer; </script>");
-		}catch(Exception e){
-			e.printStackTrace();
->>>>>>> origin/master
 		}
 	}
 
 
-<<<<<<< HEAD
-=======
-
-
-
-
-
-
-
-
-
->>>>>>> origin/master
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doGet(request, response);

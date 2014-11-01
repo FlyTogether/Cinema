@@ -7,8 +7,6 @@
     
     <title>添加电影</title>
     
-    <script src="${pageContext.request.contextPath }/js/getDate.js"></script>
-    
     <style type="text/css">
     	body{
     		margin: 0px;
@@ -18,29 +16,38 @@
     		margin-top: 20px;
     		margin-left: 150px;
     	}
+    	.input{
+    		width: 500px;
+    	}
     </style>
 
 	<link href="${pageContext.request.contextPath }/css/tablestyle.css" rel="stylesheet" type="text/css" />
 	<script language="javascript" type="text/javascript" src="${pageContext.request.contextPath }/js/tablejquery.js"></script>
 	<script language="javascript" type="text/javascript" src="${pageContext.request.contextPath }/js/bstablecrosshair.js"></script>
-
+    <script src="${pageContext.request.contextPath }/js/getDate.js"></script>
+    
   </head>
   
   <body>
+  	<c:if test="${!empty changeImageResult }">
+  		<script type="text/javascript">
+  			alert("修改图片成功！");
+  		</script>
+  	</c:if>
   	<div id="container">
   		<h3>在这里你可以修改影片数据：</h3>
-    	<form action="${pageContext.request.contextPath }/manger/MovieServlet?method=changeMovieDetail&id=${movie.id}" method="post" enctype="multipart/form-data" >
+    	<form action="${pageContext.request.contextPath }/manager/MovieServlet?method=changeMovieDetail&id=${movie.id}" method="post">
     		<table style="border:2px solid #444;border-collapse:collapse;" id="mytable">
     			<tr>
-    				<td>影片名：</td><td ><input type="text" name="moviename"  value=${movie.name }></td>
-    				<td>上映时间：</td><td><input type="text" name=showtimes onfocus="HS_setDate(this) value=${movie.showtime}"></td>
+    				<td>影片名：</td><td ><input type="text" name="name"  value=${movie.name }></td>
+    				<td>上映时间：</td><td><input type="text" name=showtime onfocus="HS_setDate(this)" value=${movie.showtime}></td>
     			</tr>
     			<tr>
-    				<td>导演：</td><td><input type="text" name="director"  value=${director }></td>
-    				<td>片场：</td><td><input type="text" name="runtime" value=${runtime }></td>
+    				<td>导演：</td><td><input type="text" name="director"  value=${movie.director }></td>
+    				<td>片场：</td><td><input type="text" name="runtime" value=${movie.runtime }></td>
     			</tr>
     			<tr>
-    				<td>主演：</td><td colspan="3" ><input type="text" name="castActor" value=${movie.castActor }></td>
+    				<td>主演：</td><td colspan="3" ><input type="text" name="castActor" class="input"  value=${movie.castActor }></td>
     				
     			</tr>
     			<tr >
@@ -90,6 +97,7 @@
     			<tr >
     				<td>类型：</td>
     				<td colspan="3">
+    					<input type="checkbox" checked name="type" value="选择的内容是：" style="display: none;">    
     					<input type="checkbox" name="type" value="剧情" <c:if test="${fn:contains( movie.type , '剧情')}">checked="ckecked"</c:if>>剧情
     					<input type="checkbox" name="type" value="爱情" <c:if test="${fn:contains( movie.type , '爱情')}">checked="ckecked"</c:if>>爱情
     					<input type="checkbox" name="type" value="喜剧" <c:if test="${fn:contains( movie.type , '喜剧')}">checked="ckecked"</c:if>>喜剧
@@ -131,7 +139,7 @@
     				<td>剧情介绍：</td><td colspan="3"><textarea cols="100" rows="5"   name="introduction" >${movie.introduction }</textarea></td>
     			</tr>
     			<tr>
-    				<td>图片：</td><td colspan="3"><a><img src="${pageContext.request.contextPath }/upload/${movie.image}"></a></td>
+    				<td>图片：</td><td colspan="3"><a href="${pageContext.request.contextPath }/manager/changeMovieImage.jsp?id=${movie.id}&imageName=${movie.image}" title="点击图片修改"><img src="${pageContext.request.contextPath }/upload/${movie.image}"></a></td>
     			</tr>
     		</table>
     		<div>

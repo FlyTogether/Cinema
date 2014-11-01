@@ -7,48 +7,56 @@ import com.cpp2.domain.Movie;
 public interface MovieDAO {
 
 	/**
-	 * 脤铆录脫脪禄虏驴脫掳脝卢
+	 * 添加一部影片
 	 * @param movie
 	 */
 	public abstract void create(Movie movie);
 
 	/**
-	 * 脡戮鲁媒脪禄虏驴脫掳脝卢
+	 * 删除一部影片
 	 * @param id
 	 */
 	public abstract void delete(int id);
 
 	/**
-	 * 赂眉脨脗脫掳脝卢脨脜脧垄
+	 * 恢复已删除的电影
+	 * @param id
+	 */
+	public abstract void restore(int id);
+
+	/**
+	 * 更新影片信息
 	 * @param movie
 	 */
 	public abstract void update(Movie movie);
+
 	/**
-	 * 赂霉戮脻_id录矛脣梅脫掳脝卢
+	 * 根据_id检索影片
 	 * @param id
 	 * @return
 	 */
-	public Movie retrieve(int id);
+	public abstract Movie retrieve(int id);
+
 	/**
-	 * 虏茅脩炉脢媒戮脻驴芒脰脨碌莽脫掳碌脛脳脺录脟脗录脢媒
+	 * 查询数据库中电影的总记录数
 	 * @return
 	 */
 	public abstract int getAllMovieTotalRecord();
 
 	/**
-	 * 虏茅脩炉脮媒脭脷脠脠脫鲁碌脛碌莽脫掳脭脷脢媒戮脻驴芒脰脨碌脛脳脺录脟脗录脢媒
+	 * 查询正在热映的电影在数据库中的总记录数
 	 * @return
 	 */
 	public abstract int getOnNowMovieTotalRecord();
 
 	/**
-	 * 虏茅脩炉录麓陆芦脡脧脫鲁碌脛碌莽脫掳脭脷脢媒戮脻驴芒脰脨碌脛脳脺录脟脗录脢媒
+	 * 查询即将上映的电影在数据库中的总记录数
 	 * @return
 	 */
 	public abstract int getComingSoonMovieTotalRecord();
 
 	/**
-	 * 虏茅脩炉鲁枚碌莽脫掳碌脛路脰脪鲁脢媒戮脻
+	 * 查询出电影的分页数据
 	 * @param startIndex
 	 * @param pageSize
 	 * @return
@@ -56,7 +64,7 @@ public interface MovieDAO {
 	public abstract List<Movie> getMoviePageData(int beginIndex, int everyPage);
 
 	/**
-	 * 虏茅脩炉鲁枚脮媒脭脷脠脠脫鲁碌莽脫掳碌脛路脰脪鲁脢媒戮脻
+	 * 查询出正在热映电影的分页数据
 	 * @param startIndex
 	 * @param pageSize
 	 * @return
@@ -65,12 +73,31 @@ public interface MovieDAO {
 			int everyPage);
 
 	/**
-	 * 虏茅脩炉鲁枚录麓陆芦脡脧脫鲁碌莽脫掳碌脛路脰脪鲁脢媒戮脻
+	 * 查询出即将上映电影的分页数据
 	 * @param startIndex
 	 * @param pageSize
 	 * @return
 	 */
 	public abstract List<Movie> getComingSoonMoviePageData(int beginIndex,
 			int everyPage);
+
+	/**
+	 * 修改影片图片
+	 * @param image
+	 * @param id
+	 */
+	public abstract void changeImage(String image, int id);
+
+	/**
+	 * 查看所有正在热映的电影
+	 * @return
+	 */
+	public abstract List<Movie> getAllOnNowMovie();
+
+	/**
+	 * 查看所有即将上映的电影
+	 * @return
+	 */
+	public abstract List<Movie> getAllComingSoonMovie();
 
 }

@@ -38,7 +38,7 @@
     				<td>时长：</td><td><input type="text" name="runtime"></td>
     			</tr>
     			<tr>
-    				<td>主演：</td><td colspan="3" ><input type="text" name="castActor" class="input" id="item_castActor"></td>
+    				<td>主演：</td><td colspan="3" ><input type="text" name="castActor" style="width: 500px"></td>
     				
     			</tr>
     			<tr >
@@ -89,6 +89,7 @@
     			<tr >
     				<td>类型：</td>
     				<td colspan="3">
+    				   <input type="checkbox" checked name="type" value="选择的内容是：" style="display: none;">  
     					<input type="checkbox" name="type" value="剧情" >剧情
     					<input type="checkbox" name="type" value="爱情" >爱情
     					<input type="checkbox" name="type" value="喜剧" >喜剧

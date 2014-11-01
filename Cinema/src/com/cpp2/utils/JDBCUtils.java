@@ -17,7 +17,7 @@ public class JDBCUtils
 	
 	static
 	{
-		cpds = new ComboPooledDataSource("cpp2");
+		cpds = new ComboPooledDataSource("rose");
 	}
 	
 	/**

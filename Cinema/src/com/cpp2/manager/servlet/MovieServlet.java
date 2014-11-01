@@ -1,14 +1,11 @@
 package com.cpp2.manager.servlet;
 
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,9 +13,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.ConvertUtils;
@@ -67,18 +61,8 @@ public class MovieServlet extends HttpServlet {
 		if("restore".equals(method)){
 			restore(request,response);
 		}
-		if("getOnNowMovieForMobile".equals(method)){
-			getOnNowMovieForMobile(request,response);
-		}
-		if("getComingSoonMovieForMobile".equals(method)){
-			getComingSoonMovieForMobile(request,response);
-		}
-		if("getMovieDetailForMobile".equals(method)){
-			getMovieDetailForMobile(request,response);
-		}
 	}
 	
-
 
 
 	/**
@@ -233,17 +217,6 @@ public class MovieServlet extends HttpServlet {
 			Movie movie = new Movie();
 			Map map = request.getParameterMap();
 			BeanUtils.populate(movie, map);
-			String array[] = request.getParameterValues("type");
-			String type="";
-			if(array.length==1){
-				type="";
-			}else{
-				for(int i = 0;i<array.length;i++){
-					type = type+array[i]+",";
-					type=type.substring(0,type.lastIndexOf(","));
-				}
-			}
-			movie.setType(type);
 			businessService.changeMovieDetail(movie);
 			request.setAttribute("msg", "修改成功！");
 		}catch(Exception e){
@@ -419,138 +392,13 @@ public class MovieServlet extends HttpServlet {
 	}
 
 
-	/**
-	 * 提供正在热映的影片数据给移动端
-	 * @param request
-	 * @param response
-	 * @throws IOException 
-	 */
-	private void getOnNowMovieForMobile(HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
-		DataOutputStream out = new DataOutputStream(response.getOutputStream());
-		try{
-			/*获取数据*/
-			BusinessServiceImpl businessService = new BusinessServiceImpl();
-			List<Movie> list = businessService.getAllOnNowMovie();
-			
-			/*封装到json中*/
-			JSONArray movieArray = new JSONArray();
-			for(Movie movie : list){
-				movieArray.add(movie);
-			}
-			
-			/*封装到结果集中*/
-			Map<String, Object> resultMap = new HashMap<String, Object>();
-			resultMap.put("movie.list", movieArray);
-			JSONObject resultObject =JSONObject.fromObject(resultMap);
-			
-			/*封装到顶层json*/
-			Map<String, Object> topMap = new HashMap<String, Object>();
-			topMap.put("code", "1");
-			topMap.put("message", "getAllOnNowMovie success");
-			topMap.put("result", resultObject);
-			JSONObject jsonObject = JSONObject.fromObject(topMap);
-			
-			/*写到客户端*/
-			out.writeUTF(jsonObject.toString());
-			out.flush();
-			
-		}catch(Exception e){
-			e.printStackTrace();
-			out.writeUTF(e.getMessage());
-			out.flush();
-		}
-		finally{
-			out.close();
-		}
-	}
-	/**
-	 * 获取所有即将上映的电影
-	 * @param request
-	 * @param response
-	 * @throws IOException 
-	 */
-	private void getComingSoonMovieForMobile(HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
-		DataOutputStream out = new DataOutputStream(response.getOutputStream());
-		try{
-			
-			/*获取数据*/
-			BusinessServiceImpl businessService = new BusinessServiceImpl();
-			List<Movie> list = businessService.getAllComingSoonMovie();
-			
-			/*封装到json中*/
-			JSONArray movieArray = new JSONArray();
-			for(Movie movie : list){
-				movieArray.add(movie);
-			}
-			
-			/*封装到结果集中*/
-			Map<String, Object> resultMap = new HashMap<String, Object>();
-			resultMap.put("movie.list", movieArray);
-			JSONObject resultObject =JSONObject.fromObject(resultMap);
-			
-			/*封装到顶层json*/
-			Map<String, Object> topMap = new HashMap<String, Object>();
-			topMap.put("code", "1");
-			topMap.put("message", "getAllComingSoonMovie success");
-			topMap.put("result", resultObject);
-			JSONObject jsonObject = JSONObject.fromObject(topMap);
-			
-			/*写到客户端*/
-			out.writeUTF(jsonObject.toString());
-			out.flush();
-			
-		}catch(Exception e){
-			e.printStackTrace();
-			out.writeUTF(e.getMessage());
-			out.flush();
-		}
-		finally{
-			out.close();
-		}
-	}
-	/**
-	 * 获取电影详情给移动端
-	 * @param request
-	 * @param response
-	 * @throws IOException 
-	 */
-	private void getMovieDetailForMobile(HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
-		DataOutputStream out = new DataOutputStream(response.getOutputStream());
-		try{
-			/*获取移动端传过来的数据*/
-			int id = Integer.parseInt(request.getParameter("id"));
-			
-			/*查询出要发送的数据*/
-			BusinessServiceImpl businessService = new BusinessServiceImpl();
-			Movie movie = businessService.findMovie(id);
-			
-			/*封装数据到json*/
-			JSONObject movieJson = JSONObject.fromObject(movie);
-			
-			/*封装到结果集中*/
-			Map<String , Object> resultMap = new HashMap<String, Object>();
-			resultMap.put("movie", movieJson);
-			
-			/*封装到顶层json中*/
-			Map<String , Object> topMap = new HashMap<String, Object>();
-			topMap.put("code", 1);
-			topMap.put("message", "get Movei Detail success");
-			JSONObject jsonObject = JSONObject.fromObject(topMap);
-			
-			/*写到客户端*/
-			out.writeUTF(jsonObject.toString());
-			out.flush();
-		}catch(Exception e){
-			e.printStackTrace();
-			out.writeUTF(e.getMessage());
-			out.flush();
-		}finally{
-			out.close();
-		}
-	}
+
+
+
+
+
+
+
 
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)

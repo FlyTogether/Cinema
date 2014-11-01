@@ -12,13 +12,13 @@ import com.cpp2.domain.User;
 import com.cpp2.utils.JDBCUtils;
 
 /**
- * 用户的DAO实现类
+ * 用户的DAO实现�?
  * @author Rose
  */
 public class UserDAOImpl implements UserDAO
 {
 	/**
-	 * 向tb_user 增加一条记录
+	 * 向tb_user 增加�?��记录
 	 * @param user
 	 */
 	@Override
@@ -35,7 +35,7 @@ public class UserDAOImpl implements UserDAO
 	}
 	
 	/**
-	 * 根据id删除tb_user的一条记录
+	 * 根据id删除tb_user的一条记�?
 	 * @param id
 	 */
 	@Override
@@ -94,24 +94,32 @@ public class UserDAOImpl implements UserDAO
 	 * @return
 	 */
 	@Override
-	public User retrieve(String username, String password)
+	public User retrieveFromUsername(String username, String password)
 	{
 		try
 		{
-			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
-			String sql = "select * from tb_user where Username=? and Password=?";
-			Object params[] = {username, password};
-			return (User)qr.query(sql, params, new BeanHandler(User.class));
-		} catch (Exception e)
-		{
-			e.printStackTrace();
+		QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
+		String sql1 = "select * from tb_user where Username=? and Password=?";
+		
+		Object params1[] = {username, password};
+		
+		//三钟登陆方法的，邮箱，手机号，用户名，以后可以优化一下，代码有点�?
+		
+		if((User)qr.query(sql1, params1, new BeanHandler(User.class))!=null){
+			return (User)qr.query(sql1, params1, new BeanHandler(User.class));
 		}
-		return null;
+		
+		
+	} catch (Exception e)
+	{
+		e.printStackTrace();
+	}
+	return null;
 	}
 	
 	
 	/**
-	 * 获取所有用户
+	 * 获取�?��用户
 	 * @return
 	 */
 	@Override
@@ -143,7 +151,7 @@ public class UserDAOImpl implements UserDAO
 	}
 	
 	/**
-	 * 获取User的分页数据
+	 * 获取User的分页数�?
 	 * @param beginIndex
 	 * @param everyPage
 	 * @return
@@ -177,22 +185,52 @@ public class UserDAOImpl implements UserDAO
 		}
 	}
 
-	/**
-	 * 根据用户名 查找并返回用户信息
-	 */
 	@Override
-	public User retrieve(String username)
-	{
+	public User retrieveFromEmail(String email, String password) {
+		// TODO Auto-generated method stub
 		try
 		{
-			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
-			String sql = "SELECT * FROM tb_user WHERE username=?";
-			return (User)qr.query(sql, username, new BeanHandler(User.class));
-		} catch (Exception e)
-		{
-			throw new RuntimeException(e);
+		QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
+		
+		String sql = "select * from tb_user where Email=? and Password=?";
+		
+		Object params[] = {email, password};
+		
+		//三钟登陆方法的，邮箱，手机号，用户名，以后可以优化一下，代码有点�?
+		
+		if((User)qr.query(sql, params, new BeanHandler(User.class))!=null){
+			return (User)qr.query(sql, params, new BeanHandler(User.class));
 		}
+		
+		
+	} catch (Exception e)
+	{
+		e.printStackTrace();
 	}
-	
-	
+	return null;
+	}
+
+	@Override
+	public User retrieveFromPhone(String phone, String password) {
+		// TODO Auto-generated method stub
+		try
+		{
+		QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
+		
+		String sql = "select * from tb_user where Pphone=? and Password=?";
+		
+		Object params[] = {phone, password};
+		//三钟登陆方法的，邮箱，手机号，用户名，以后可以优化一下，代码有点�?
+		
+		if((User)qr.query(sql, params, new BeanHandler(User.class))!=null){
+			return (User)qr.query(sql, params, new BeanHandler(User.class));
+		}
+		
+		
+	} catch (Exception e)
+	{
+		e.printStackTrace();
+	}
+	return null;
+	}
 }

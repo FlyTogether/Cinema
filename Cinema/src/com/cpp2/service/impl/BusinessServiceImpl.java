@@ -8,7 +8,6 @@ import java.util.Map;
 import com.cpp2.dao.AdminDAO;
 import com.cpp2.dao.MovieDAO;
 import com.cpp2.dao.OrderDAO;
-import com.cpp2.dao.ScheduleDAO;
 import com.cpp2.dao.UserDAO;
 import com.cpp2.domain.Admin;
 import com.cpp2.domain.Cart;
@@ -16,7 +15,6 @@ import com.cpp2.domain.CartItem;
 import com.cpp2.domain.Movie;
 import com.cpp2.domain.Order;
 import com.cpp2.domain.OrderItem;
-import com.cpp2.domain.Schedule;
 import com.cpp2.domain.User;
 import com.cpp2.factory.DAOFactory;
 import com.cpp2.utils.Page;
@@ -24,18 +22,17 @@ import com.cpp2.utils.PageUtil;
 import com.cpp2.utils.Result;
 
 /**
- * ÒµÎñÂß¼­´¦ÀíÀà
+ * Òµï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  */
 public class BusinessServiceImpl
 {
-	/* Ê¹ÓÃ¹¤³§ÀàÉú³ÉDAO¶ÔÏó */
+	/* Ê¹ï¿½Ã¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½DAOï¿½ï¿½ï¿½ï¿½ */
 	private AdminDAO aDAO = DAOFactory.getInstance().createDAO("com.cpp2.dao.impl.AdminDAOImpl", AdminDAO.class);
 	private UserDAO uDAO = DAOFactory.getInstance().createDAO("com.cpp2.dao.impl.UserDAOImpl", UserDAO.class);
 	private OrderDAO oDAO = DAOFactory.getInstance().createDAO("com.cpp2.dao.impl.OrderDAOImpl", OrderDAO.class);
 	private MovieDAO movieDAO =  DAOFactory.getInstance().createDAO("com.cpp2.dao.impl.MovieDAOImpl", MovieDAO.class);
-	private ScheduleDAO sDAO = DAOFactory.getInstance().createDAO("com.cpp2.dao.impl.ScheduleDAOImpl", ScheduleDAO.class);
 	/**
-	 * ºóÌ¨µÇÂ½´¦Àí,¼ì²éÊý¾Ý¿âÊÇ·ñ´æÔÚ¸Ã¹ÜÀíÔ±
+	 * ï¿½ï¿½Ì¨ï¿½ï¿½Â½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ú¸Ã¹ï¿½ï¿½ï¿½Ô±
 	 * @param admin
 	 * @throws Exception
 	 * @author Rose
@@ -46,18 +43,26 @@ public class BusinessServiceImpl
 	}
 
 	/**
-	 * ÓÃ»§µÇÂ¼´¦Àí, ¼ì²éÊý¾Ý¿âÊÇ·ñ´æÔÚ¸ÃÓÃ»§
+	 * ï¿½Ã»ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ú¸ï¿½ï¿½Ã»ï¿½
 	 * @param username
 	 * @param password
 	 * @return
 	 */
-	public User userLogin(String username, String password)
+	public User userUsernameLogin(String username, String password)
 	{
-		return uDAO.retrieve(username, password);
+		return uDAO.retrieveFromUsername(username, password);
+	}
+	public User userEmailLogin(String email, String password)
+	{
+		return uDAO.retrieveFromEmail(email, password);
+	}
+	public User userPhoneLogin(String phone, String password)
+	{
+		return uDAO.retrieveFromPhone(phone, password);
 	}
 	
 	/**
-	 * ¸üÐÂÓÃ»§ÃÜÂë
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * @author SevenLin
 	 * @param newpassword
 	 * @param id
@@ -67,7 +72,7 @@ public class BusinessServiceImpl
 	}
 	
 	/**
-	 * »ñÈ¡ËùÓÐÓÃ»§
+	 * ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½
 	 * @author SevenLin
 	 * @return
 	 */
@@ -76,7 +81,7 @@ public class BusinessServiceImpl
 	}
 	
 	/**
-	 * User·ÖÒ³Êý¾Ý
+	 * Userï¿½ï¿½Ò³ï¿½ï¿½ï¿½
 	 * @param currentPage
 	 * @param everyPage
 	 * @return
@@ -94,24 +99,28 @@ public class BusinessServiceImpl
 	
 	
 	/**
-	 * Ìí¼ÓÒ»²¿µçÓ°
+	 * ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ó°
 	 * @param movie
 	 */
 	public void addMovie(Movie movie){
 		movieDAO.create(movie);
 	}
 	/**
-	 * É¾³ýÒ»²¿µçÓ°
+	 * É¾ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ó°
 	 * @param id
 	 */
 	public void deleteMovie(int id){
 		movieDAO.delete(id);
 	}
+	/**
+	 * ï¿½Ö¸ï¿½ï¿½ï¿½É¾ï¿½ï¿½Äµï¿½Ó°
+	 * @param id
+	 */
 	public void restoreMovie(int id){
 		movieDAO.restore(id);
 	}
 	/**
-	 * ¸ù¾Ýid²éÕÒÒ»²¿µçÓ°
+	 * ï¿½ï¿½ï¿½idï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ó°
 	 * @param id
 	 * @return
 	 */
@@ -119,14 +128,14 @@ public class BusinessServiceImpl
 		return movieDAO.retrieve(id);
 	}
 	/**
-	 * ÐÞ¸ÄµçÓ°ÏêÇé
+	 * ï¿½Þ¸Äµï¿½Ó°ï¿½ï¿½ï¿½ï¿½
 	 * @param movie
 	 */
 	public void changeMovieDetail(Movie movie){
 		movieDAO.update(movie);
 	}
 	/**
-	 * »ñÈ¡ËùÓÐµçÓ°µÄ·ÖÒ³Êý¾Ý
+	 * ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ðµï¿½Ó°ï¿½Ä·ï¿½Ò³ï¿½ï¿½ï¿½
 	 * @param currentPage
 	 * @param everyPage
 	 * @return
@@ -142,7 +151,7 @@ public class BusinessServiceImpl
 	}
 	
 	/**
-	 * »ñÈ¡ÕýÔÚÈÈÓ³µÄµçÓ°µÄ·ÖÒ³Êý¾Ý
+	 * ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó³ï¿½Äµï¿½Ó°ï¿½Ä·ï¿½Ò³ï¿½ï¿½ï¿½
 	 * @param currentPage
 	 * @param everyPage
 	 * @return
@@ -157,7 +166,7 @@ public class BusinessServiceImpl
 		return result;
 	}
 	/**
-	 * »ñÈ¡¼´½«ÉÏÓ³µçÓ°µÄ·ÖÒ³Êý¾Ý
+	 * ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó³ï¿½ï¿½Ó°ï¿½Ä·ï¿½Ò³ï¿½ï¿½ï¿½
 	 * @param currentPage
 	 * @param everyPage
 	 * @return
@@ -172,7 +181,7 @@ public class BusinessServiceImpl
 		return result;
 	}
 	/**
-	 * ÐÞ¸ÄÓ°Æ¬µÄÍ¼Æ¬
+	 * ï¿½Þ¸ï¿½Ó°Æ¬ï¿½ï¿½Í¼Æ¬
 	 * @param image
 	 * @param id
 	 */
@@ -180,21 +189,7 @@ public class BusinessServiceImpl
 		movieDAO.changeImage(image, id);
 	}
 	/**
-	 * »ñÈ¡ËùÓÐÕýÔÚÈÈÓ³µÄµçÓ°
-	 * @return
-	 */
-	public List<Movie> getAllOnNowMovie(){
-		return movieDAO.getAllOnNowMovie();
-	}
-	/**
-	 * »ñÈ¡ËùÓÐ¼´½«ÉÏÓ³µÄµçÓ°
-	 * @return
-	 */
-	public List<Movie> getAllComingSoonMovie(){
-		return movieDAO.getAllComingSoonMovie();
-	}
-	/**
-	 * ÐÂÔö¶©µ¥
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * @param cart
 	 * @param user
 	 */
@@ -208,8 +203,8 @@ public class BusinessServiceImpl
 		order.setOrdertime(new Date());
 		order.setPrice(cart.getPrice());
 		order.setUser(user);
-		order.setState("unsend");										// Î´·¢»õ×´Ì¬
-		/* ½«¹ºÎïÏîÌí¼Óµ½¶©µ¥Ïî */
+		order.setState("unsend");										// Î´ï¿½ï¿½ï¿½ï¿½×´Ì¬
+		/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
 		for(Map.Entry<Integer, CartItem> me : cart.getMap().entrySet())
 		{
 			CartItem citem = me.getValue();
@@ -217,25 +212,25 @@ public class BusinessServiceImpl
 			oitem.setMovie(citem.getMovie());
 			oitem.setPrice(citem.getPrice());
 			oitem.setQuantity(citem.getQuantity());
-			order.getOrderitem().add(oitem);					// ½«¶©µ¥ÏîÌí¼Óµ½¶©µ¥
+			order.getOrderitem().add(oitem);					// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½
 		}
-		/* ½«¶©µ¥Ìí¼Óµ½Êý¾Ý¿â */
+		/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½Ý¿ï¿½ */
 		oDAO.create(order);
 	}
 
 	/**
-	 * È·ÈÏ¶©µ¥·¢»õ×´Ì¬
+	 * È·ï¿½Ï¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬
 	 * @param orderId
 	 */
 	public void confirmOrder(int orderId)
 	{
 		Order order = oDAO.retrieve(orderId);
-		order.setState("send"); 										// ½«¶©µ¥×´Ì¬ÖÃÎªÒÑ·¢»õ
+		order.setState("send"); 										// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½Îªï¿½Ñ·ï¿½ï¿½ï¿½
 		oDAO.update(order);
 	}
 	
 	/**
-	 * ÁÐ³öÎ´·¢»õ/ÒÑ·¢»õµÄ¶©µ¥
+	 * ï¿½Ð³ï¿½Î´ï¿½ï¿½ï¿½ï¿½/ï¿½Ñ·ï¿½ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½
 	 * @param state
 	 * @return
 	 */
@@ -245,7 +240,7 @@ public class BusinessServiceImpl
 	}
 	
 	/**
-	 * ¸ù¾Ý¶©µ¥id»ñÈ¡¶©µ¥¶ÔÏó
+	 * ï¿½ï¿½Ý¶ï¿½ï¿½ï¿½idï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * @param orderId
 	 * @return
 	 */
@@ -255,7 +250,7 @@ public class BusinessServiceImpl
 	}
 	
 	/**
-	 * Íù¹ºÎï³µÌí¼ÓÒ»²¿µçÓ°
+	 * ï¿½ï¿½ï¿½ï³µï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ó°
 	 * @param cart
 	 * @param movie
 	 */
@@ -265,7 +260,7 @@ public class BusinessServiceImpl
 	}
 	
 	/**
-	 *  »ñµÃÈ«²¿¶©µ¥µÄ·ÖÒ³Êý¾Ý
+	 *  ï¿½ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä·ï¿½Ò³ï¿½ï¿½ï¿½
 	 *  @author Rose
 	 * @param currentPage
 	 * @param everyPage
@@ -283,7 +278,7 @@ public class BusinessServiceImpl
 	}
 	
 	/**
-	 * »ñµÃÒÑ·¢»õµÄ·ÖÒ³Êý¾Ý
+	 * ï¿½ï¿½ï¿½ï¿½Ñ·ï¿½ï¿½ï¿½ï¿½Ä·ï¿½Ò³ï¿½ï¿½ï¿½
 	 * @author Rose
 	 * @param pageSize
 	 * @param currentPage
@@ -298,107 +293,6 @@ public class BusinessServiceImpl
 		result.setPage(page);
 		result.setList(list);
 		return result;
-	}
-	/**
-	 * ÐÂ½¨ÅÅÆÚ
-	 * @param schedule
-	 */
-	public void createSchedule(Schedule schedule){
-		sDAO.createSchedule(schedule);
-	}
-	/**
-	 * É¾³ýÅÅÆÚ
-	 * @param id
-	 */
-	public void deleteSchedule(int id){
-		sDAO.deleteSchedule(id);
-	}
-	/**
-	 * ¸üÐÂÅÅÆÚ
-	 * @param schedule
-	 */
-	public void updateSchedule(Schedule schedule){
-		sDAO.updateSchedule(schedule);
-	}
-	/**
-	 * »ñÈ¡ÅÅÆÚµÄ·ÖÒ³Êý¾Ý
-	 * @param everyPage
-	 * @param currentPage
-	 * @return
-	 */
-	public Result getAllSchedulePageData(int everyPage,int currentPage){
-		Result result = new Result();
-		int totalRecord = sDAO.getScheduleTotalRecord();
-		Page page = PageUtil.createPage(everyPage, totalRecord, currentPage);
-		List<Schedule> list = sDAO.getAllSchedulePageDate(page.getBeginIndex(), everyPage);
-		result.setList(list);
-		result.setPage(page);
-		return result;
-	}
-	/**
-	 * ¸ù¾ÝµçÓ°id²éÕÒ¸ÃÓ°Æ¬µÄËùÓÐÅÅÆÚ
-	 * @param id
-	 * @return
-	 */
-	public List<Schedule> getScheduleByMovieId(int id){
-		return sDAO.getScheduleByMovieId(id);
-	}
-	/**
-	 * ¸ù¾ÝÓ°Æ¬µÄidºÍÓ°ÔºµÄidÀ´²éÕÒÅÅÆÚ
-	 * @param movie_id
-	 * @param cinema_id
-	 * @return
-	 */
-	public List<Schedule> getScheduleByMovieIdAndCinemaId(int movie_id,int cinema_id){
-		return sDAO.getScheduleByMovieIdAndCinemaId(movie_id, cinema_id);
-	}
-	/**
-	 * ¸üÐÂÊ£ÓàÆ±Êý
-	 * @param id
-	 * @param remanent
-	 */
-	public void updateRemanent(int id ,int remanent){
-		sDAO.updateRemanent(id, remanent);
-	}
-
-	/**
-	 * ×¢²áÓÃ»§
-	 * @param user
-	 */
-	public void register(User user)
-	{
-		/* ÏÈÉ¨ÃèÊý¾Ý¿â, ¼ì²éÊÇ·ñÒÑ¾­´æÔÚ¸ÃÓÃ»§ */
-		uDAO.create(user);
-	}
-
-	/**
-	 * ¸ù¾ÝÓÃ»§µÄÊÖ»úºÅÂë,ÐÞ¸ÄÃÜÂë
-	 * @param username
-	 * @param phone
-	 * @param password
-	 */
-	public boolean forgotten(String username, String phone, String password)
-	{
-		/* ÏÈÍ¨¹ýusernameÕÒµ½ÓÃ»§ */
-		User user = uDAO.retrieve(username);
-		/* ºË¶ÔÐÅÏ¢ */
-		if(!user.getPhone().equals(phone))
-		{
-			return false;
-		}
-		/* ÐÞ¸ÄÃÜÂë(update) */
-		uDAO.updatePassword(password, user.getId());
-		return true;
-	}
-
-	/**
-	 * ¸ù¾ÝµçÓ°IDÕÒµ½µçÓ°
-	 * @param movieid
-	 * @return
-	 */
-	public Movie retrieveMovie(String movieid)
-	{
-		return movieDAO.retrieve(Integer.parseInt(movieid));
 	}
 	
 }

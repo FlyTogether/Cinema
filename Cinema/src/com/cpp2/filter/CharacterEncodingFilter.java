@@ -25,7 +25,7 @@ public class CharacterEncodingFilter implements Filter
 		HttpServletRequest request=(HttpServletRequest) req;
 		HttpServletResponse response= (HttpServletResponse) res;
 		
-		//解决以post方式提交的数据编码问题
+		//解决以post方式提交的数据编码问�?
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
@@ -41,7 +41,7 @@ public class CharacterEncodingFilter implements Filter
 	}
 }
 
-//继承request包装类，增强getParameter方法，用来解决get方法乱码的问题
+//继承request包装类，增强getParameter方法，用来解决get方法乱码的问�?
 class MyRequest extends HttpServletRequestWrapper{
 	private HttpServletRequest request;
 	public MyRequest(HttpServletRequest request){

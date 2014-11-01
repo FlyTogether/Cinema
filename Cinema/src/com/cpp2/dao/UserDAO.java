@@ -41,13 +41,6 @@ public interface UserDAO
 	User retrieve(String username, String password);
 
 	/**
-	 * 根据用户名查找用户
-	 * @param username
-	 * @return
-	 */
-	User retrieve(String username);
-	
-	/**
 	 * 获取所有用户
 	 * @return
 	 */

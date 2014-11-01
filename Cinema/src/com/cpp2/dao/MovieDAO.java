@@ -19,18 +19,29 @@ public interface MovieDAO {
 	public abstract void delete(int id);
 
 	/**
+<<<<<<< HEAD
 	 * 恢复已删除的电影
 	 * @param id
 	 */
 	public abstract void restore(int id);
 
 	/**
+=======
+>>>>>>> origin/master
 	 * 更新影片信息
 	 * @param movie
 	 */
 	public abstract void update(Movie movie);
 
 	/**
+<<<<<<< HEAD
+=======
+	 * 恢复已删除的电影
+	 * @param id
+	 */
+	public abstract void restore(int id);
+	/**
+>>>>>>> origin/master
 	 * 根据_id检索影片
 	 * @param id
 	 * @return
@@ -88,6 +99,7 @@ public interface MovieDAO {
 	 */
 	public abstract void changeImage(String image, int id);
 
+<<<<<<< HEAD
 	/**
 	 * 查看所有正在热映的电影
 	 * @return
@@ -100,4 +112,6 @@ public interface MovieDAO {
 	 */
 	public abstract List<Movie> getAllComingSoonMovie();
 
+=======
+>>>>>>> origin/master
 }

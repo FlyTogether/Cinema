@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+<<<<<<< HEAD
 encoding//WebRoot/js/getDate.js=UTF-8
 encoding//WebRoot/js/index.js=UTF-8
 encoding//src/com/cpp2/dao/impl/OrderDAOImpl.java=UTF-8
@@ -6,3 +7,6 @@ encoding//src/com/cpp2/dao/impl/UserDAOImpl.java=UTF-8
 encoding//src/com/cpp2/filter/CharacterEncodingFilter.java=UTF-8
 encoding//src/com/cpp2/filter/HTMLCharacterFilter.java=UTF-8
 encoding//src/com/cpp2/manager/servlet/UserServlet.java=UTF-8
+=======
+encoding/<project>=UTF-8
+>>>>>>> origin/master

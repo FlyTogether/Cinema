@@ -1,10 +1,18 @@
 package com.cpp2.manager.servlet;
 
+
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+<<<<<<< HEAD
+=======
+import java.util.Iterator;
+import java.util.List;
+>>>>>>> origin/master
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,21 +22,27 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import com.cpp2.domain.User;
 import com.cpp2.service.impl.BusinessServiceImpl;
 
 /**
+<<<<<<< HEAD
  * 用户管理模块, 处理用户的登录, 注册,忘记密码
+=======
+ * �û�����ģ��, �����û��ĵ�¼, ע��,�������
+>>>>>>> origin/master
  * @author Rose
  */
 public class UserServlet extends HttpServlet
 {
-
+	
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException
 	{
+<<<<<<< HEAD
 		/* 根据用户的url参数, 判断用户的操作 */
 		String method = request.getParameter("method");
 		if("login".equals(method))										// 登录操作
@@ -86,26 +100,53 @@ public class UserServlet extends HttpServlet
 				out.writeInt(0);
 			}
 		} catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		finally
-		{
-			out.close();
-			
-		}
+=======
+		response.setContentType("text/plain");
+		response.setCharacterEncoding("utf-8");
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		JSONObject object = new JSONObject();
 		
+		
+		PrintWriter out = response.getWriter();
+		BusinessServiceImpl service = new BusinessServiceImpl();
+		User user = service.userLogin(username, password);
+		object.put("username",user.getUsername());
+		object.put("password", user.getPassword());
+		object.put("phone", user.getPhone());
+		object.put("gender", user.getGender());
+		object.put("email", user.getEmail());
+		object.put("birthday", user.getBirthday().toLocaleString());
+		System.out.println(user.getPassword()+user.getPassword());
+		if(user == null)
+>>>>>>> origin/master
+		{
+			out.write(0);
+		}
+		else
+		{
+			out.write("1");	
+			out.write(object.toString());
+		}
+		request.getSession().setAttribute("user", user);
+		out.flush();
+		out.close();
 	}
-
+	
+	
 	/**
+<<<<<<< HEAD
 	 * 注册
+=======
+	 * ע��
+>>>>>>> origin/master
 	 * @param request
 	 * @param response
-	 * @throws IOException 
 	 */
 	private void register(HttpServletRequest request,
-			HttpServletResponse response) throws IOException
+			HttpServletResponse response)
 	{
+<<<<<<< HEAD
 		DataOutputStream out = new DataOutputStream(response.getOutputStream());
 		try
 		{
@@ -177,6 +218,20 @@ public class UserServlet extends HttpServlet
 		Pattern p = Pattern.compile(regex);
 		Matcher m = p.matcher(phone);
 		bPhone = m.matches();
+=======
+		/* ��ȡ�ƶ��� post�ύ����� */
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		String phone = request.getParameter("phone");
+		String gender = request.getParameter("gender");
+		String email = request.getParameter("email");
+		String birthday = request.getParameter("birthday");
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+		birthday = format.format(new Date(birthday));						// ��ʽ�����ڶ���
+		
+		/* ҵ���߼�����: ��У��,ͨ��������ݿ���Ӽ�¼ */
+		
+>>>>>>> origin/master
 		
 		regex = "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$";// 邮箱正则
 		m = p.matcher(email);
@@ -189,21 +244,31 @@ public class UserServlet extends HttpServlet
 	}
 
 	/**
+<<<<<<< HEAD
 	 * 用户登录
+=======
+	 * �û���¼
+>>>>>>> origin/master
 	 * @param request
 	 * @param response
 	 * @throws IOException 
 	 */
 	private void login(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
-		DataOutputStream out = new DataOutputStream(response.getOutputStream());
+		response.setCharacterEncoding("utf-8");
+		PrintWriter out = response.getWriter();
 		try
 		{
+<<<<<<< HEAD
 			/* 获取移动端post的数据 */
+=======
+			/* ��ȡ�ƶ���post����� */
+>>>>>>> origin/master
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
 			
 			
+<<<<<<< HEAD
 			/* 业务逻辑处理: 用户登录处理 */
 			BusinessServiceImpl service = new BusinessServiceImpl();
 			User user = service.userLogin(username, password);
@@ -212,14 +277,29 @@ public class UserServlet extends HttpServlet
 			request.getSession().setAttribute("user", user);
 			
 			/* 失败返回0和"login failure", 成功返回1和"login success" 以及json数据*/
+=======
+			/* ҵ���߼�����: �û���¼���� */
+			BusinessServiceImpl service = new BusinessServiceImpl();
+			User user = service.userLogin(username, password);
+			
+			/* �浽Session */
+			
+			
+			/* ʧ�ܷ���0��"login failure", �ɹ�����1��"login success" �Լ�json���*/
+>>>>>>> origin/master
 			if(user == null)
 			{
-				out.writeUTF("login failure");
-				out.writeInt(0);
+				out.write("login failure");
+				out.write(0);
 			}
 			else
 			{
+<<<<<<< HEAD
 				/* 封装Json对象 并用字符流输出*/
+=======
+				/* ��װJson���� �����ַ������*/
+				System.out.println("find user");
+>>>>>>> origin/master
 				JSONObject jsonObject = JSONObject.fromObject(user);
 				
 			/*	Iterator<String> i = jsonObject.keys();
@@ -237,19 +317,20 @@ public class UserServlet extends HttpServlet
 				
 				JSONObject jsonArray = JSONObject.fromObject(topMap);
 				
-				out.writeUTF(jsonArray.toString());
+				out.write(jsonArray.toString());
 				out.flush();
+				System.out.println("json");
 			}
 			
 		} catch (Exception e)
 		{
 			e.printStackTrace();
-			out.writeUTF(e.getMessage());
+			out.write(e.getMessage());
 			out.flush();
 		}
 		finally
 		{
-			out.close();
+			out.close();																				// �ر���Դ
 		}
 	}
 
@@ -257,6 +338,7 @@ public class UserServlet extends HttpServlet
 			throws ServletException, IOException
 	{
 		doGet(request,response);
+		
 	}
 
 }

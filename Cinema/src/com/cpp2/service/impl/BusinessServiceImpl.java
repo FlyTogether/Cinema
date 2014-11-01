@@ -111,6 +111,13 @@ public class BusinessServiceImpl
 		movieDAO.restore(id);
 	}
 	/**
+	 * 恢复已删除的电影
+	 * @param id
+	 */
+	public void restoreMovie(int id){
+		movieDAO.restore(id);
+	}
+	/**
 	 * 根据id查找一部电影
 	 * @param id
 	 * @return
@@ -180,6 +187,7 @@ public class BusinessServiceImpl
 		movieDAO.changeImage(image, id);
 	}
 	/**
+<<<<<<< HEAD
 	 * 获取所有正在热映的电影
 	 * @return
 	 */
@@ -194,6 +202,8 @@ public class BusinessServiceImpl
 		return movieDAO.getAllComingSoonMovie();
 	}
 	/**
+=======
+>>>>>>> origin/master
 	 * 新增订单
 	 * @param cart
 	 * @param user
@@ -299,6 +309,7 @@ public class BusinessServiceImpl
 		result.setList(list);
 		return result;
 	}
+<<<<<<< HEAD
 	/**
 	 * 新建排期
 	 * @param schedule
@@ -400,5 +411,7 @@ public class BusinessServiceImpl
 	{
 		return movieDAO.retrieve(Integer.parseInt(movieid));
 	}
+=======
+>>>>>>> origin/master
 	
 }

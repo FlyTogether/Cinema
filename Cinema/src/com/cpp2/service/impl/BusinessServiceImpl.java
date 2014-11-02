@@ -400,5 +400,16 @@ public class BusinessServiceImpl
 	{
 		return movieDAO.retrieve(Integer.parseInt(movieid));
 	}
+
+	/**
+	 * 根据订单id,删除订单
+	 * @param orderID
+	 */
+	public void deleteOrder(String orderID)
+	{
+		/* 先找到订单再删除 */
+		Order order = oDAO.retrieve(Integer.parseInt(orderID));
+		oDAO.delete(order);
+	}
 	
 }

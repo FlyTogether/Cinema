@@ -135,11 +135,10 @@ public class OrderDAOImpl implements OrderDAO
 		{
 			/* 先将外键断开 */
 			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
-			String sql = "UPDATE TB_Order SET User_id=?";
-			qr.update(sql,null);
-			
+			String sql = "UPDATE tb_order SET User_id=null,Schedule_id=null where id=?";
+			qr.update(sql, order.getId());
 			/* 再进行delete*/
-			sql = "DELETE FROM TB_Order WHERE id=?";
+			sql = "DELETE FROM tb_order WHERE id=?";
 			qr.update(sql, order.getId());
 		} catch (Exception e)
 		{

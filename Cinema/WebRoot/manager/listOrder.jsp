@@ -37,7 +37,7 @@
   				<td>${order.state=='unsend'?'未发货':'已发货' }</td>
   				<td>
   					<a href="${pageContext.request.contextPath }/manager/OrderServlet?method=detail&orderid=${order.id}">查看详情</a>
-  					<a href="${pageContext.request.contextPath }/manager/OrderServlet?method=detail&orderid=${order.id}">删除</a>
+  					<a href="${pageContext.request.contextPath }/manager/OrderServlet?method=delete&orderid=${order.id}&state=${state=='未发货'?'showUnsend':'showSend' }">删除</a>
 				</td>
   			</tr>
   			</c:forEach>

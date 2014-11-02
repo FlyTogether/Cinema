@@ -8,13 +8,13 @@ public interface UserDAO
 {
 
 	/**
-	 * Ïòtb_user Ôö¼ÓÒ»Ìõ¼ÇÂ¼
+	 * ï¿½ï¿½tb_user ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Â¼
 	 * @param user
 	 */
 	void create(User user);
 
 	/**
-	 * ¸ù¾İidÉ¾³ıtb_userµÄÒ»Ìõ¼ÇÂ¼
+	 * ï¿½ï¿½ï¿½idÉ¾ï¿½ï¿½tb_userï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Â¼
 	 * @param id
 	 */
 	void delete(int id);
@@ -26,29 +26,27 @@ public interface UserDAO
 	void update(User user);
 
 	/**
-	 * ¸ù¾İid²éÕÒÓÃ»§
+	 * ï¿½ï¿½ï¿½idï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½
 	 * @param id
 	 * @return
 	 */
 	User retrieve(int id);
 
 	/**
-	 * ¸ù¾İÓÃ»§ÃûºÍÃÜÂë²éÕÒÓÃ»§
+	 * ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½
 	 * @param username
 	 * @param password
 	 * @return
 	 */
-	User retrieve(String username, String password);
+	//ç”¨æˆ·åè·å–
+	User retrieveFromUsername(String username, String password);
+	//é‚®ç®±åè·å–
+	User retrieveFromEmail(String email, String password);
+	//æ‰‹æœºå·è·å–
+	User retrieveFromPhone(String phone, String password);
 
 	/**
-	 * ¸ù¾İÓÃ»§Ãû²éÕÒÓÃ»§
-	 * @param username
-	 * @return
-	 */
-	User retrieve(String username);
-	
-	/**
-	 * »ñÈ¡ËùÓĞÓÃ»§
+	 * ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½
 	 * @return
 	 */
 	List<User> getAll();

@@ -409,7 +409,6 @@ public class BusinessServiceImpl
 	{
 		return movieDAO.retrieve(Integer.parseInt(movieid));
 	}
-<<<<<<< HEAD
 	/**
 	 * 查找所有的影院
 	 * @return
@@ -509,7 +508,6 @@ public class BusinessServiceImpl
 	public Schedule getScheduleById(int id){
 		return sDAO.getScheduleById(id);
 	}
-=======
 
 	/**
 	 * 根据订单id,删除订单
@@ -522,5 +520,4 @@ public class BusinessServiceImpl
 		oDAO.delete(order);
 	}
 	
->>>>>>> 6007d1fd75d44072aaf9f131336d4f53dd290dcc
 }

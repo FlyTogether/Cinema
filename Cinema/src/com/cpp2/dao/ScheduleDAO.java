@@ -22,7 +22,7 @@ public interface ScheduleDAO {
 	 * 修改排期信息
 	 * @param schedule
 	 */
-	public abstract void updateSchedule(Schedule schedule);
+	public abstract void updateSchedule(Schedule schedule,int id);
 
 	/**
 	 * 获得所有排期在数据库中的数据
@@ -61,5 +61,10 @@ public interface ScheduleDAO {
 	 * @param num
 	 */
 	public abstract void updateRemanent(int id, int remanent);
-
+	/**
+	 * 根据排期id查找排期
+	 * @param id
+	 * @return
+	 */
+	public abstract Schedule getScheduleById(int id);
 }

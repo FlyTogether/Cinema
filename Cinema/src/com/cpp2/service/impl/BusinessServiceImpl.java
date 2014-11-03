@@ -6,18 +6,24 @@ import java.util.List;
 import java.util.Map;
 
 import com.cpp2.dao.AdminDAO;
+import com.cpp2.dao.CinemaDAO;
 import com.cpp2.dao.MovieDAO;
 import com.cpp2.dao.OrderDAO;
 import com.cpp2.dao.ScheduleDAO;
+import com.cpp2.dao.ScheduleViewDAO;
 import com.cpp2.dao.UserDAO;
+import com.cpp2.dao.VideohallDAO;
 import com.cpp2.domain.Admin;
 import com.cpp2.domain.Cart;
 import com.cpp2.domain.CartItem;
+import com.cpp2.domain.Cinema;
 import com.cpp2.domain.Movie;
 import com.cpp2.domain.Order;
 import com.cpp2.domain.OrderItem;
 import com.cpp2.domain.Schedule;
+import com.cpp2.domain.ScheduleView;
 import com.cpp2.domain.User;
+import com.cpp2.domain.Videohall;
 import com.cpp2.factory.DAOFactory;
 import com.cpp2.utils.Page;
 import com.cpp2.utils.PageUtil;
@@ -34,6 +40,9 @@ public class BusinessServiceImpl
 	private OrderDAO oDAO = DAOFactory.getInstance().createDAO("com.cpp2.dao.impl.OrderDAOImpl", OrderDAO.class);
 	private MovieDAO movieDAO =  DAOFactory.getInstance().createDAO("com.cpp2.dao.impl.MovieDAOImpl", MovieDAO.class);
 	private ScheduleDAO sDAO = DAOFactory.getInstance().createDAO("com.cpp2.dao.impl.ScheduleDAOImpl", ScheduleDAO.class);
+	private VideohallDAO vDAO = DAOFactory.getInstance().createDAO("com.cpp2.dao.impl.VideohallDAOImpl", VideohallDAO.class);
+	private CinemaDAO cDAO = DAOFactory.getInstance().createDAO("com.cpp2.dao.impl.CinemaDAOImpl", CinemaDAO.class);
+	private ScheduleViewDAO svDAO = DAOFactory.getInstance().createDAO("com.cpp2.dao.impl.ScheduleViewDAOImpl", ScheduleViewDAO.class);
 	/**
 	 * 后台登陆处理,检查数据库是否存在该管理员
 	 * @param admin
@@ -317,8 +326,8 @@ public class BusinessServiceImpl
 	 * 更新排期
 	 * @param schedule
 	 */
-	public void updateSchedule(Schedule schedule){
-		sDAO.updateSchedule(schedule);
+	public void updateSchedule(Schedule schedule,int id){
+		sDAO.updateSchedule(schedule,id);
 	}
 	/**
 	 * 获取排期的分页数据
@@ -400,5 +409,103 @@ public class BusinessServiceImpl
 	{
 		return movieDAO.retrieve(Integer.parseInt(movieid));
 	}
-	
+	/**
+	 * 查找所有的影院
+	 * @return
+	 */
+	public List<Cinema> getAllCinema(){
+		return cDAO.getAll();
+	}
+	/**
+	 * 根据影院id查找影院
+	 * @param id
+	 * @return
+	 */
+	public Cinema findCinemaById(int id){
+		return cDAO.findCinemaById(id);
+	}
+	/**
+	 * 查找所哟影厅
+	 * @return
+	 */
+	public List<Videohall> getAllVideohall(){
+		return vDAO.getAllVideohall();
+	}
+	/**
+	 * 根据影院查找该影院的所有影厅
+	 * @param id
+	 * @return
+	 */
+	public List<Videohall> getVideohallByCinemaId(int id){
+		return vDAO.getVideohallByCinemaId(id);
+	}
+	/**
+	 * 根据影片的名称寻找电影
+	 * @param name
+	 * @return
+	 */
+	public Movie findMovieByName(String name){
+		return movieDAO.findMovieByName(name);
+	}
+	/**
+	 * 根据影院的名字寻找影院
+	 * @param name
+	 * @return
+	 */
+	public Cinema findCinemaByName(String name){
+		return cDAO.findCinemaByName(name);
+	}
+	/**
+	 * 根据影厅的名字
+	 * @param name
+	 * @return
+	 */
+	public Videohall findVideohallByC_idAndV_name(int cinema_id,String name){
+		return vDAO.findVideohallByC_idAndV_name(cinema_id, name);
+	}
+	/**
+	 * 利用视图查询所有的排期以及一些信息
+	 * @return
+	 */
+	public List<ScheduleView> getAllScheduleView(){
+		return svDAO.getAll();
+	}
+	/**
+	 * 利用视图，根据影片id查找排期
+	 * @param id
+	 * @return
+	 */
+	public List<ScheduleView> getScheduleViewByMovieId(int id){
+		return svDAO.getScheduleViewByMovieId(id);
+	}
+	/**
+	 * 利用视图，查询指定的影院指定的影片的所有排期，给移动端使用
+	 * @param movie_id
+	 * @param cinema_id
+	 * @return
+	 */
+	public List<ScheduleView> getScheduleViewByMovieIdAndCinemaId(int movie_id,int cinema_id){
+		return svDAO.getScheduleViewByMovieIdAndCinemaId(movie_id, cinema_id);
+	}
+	/**
+	 * 利用视图查询所有的排期以及一些信息,分页
+	 * @return
+	 */
+	public Result getAllScheduleViewPageData(int everyPage,int currentPage){
+		Result result = new Result();
+		int totalRecord = svDAO.getScheudleViewTotalRecord();
+		Page page = PageUtil.createPage(everyPage, totalRecord, currentPage);
+		List<ScheduleView> list = svDAO.getAllScheduleViewPageData(page.getBeginIndex(), everyPage);
+		result.setList(list);
+		result.setPage(page);
+		return result;
+	}
+	/**
+	 * 根据排期id查找排期
+	 * @param id
+	 * @return
+	 */
+	public Schedule getScheduleById(int id){
+		return sDAO.getScheduleById(id);
+	}
 }

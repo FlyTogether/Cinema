@@ -25,32 +25,54 @@
     	}
     </style>
 
+	
+	<script type="text/javascript">
+	  function getopt()
+         {
+             var ss = sel.options[sel.selectedIndex].parentNode.attributes;
+             var cn = document.getElementById("cn");
+             cn.value = ss["label"].value;
+             alert( ss["label"].value);
+         }
+	</script>
   </head>
   
   <body>
   	<div id="container">
  	 <h3>请输入排期具体信息：</h3>
-  		<form action="${pageContext.request.contextPath }/servlet/ScheduleServlet?method=add" method="post">
+  		<form action="${pageContext.request.contextPath }/manager/ScheduleServlet?method=add" method="post">
   			<table>
   				<tr>
   					<td>请选电影：</td>
   					<td>
-  						<select name="name">
-  							<c:forEach var="movie" items="${onNowMovies }">
-  								<option>${movie.movieName }</option>
+  						<select name="movieName">
+  						<option selected="selected" value="0">--请选择--</option>   
+  							<c:forEach var="movie" items="${movies }">
+  								<option >${movie.name }</option>
   							</c:forEach>
   						</select>
   					</td>
   				</tr>
   				<tr>
-  					<td>请选择影厅：</td>
+  					<td>影厅：</td>
   					<td>
-	  					<select name="videohallName">
-	  							<c:forEach var="videohall" items="${videohalls }">
-	  								<option>${videohall.videohallName }</option>
-	  							</c:forEach>
-	  					</select>
-	  				</td>
+  						<select name="videohallName" id="sel" onchange="getopt()">
+  							<option selected="selected" value="0">--请选择--</option>   
+  							<c:forEach items="${cinemas }" var="cinema">
+  								<optgroup label="${cinema.name }">
+	  								<c:forEach items="${videohalls }" var="videohall">
+	  									<c:if test="${cinema.id==videohall.cinema_id }">
+	  										<option>${videohall.name }</option>
+	  									</c:if>
+	  								</c:forEach>
+  								</optgroup>
+  							</c:forEach>
+  						</select>
+  					</td>
+  				</tr>
+  				<tr>
+					<td>你选择的影院是：</td>  	
+					<td>  <input type="text" id="cn" name="cinemaName" value="" readonly/></td>	
   				</tr>
   				<tr>
   					<td> 播放时间：</td>
@@ -153,6 +175,6 @@
 	  			<input type="reset" name="reset" value="重置">
   			</div>
 		</form>
-  	</div>
+	</div>
   </body>
 </html>

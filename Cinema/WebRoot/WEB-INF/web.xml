@@ -97,6 +97,11 @@
     <servlet-name>UserServlet</servlet-name>
     <servlet-class>com.cpp2.manager.servlet.UserServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>ScheduleServlet</servlet-name>
+    <servlet-class>com.cpp2.manager.servlet.ScheduleServlet</servlet-class>
+  </servlet>
+
 
 
 
@@ -146,5 +151,9 @@
   <servlet-mapping>
     <servlet-name>UserServlet</servlet-name>
     <url-pattern>/manager/UserServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ScheduleServlet</servlet-name>
+    <url-pattern>/manager/ScheduleServlet</url-pattern>
   </servlet-mapping>
 </web-app>

@@ -200,7 +200,7 @@ public class MovieDAOImpl implements MovieDAO {
 			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
 			Date currentTime = new Date();
 			String sql = "select * from tb_movie where Showtime<=? and State='未删除' order by Showtime";
-			return (List<Movie>)qr.query(sql, currentTime, new BeanHandler(Movie.class));
+			return (List<Movie>)qr.query(sql, currentTime, new BeanListHandler(Movie.class));
 		}catch(Exception e){
 			throw new RuntimeException(e);
 		}
@@ -219,5 +219,18 @@ public class MovieDAOImpl implements MovieDAO {
 			throw new RuntimeException(e);
 		}
 	}
-
+	/**
+	 * 根据影片名字寻找影片
+	 * @param name
+	 * @return
+	 */
+	public Movie findMovieByName(String name){
+		try{
+			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
+			String sql = "select * from tb_movie where name=?";
+			return (Movie)qr.query(sql, name, new BeanHandler(Movie.class));
+		}catch(Exception e){
+			throw new RuntimeException(e);
+		}
+	}
 }

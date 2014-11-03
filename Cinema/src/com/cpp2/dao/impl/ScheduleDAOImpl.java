@@ -3,8 +3,10 @@ package com.cpp2.dao.impl;
 import java.util.List;
 
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
+
 
 
 import com.cpp2.dao.ScheduleDAO;
@@ -47,11 +49,11 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 	 * 修改排期信息
 	 * @param schedule
 	 */
-	public void updateSchedule(Schedule schedule){
+	public void updateSchedule(Schedule schedule,int id){
 		try{
 			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
-			String sql = "update tb_schedule set Airtime=?,VideoHall_id=?,Movie_id=?,Remanent=? where id=?";
-			Object params[] = {schedule.getAirtime(),schedule.getVideoHall_id(),schedule.getMovie_id(),schedule.getId()};
+			String sql = "update tb_schedule set Airtime=?,VideoHall_id=?,Movie_id=? where id=?";
+			Object params[] = {schedule.getAirtime(),schedule.getVideoHall_id(),schedule.getMovie_id(),id};
 			qr.update(sql, params);
 		}catch(Exception e){
 			throw new RuntimeException(e);
@@ -128,6 +130,20 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 			String sql = "update  tb_schedule set Remanent=? where id=?";
 			Object params[] = {remanent,id};
 			runner.update(sql, params);
+		}catch(Exception e){
+			throw new RuntimeException(e);
+		}
+	}
+	/**
+	 * 根据排期id查找排期
+	 * @param id
+	 * @return
+	 */
+	public Schedule getScheduleById(int id){
+		try{
+			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
+			String sql = "select * from tb_schedule  where id=?";
+			return (Schedule)qr.query(sql, id, new BeanHandler(Schedule.class));
 		}catch(Exception e){
 			throw new RuntimeException(e);
 		}

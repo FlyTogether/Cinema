@@ -11,7 +11,7 @@
     		margin: 0ps;
     		padding: 0px;
     	}
-    	#containter{
+    	#container{
     		margin-top: 100px;
     		margin-left: 50px;
     	}
@@ -27,7 +27,7 @@
   </head>
   
   <body>
-  	<div id="containter">
+  	<div id="container">
   		<table style="border:2px solid #444;border-collapse:collapse; margin-left:15%;" id="mytable">
   			<tr>
   				<th>片名</th>

@@ -127,6 +127,11 @@ public class MovieServlet extends HttpServlet {
 					String fileName = item.getName();
 					String saveName = makeFileName(fileName);
 					String savePath = this.getServletContext().getRealPath("/upload");
+					//这里的file不是用来写文件，而是用来创建文件夹
+					File saveFile = new File(new File(savePath),saveName);
+					if(!saveFile.getParentFile().exists()){
+						saveFile.getParentFile().mkdirs();
+					}
 					InputStream in = item.getInputStream();
 					FileOutputStream out = new FileOutputStream(savePath+"\\"+saveName);
 					int len = 0;

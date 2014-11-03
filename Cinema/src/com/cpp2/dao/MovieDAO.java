@@ -99,5 +99,10 @@ public interface MovieDAO {
 	 * @return
 	 */
 	public abstract List<Movie> getAllComingSoonMovie();
-
+	/**
+	 * 根据影片名字寻找影片
+	 * @param name
+	 * @return
+	 */
+	public abstract Movie findMovieByName(String name);
 }

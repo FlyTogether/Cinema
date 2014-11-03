@@ -33,40 +33,36 @@
   				<th>片名</th>
   				<th>上映时间</th>
   				<th>时长</th>
-  				<th>状态</th>
+  				<th>热度</th>
   				<th>查看详情</th>
   				<th>修改</th>
-  				<th>删除/恢复</th>
   			</tr>
   			<c:forEach items="${result.list}" var="movie" >
   				<tr>
   					<td>${movie.name }</td>
   					<td>${movie.showtime }</td>
   					<td>${movie.runtime }</td>
-  					<td>${movie.state }</td>
+  					<td>${movie.popularity }</td>
   					<td><a href="${pageContext.request.contextPath }/manager/MovieServlet?method=showMovieDetail&id=${movie.id}">查看详情</a></td>
   					<td><a href="${pageContext.request.contextPath }/manager/MovieServlet?method=showEditableMovieDetail&id=${movie.id}">修改</a></td>
-  					<td>
-						<a href="${pageContext.request.contextPath }/manager/MovieServlet?method=delete&id=${movie.id}">删除</a>
-					</td>
   				</tr>
   			</c:forEach>
   		</table>
   		<div id="page">
   			<c:if test="${result.page.currentPage-1>0}">
-  				<a href="${pageContext.request.contextPath }/manager/MovieServlet?method=showAll&currentPage=${result.page.currentPage-1}">[上一页]</a>
+  				<a href="${pageContext.request.contextPath }/manager/MovieServlet?method=showOnNowMovie&currentPage=${result.page.currentPage-1}">[上一页]</a>
   			</c:if>
   			<c:if test="${result.page.currentPage-1<=0}">
-  				<a href="${pageContext.request.contextPath }/manager/MovieServlet?method=showAll&currentPage=${result.page.startPage}">[上一页]</a>
+  				<a href="${pageContext.request.contextPath }/manager/MovieServlet?method=showOnNowMovie&currentPage=${result.page.startPage}">[上一页]</a>
   			</c:if>
 			<c:forEach begin="${result.page.startPage }" end="${result.page.endPage }" var="currentPage">
-				[<a href="${pageContext.request.contextPath }/manager/MovieServlet?method=showAll&currentPage=${currentPage}">${currentPage }</a>]
+				[<a href="${pageContext.request.contextPath }/manager/MovieServlet?method=showOnNowMovie&currentPage=${currentPage}">${currentPage }</a>]
 			</c:forEach>
 			<c:if test="${result.page.currentPage+1>result.page.totalPage}">
-				<a href="${pageContext.request.contextPath }/manager/MovieServlet?method=showAll&currentPage=${result.page.totalPage}">[下一页]</a>
+				<a href="${pageContext.request.contextPath }/manager/MovieServlet?method=showOnNowMovie&currentPage=${result.page.totalPage}">[下一页]</a>
   			</c:if>
   			<c:if test="${result.page.currentPage+1<=result.page.totalPage}">
-				<a href="${pageContext.request.contextPath }/manager/MovieServlet?method=showAll&currentPage=${result.page.currentPage+1}">[下一页]</a>
+				<a href="${pageContext.request.contextPath }/manager/MovieServlet?method=showOnNowMovie&currentPage=${result.page.currentPage+1}">[下一页]</a>
   			</c:if>
   		</div>
   	</div>

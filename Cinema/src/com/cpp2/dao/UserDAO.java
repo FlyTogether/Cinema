@@ -59,4 +59,12 @@ public interface UserDAO
 
 	int getTotalRecord();
 
+	// 用户名获取
+	User retrieveFromUsername(String username, String password);
+
+	// 邮箱名获取
+	User retrieveFromEmail(String email, String password);
+
+	// 手机号获取
+	User retrieveFromPhone(String phone, String password);
 }

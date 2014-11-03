@@ -195,4 +195,83 @@ public class UserDAOImpl implements UserDAO
 	}
 	
 	
+	/**
+	 * 根据用户名和密码查找用户
+	 * @param username
+	 * @param password
+	 * @return
+	 */
+	@Override
+	public User retrieveFromUsername(String username, String password)
+	{
+		try
+		{
+		QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
+		String sql1 = "select * from tb_user where Username=? and Password=?";
+		
+		Object params1[] = {username, password};
+		
+		//三钟登陆方法的，邮箱，手机号，用户名，以后可以优化一下，代码有点�?
+		
+		if((User)qr.query(sql1, params1, new BeanHandler(User.class))!=null){
+			return (User)qr.query(sql1, params1, new BeanHandler(User.class));
+		}
+		
+		
+	} catch (Exception e)
+	{
+		e.printStackTrace();
+	}
+	return null;
+	}
+
+	@Override
+	public User retrieveFromEmail(String email, String password) {
+		// TODO Auto-generated method stub
+		try
+		{
+		QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
+		
+		String sql = "select * from tb_user where Email=? and Password=?";
+		
+		Object params[] = {email, password};
+		
+		//三钟登陆方法的，邮箱，手机号，用户名，以后可以优化一下，代码有点�?
+		
+		if((User)qr.query(sql, params, new BeanHandler(User.class))!=null){
+			return (User)qr.query(sql, params, new BeanHandler(User.class));
+		}
+		
+		
+	} catch (Exception e)
+	{
+		e.printStackTrace();
+	}
+	return null;
+	}
+	
+	@Override
+	public User retrieveFromPhone(String phone, String password) {
+		// TODO Auto-generated method stub
+		try
+		{
+		QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
+		
+		String sql = "select * from tb_user where Pphone=? and Password=?";
+		
+		Object params[] = {phone, password};
+		//三钟登陆方法的，邮箱，手机号，用户名，以后可以优化一下，代码有点�?
+		
+		if((User)qr.query(sql, params, new BeanHandler(User.class))!=null){
+			return (User)qr.query(sql, params, new BeanHandler(User.class));
+		}
+		
+		
+	} catch (Exception e)
+	{
+		e.printStackTrace();
+	}
+	return null;
+	}
+	
 }

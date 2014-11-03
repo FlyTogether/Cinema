@@ -37,6 +37,44 @@ public class OrderServlet extends HttpServlet
 		{
 			confirm(request, response);
 		}
+		else if("delete".equals(method))				// 删除一个订单
+		{
+			delete(request, response);
+		}
+	}
+
+	/**
+	 * 删除
+	 * @param request
+	 * @param response
+	 */
+	private void delete(HttpServletRequest request, HttpServletResponse response)
+	{
+		try
+		{
+			/* 先获取订单ID */
+			String orderID = request.getParameter("orderid");
+			/* 业务逻辑处理: 从数据库里面删除数据 */
+			BusinessServiceImpl service = new BusinessServiceImpl();
+			service.deleteOrder(orderID);
+			/* 从新回到订单页面 */
+			String state = (String) request.getParameter("state");
+			System.out.println(state);
+			if("showUnsend".equals(state))
+			{
+				showUnsend(request, response);
+			}
+			else			// 已发货
+			{
+				showSend(request, response);
+			}
+		} catch (Exception e)
+		{
+			/* 异常 */
+			throw new RuntimeException(e);
+		}
+		
+		
 	}
 
 	private void confirm(HttpServletRequest request,

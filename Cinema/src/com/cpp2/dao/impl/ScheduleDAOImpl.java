@@ -124,12 +124,15 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 	 * @param id
 	 * @param num
 	 */
-	public void updateRemanent(int id ,int remanent){
+	public void updateRemanent(int id ,int num){
 		try{
-			QueryRunner runner = new QueryRunner(JDBCUtils.getDataSource());
-			String sql = "update  tb_schedule set Remanent=? where id=?";
+			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
+			String sql = "select remanent from tb_schedule where id=?";
+			long l = qr.query(sql, new ScalarHandler());
+			int remanent = (int)l-num;
+			sql = "update  tb_schedule set Remanent=? where id=?";
 			Object params[] = {remanent,id};
-			runner.update(sql, params);
+			qr.update(sql, params);
 		}catch(Exception e){
 			throw new RuntimeException(e);
 		}

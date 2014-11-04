@@ -196,6 +196,7 @@ public class UserServlet extends HttpServlet
 	 */
 	private void login(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
+		System.out.println("1");
 		DataOutputStream out = new DataOutputStream(response.getOutputStream());
 		try
 		{
@@ -215,10 +216,12 @@ public class UserServlet extends HttpServlet
 			if(user == null)
 			{
 				out.writeUTF("login failure");
+				System.out.println("2");
 				out.writeInt(0);
 			}
 			else
 			{
+				System.out.println("3");
 				/* 封装Json对象 并用字符流输出*/
 				JSONObject jsonObject = JSONObject.fromObject(user);
 				

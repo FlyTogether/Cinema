@@ -4,8 +4,8 @@ import java.util.Date;
 
 public class ScheduleView {
 	private int schedule_id;
-	private Date airtime;
-	private int remanent;
+	private Date airtime;				// ²¥·ÅÊ±¿Ì
+	private int remanent;				// Ê£ÓàÆ±Êı
 	private int movie_id;
 	private String movie_name;
 	private String movie_style;

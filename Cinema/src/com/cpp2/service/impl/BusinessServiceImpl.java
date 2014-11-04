@@ -11,6 +11,7 @@ import com.cpp2.dao.MovieDAO;
 import com.cpp2.dao.OrderDAO;
 import com.cpp2.dao.ScheduleDAO;
 import com.cpp2.dao.ScheduleViewDAO;
+import com.cpp2.dao.SeatDAO;
 import com.cpp2.dao.UserDAO;
 import com.cpp2.dao.VideohallDAO;
 import com.cpp2.domain.Admin;
@@ -42,6 +43,7 @@ public class BusinessServiceImpl
 	private ScheduleDAO sDAO = DAOFactory.getInstance().createDAO("com.cpp2.dao.impl.ScheduleDAOImpl", ScheduleDAO.class);
 	private VideohallDAO vDAO = DAOFactory.getInstance().createDAO("com.cpp2.dao.impl.VideohallDAOImpl", VideohallDAO.class);
 	private CinemaDAO cDAO = DAOFactory.getInstance().createDAO("com.cpp2.dao.impl.CinemaDAOImpl", CinemaDAO.class);
+	private SeatDAO seatDAO = DAOFactory.getInstance().createDAO("com.cpp2.dao.impl.SeatDAOImpl", SeatDAO.class);
 	private ScheduleViewDAO svDAO = DAOFactory.getInstance().createDAO("com.cpp2.dao.impl.ScheduleViewDAOImpl", ScheduleViewDAO.class);
 	/**
 	 * 后台登陆处理,检查数据库是否存在该管理员
@@ -364,10 +366,10 @@ public class BusinessServiceImpl
 	/**
 	 * 更新剩余票数
 	 * @param id
-	 * @param remanent
+	 * @param num
 	 */
-	public void updateRemanent(int id ,int remanent){
-		sDAO.updateRemanent(id, remanent);
+	public void updateRemanent(int id ,int num){
+		sDAO.updateRemanent(id, num);
 	}
 
 	/**
@@ -519,5 +521,14 @@ public class BusinessServiceImpl
 		Order order = oDAO.retrieve(Integer.parseInt(orderID));
 		oDAO.delete(order);
 	}
+	
+	/**
+	 * 购票时选择座位,根据座位id跟新座位信息
+	 * @param id
+	 */
+	public void orderSeat(int id){
+		seatDAO.orderSeat(id);
+	}
+
 	
 }

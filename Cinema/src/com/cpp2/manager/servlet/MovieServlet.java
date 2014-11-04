@@ -440,9 +440,9 @@ public class MovieServlet extends HttpServlet {
 			
 			/*封装到json中*/
 			JSONArray movieArray = new JSONArray();
-			for(Movie movie : list){
+			/*for(Movie movie : list){
 				movieArray.add(movie);
-			}
+			}*/
 			
 			/*封装到结果集中*/
 			Map<String, Object> resultMap = new HashMap<String, Object>();
@@ -459,7 +459,6 @@ public class MovieServlet extends HttpServlet {
 			/*写到客户端*/
 			out.writeUTF(jsonObject.toString());
 			out.flush();
-			
 		}catch(Exception e){
 			e.printStackTrace();
 			out.writeUTF(e.getMessage());

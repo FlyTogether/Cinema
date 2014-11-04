@@ -214,7 +214,7 @@ public class MovieDAOImpl implements MovieDAO {
 			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
 			Date currentTime = new Date();
 			String sql = "select * from tb_movie where Showtime>? and State='Î´É¾³ý' order by Showtime";
-			return (List<Movie>)qr.query(sql, currentTime, new BeanHandler(Movie.class));
+			return (List<Movie>)qr.query(sql, currentTime, new BeanListHandler(Movie.class));
 		}catch(Exception e){
 			throw new RuntimeException(e);
 		}

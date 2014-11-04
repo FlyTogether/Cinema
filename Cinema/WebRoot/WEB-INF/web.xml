@@ -101,6 +101,16 @@
     <servlet-name>ScheduleServlet</servlet-name>
     <servlet-class>com.cpp2.manager.servlet.ScheduleServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>CinemaServlet</servlet-name>
+    <servlet-class>com.cpp2.manager.servlet.CinemaServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>SeatServlet</servlet-name>
+    <servlet-class>com.cpp2.manager.servlet.SeatServlet</servlet-class>
+  </servlet>
+
+
 
 
 
@@ -155,5 +165,13 @@
   <servlet-mapping>
     <servlet-name>ScheduleServlet</servlet-name>
     <url-pattern>/manager/ScheduleServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>CinemaServlet</servlet-name>
+    <url-pattern>/manager/CinemaServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>SeatServlet</servlet-name>
+    <url-pattern>/manager/SeatServlet</url-pattern>
   </servlet-mapping>
 </web-app>

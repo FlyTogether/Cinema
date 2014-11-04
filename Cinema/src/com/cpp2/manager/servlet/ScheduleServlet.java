@@ -1,19 +1,26 @@
 package com.cpp2.manager.servlet;
 
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import com.cpp2.domain.Cinema;
 import com.cpp2.domain.Movie;
 import com.cpp2.domain.Schedule;
+import com.cpp2.domain.ScheduleView;
 import com.cpp2.domain.Videohall;
 import com.cpp2.service.impl.BusinessServiceImpl;
 import com.cpp2.utils.Result;
@@ -23,26 +30,28 @@ public class ScheduleServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String  method = request.getParameter("method");
-		if("getInfo".equals(method)){
-			getInfo(request,response);
+		if ("getInfo".equals(method)) {
+			getInfo(request, response);
 		}
-		if("add".equals(method)){
-			add(request,response);
+		if ("add".equals(method)) {
+			add(request, response);
 		}
-		if("getAll".equals(method)){
-			getAll(request,response);
+		if ("getAll".equals(method)) {
+			getAll(request, response);
 		}
-		if("delete".equals(method)){
-			delete(request,response);
+		if ("delete".equals(method)) {
+			delete(request, response);
 		}
-		if("showBack".equals(method)){
-			showBack(request,response);
+		if ("showBack".equals(method)) {
+			showBack(request, response);
 		}
-		if("update".equals(method))
-			update(request,response);
+		if ("update".equals(method)){
+			update(request, response);
+		}
+		if("getScheduleViewByMovieIdAndCinemaId".equals(method)){
+			getScheduleViewByMovieIdAndCinemaId(request,response);
+		}
 	}
-
-
 
 
 
@@ -65,7 +74,7 @@ public class ScheduleServlet extends HttpServlet {
 			request.setAttribute("videohalls", videohalls);
 			request.setAttribute("movies", movies);
 			request.getRequestDispatcher("/manager/addSchedule.jsp").forward(request, response);
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 			request.setAttribute("msg", "抱歉，系统错误！");
 			request.getRequestDispatcher("/msg.jsp").forward(request, response);
@@ -235,6 +244,53 @@ public class ScheduleServlet extends HttpServlet {
 		}
 		request.getRequestDispatcher("/msg.jsp").forward(request, response);
 	}
+	/**
+	 * 根据影院id和影片id获得排期，给移动端使用
+	 * @param request
+	 * @param response
+	 * @throws IOException 
+	 */
+	private void getScheduleViewByMovieIdAndCinemaId(
+			HttpServletRequest request, HttpServletResponse response) throws IOException {
+		DataOutputStream out = new DataOutputStream(response.getOutputStream());
+		try{
+			//获取传过来的参数
+			int movie_id = Integer.parseInt(request.getParameter("movie_id"));
+			int cinema_id = Integer.parseInt(request.getParameter("cinema_id"));
+			//获取排期数据
+			BusinessServiceImpl businessService = new BusinessServiceImpl();
+			List<ScheduleView> list = businessService.getScheduleViewByMovieIdAndCinemaId(movie_id, cinema_id);
+			//封装到json
+			JSONArray scheduleViewArray = new JSONArray();
+			for(ScheduleView scheduleView:list){
+				//修改date的数据类型
+				java.util.Date date = new java.util.Date(scheduleView.getAirtime().getTime());
+				scheduleView.setAirtime(date);
+				scheduleViewArray.add(scheduleView);
+			}
+			//封装到结果集
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap.put("scheduleView.list", scheduleViewArray);
+			JSONObject resultObject = JSONObject.fromObject(resultMap);
+			//封装到顶层json
+			Map<String, Object> topMap = new HashMap<String, Object>();
+			topMap.put("code", "1");
+			topMap.put("message", "get all schedule success");
+			topMap.put("result", resultObject);
+			JSONObject jsonObject = JSONObject.fromObject(topMap);
+			//写数据
+			out.writeUTF(jsonObject.toString());
+			out.flush();
+		}catch(Exception e){
+			e.printStackTrace();
+			out.writeUTF(e.getMessage());
+			out.flush();
+		}
+		finally{
+			out.close();
+		}
+	}
+
 
 
 

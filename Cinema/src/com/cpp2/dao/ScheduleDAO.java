@@ -60,7 +60,7 @@ public interface ScheduleDAO {
 	 * @param id
 	 * @param num
 	 */
-	public abstract void updateRemanent(int id, int remanent);
+	public abstract void updateRemanent(int id, int num);
 	/**
 	 * 根据排期id查找排期
 	 * @param id

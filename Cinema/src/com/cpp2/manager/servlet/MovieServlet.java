@@ -441,6 +441,9 @@ public class MovieServlet extends HttpServlet {
 			/*封装到json中*/
 			JSONArray movieArray = new JSONArray();
 			for(Movie movie : list){
+				//修改date的数据类型
+				java.util.Date date = new java.util.Date(movie.getShowtime().getTime());
+				movie.setShowtime(date);
 				movieArray.add(movie);
 			}
 			
@@ -452,7 +455,7 @@ public class MovieServlet extends HttpServlet {
 			/*封装到顶层json*/
 			Map<String, Object> topMap = new HashMap<String, Object>();
 			topMap.put("code", "1");
-			topMap.put("message", "getAllOnNowMovie success");
+			topMap.put("message", "get all OnNowMovies success");
 			topMap.put("result", resultObject);
 			JSONObject jsonObject = JSONObject.fromObject(topMap);
 			
@@ -469,6 +472,7 @@ public class MovieServlet extends HttpServlet {
 			out.close();
 		}
 	}
+	
 	/**
 	 * 获取所有即将上映的电影
 	 * @param request
@@ -486,7 +490,11 @@ public class MovieServlet extends HttpServlet {
 			
 			/*封装到json中*/
 			JSONArray movieArray = new JSONArray();
+			//movieArray.fromObject(list.toArray());
 			for(Movie movie : list){
+				//修改date的数据类型
+				java.util.Date date = new java.util.Date(movie.getShowtime().getTime());
+				movie.setShowtime(date);
 				movieArray.add(movie);
 			}
 			
@@ -498,7 +506,7 @@ public class MovieServlet extends HttpServlet {
 			/*封装到顶层json*/
 			Map<String, Object> topMap = new HashMap<String, Object>();
 			topMap.put("code", "1");
-			topMap.put("message", "getAllComingSoonMovie success");
+			topMap.put("message", "get all ComingSoonMovies success");
 			topMap.put("result", resultObject);
 			JSONObject jsonObject = JSONObject.fromObject(topMap);
 			
@@ -531,18 +539,22 @@ public class MovieServlet extends HttpServlet {
 			/*查询出要发送的数据*/
 			BusinessServiceImpl businessService = new BusinessServiceImpl();
 			Movie movie = businessService.findMovie(id);
-			
+			//修改date的类型
+			java.util.Date date = new java.util.Date(movie.getShowtime().getTime());
+			movie.setShowtime(date);
 			/*封装数据到json*/
 			JSONObject movieJson = JSONObject.fromObject(movie);
 			
 			/*封装到结果集中*/
 			Map<String , Object> resultMap = new HashMap<String, Object>();
 			resultMap.put("movie", movieJson);
+			JSONObject resultObject =JSONObject.fromObject(resultMap);
 			
 			/*封装到顶层json中*/
 			Map<String , Object> topMap = new HashMap<String, Object>();
 			topMap.put("code", 1);
 			topMap.put("message", "get Movei Detail success");
+			topMap.put("result", resultObject);
 			JSONObject jsonObject = JSONObject.fromObject(topMap);
 			
 			/*写到客户端*/
@@ -562,4 +574,5 @@ public class MovieServlet extends HttpServlet {
 			throws ServletException, IOException {
 		doGet(request, response);
 	}
+	
 }

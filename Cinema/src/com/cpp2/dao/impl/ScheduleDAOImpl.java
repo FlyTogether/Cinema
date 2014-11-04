@@ -9,7 +9,9 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 
 
+
 import com.cpp2.dao.ScheduleDAO;
+import com.cpp2.dao.SeatDAO;
 import com.cpp2.domain.Schedule;
 import com.cpp2.utils.JDBCUtils;
 
@@ -35,7 +37,7 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 	public void deleteSchedule(int id){
 		try{
 			/*首先删除该排期的座位表*/
-			SeatDAOImpl seatDAO = new SeatDAOImpl();
+			SeatDAO seatDAO = new SeatDAOImpl();
 			seatDAO.deleteSeatBySchedule(id);
 			/*然后才可以删除该排期*/
 			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
@@ -124,12 +126,15 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 	 * @param id
 	 * @param num
 	 */
-	public void updateRemanent(int id ,int remanent){
+	public void updateRemanent(int id ,int num){
 		try{
-			QueryRunner runner = new QueryRunner(JDBCUtils.getDataSource());
-			String sql = "update  tb_schedule set Remanent=? where id=?";
+			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
+			String sql = "select remanent from tb_schedule where id=?";
+			long l = qr.query(sql, new ScalarHandler());
+			int remanent = (int)l-num;
+			sql = "update  tb_schedule set Remanent=? where id=?";
 			Object params[] = {remanent,id};
-			runner.update(sql, params);
+			qr.update(sql, params);
 		}catch(Exception e){
 			throw new RuntimeException(e);
 		}

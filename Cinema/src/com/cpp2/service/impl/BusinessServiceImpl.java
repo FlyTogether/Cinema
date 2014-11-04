@@ -11,6 +11,7 @@ import com.cpp2.dao.MovieDAO;
 import com.cpp2.dao.OrderDAO;
 import com.cpp2.dao.ScheduleDAO;
 import com.cpp2.dao.ScheduleViewDAO;
+import com.cpp2.dao.SeatDAO;
 import com.cpp2.dao.UserDAO;
 import com.cpp2.dao.VideohallDAO;
 import com.cpp2.domain.Admin;
@@ -22,6 +23,7 @@ import com.cpp2.domain.Order;
 import com.cpp2.domain.OrderItem;
 import com.cpp2.domain.Schedule;
 import com.cpp2.domain.ScheduleView;
+import com.cpp2.domain.Seat;
 import com.cpp2.domain.User;
 import com.cpp2.domain.Videohall;
 import com.cpp2.factory.DAOFactory;
@@ -43,6 +45,7 @@ public class BusinessServiceImpl
 	private VideohallDAO vDAO = DAOFactory.getInstance().createDAO("com.cpp2.dao.impl.VideohallDAOImpl", VideohallDAO.class);
 	private CinemaDAO cDAO = DAOFactory.getInstance().createDAO("com.cpp2.dao.impl.CinemaDAOImpl", CinemaDAO.class);
 	private ScheduleViewDAO svDAO = DAOFactory.getInstance().createDAO("com.cpp2.dao.impl.ScheduleViewDAOImpl", ScheduleViewDAO.class);
+	private SeatDAO seatDAO = DAOFactory.getInstance().createDAO("com.cpp2.dao.impl.SeatDAOImpl", SeatDAO.class);
 	/**
 	 * 后台登陆处理,检查数据库是否存在该管理员
 	 * @param admin
@@ -366,8 +369,8 @@ public class BusinessServiceImpl
 	 * @param id
 	 * @param remanent
 	 */
-	public void updateRemanent(int id ,int remanent){
-		sDAO.updateRemanent(id, remanent);
+	public void updateRemanent(int id ,int num){
+		sDAO.updateRemanent(id, num);
 	}
 
 	/**
@@ -519,5 +522,19 @@ public class BusinessServiceImpl
 		Order order = oDAO.retrieve(Integer.parseInt(orderID));
 		oDAO.delete(order);
 	}
-	
+	/**
+	 * 购票时选择座位,根据座位id跟新座位信息
+	 * @param id
+	 */
+	public void orderSeat(int id){
+		seatDAO.orderSeat(id);
+	}
+	/**
+	 * 根据排期id查找该排期的所有座位详情,给移动端使用
+	 * @param schedule_id
+	 * @return
+	 */
+	public List<Seat> getAllSeatByScheduleId(int schedule_id){
+		return seatDAO.getAllSeatByScheduleId(schedule_id);
+	}
 }

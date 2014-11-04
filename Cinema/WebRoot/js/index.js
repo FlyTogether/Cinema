@@ -170,7 +170,7 @@ function switchTab(tabpage, tabid) {
 			"accessPath" : "./manager/MovieServlet?method=showAll",
 			"checked" : false,
 			"delFlag" : 0,
-			"parentID" : 1,
+			"parentID" : 3,
 			"resourceCode" : "",
 			"resourceDesc" : "",
 			"resourceGrade" : 2,
@@ -182,7 +182,7 @@ function switchTab(tabpage, tabid) {
 			"accessPath" : "./manager/MovieServlet?method=showComingSoonMovie",
 			"checked" : false,
 			"delFlag" : 0,
-			"parentID" : 1,
+			"parentID" : 3,
 			"resourceCode" : "",
 			"resourceDesc" : "",
 			"resourceGrade" : 2,
@@ -194,7 +194,7 @@ function switchTab(tabpage, tabid) {
 			"accessPath" : "./manager/MovieServlet?method=showOnNowMovie",
 			"checked" : false,
 			"delFlag" : 0,
-			"parentID" : 1,
+			"parentID" : 3,
 			"resourceCode" : "",
 			"resourceDesc" : "",
 			"resourceGrade" : 2,
@@ -211,7 +211,7 @@ function switchTab(tabpage, tabid) {
 			"resourceDesc" : "",
 			"resourceGrade" : 2,
 			"resourceID" : 34,
-			"resourceName" : "电影排期",
+			"resourceName" : "排期管理",
 			"resourceOrder" : 0,
 			"resourceType" : ""
 		} ,{
@@ -260,6 +260,30 @@ function switchTab(tabpage, tabid) {
 				"resourceGrade" : 2,
 				"resourceID" : 8,
 				"resourceName" : "查看已发货发货订单",
+				"resourceOrder" : 0,
+				"resourceType" : ""
+			},{
+				"accessPath" : "./manager/ScheduleServlet?method=getAll",
+				"checked" : false,
+				"delFlag" : 0,
+				"parentID" : 34,
+				"resourceCode" : "",
+				"resourceDesc" : "",
+				"resourceGrade" : 2,
+				"resourceID" : 7,
+				"resourceName" : "排期列表",
+				"resourceOrder" : 0,
+				"resourceType" : ""
+			},{
+				"accessPath" : "./manager/ScheduleServlet?method=getInfo",
+				"checked" : false,
+				"delFlag" : 0,
+				"parentID" : 34,
+				"resourceCode" : "",
+				"resourceDesc" : "",
+				"resourceGrade" : 2,
+				"resourceID" : 9,
+				"resourceName" : "添加排期",
 				"resourceOrder" : 0,
 				"resourceType" : ""
 			}];

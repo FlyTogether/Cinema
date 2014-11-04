@@ -445,7 +445,7 @@ public class MovieServlet extends HttpServlet {
 				java.util.Date date = new java.util.Date(movie.getShowtime().getTime());
 				movie.setShowtime(date);
 				movieArray.add(movie);
-			}
+			};
 			
 			/*封装到结果集中*/
 			Map<String, Object> resultMap = new HashMap<String, Object>();
@@ -462,7 +462,6 @@ public class MovieServlet extends HttpServlet {
 			/*写到客户端*/
 			out.writeUTF(jsonObject.toString());
 			out.flush();
-			
 		}catch(Exception e){
 			e.printStackTrace();
 			out.writeUTF(e.getMessage());

@@ -24,9 +24,13 @@ public class BuyTicketServlet extends HttpServlet
 		{
 			/* 获取移动端get过来的数据 */
 			String movieid = request.getParameter("movieid");
+			String ScheduleID = request.getParameter("ScheduleID");
+			String seatID = request.getParameter("seatID");
 			/* 业务逻辑处理: 查找到该电影 */
 			BusinessServiceImpl service = new BusinessServiceImpl();
 			Movie movie = service.retrieveMovie(movieid);
+			service.updateRemanent(Integer.parseInt(ScheduleID), 1); 		// 更新剩余票数
+			service.orderSeat(Integer.parseInt(seatID));    							// 更新座位信息
 			/* 看看Session有没有购物车,没有就new 一个 */
 			Cart cart = (Cart) request.getSession().getAttribute("cart");
 			if(null == cart)

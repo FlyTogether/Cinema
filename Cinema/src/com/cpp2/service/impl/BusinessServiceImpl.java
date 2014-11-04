@@ -367,7 +367,7 @@ public class BusinessServiceImpl
 	/**
 	 * ¸üĞÂÊ£ÓàÆ±Êı
 	 * @param id
-	 * @param remanent
+	 * @param num
 	 */
 	public void updateRemanent(int id ,int num){
 		sDAO.updateRemanent(id, num);

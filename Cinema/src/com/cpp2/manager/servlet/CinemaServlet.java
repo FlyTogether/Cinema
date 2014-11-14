@@ -36,7 +36,8 @@ public class CinemaServlet extends HttpServlet {
 	 */
 	private void getAllCinemaForMobile(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
-		DataOutputStream out = new DataOutputStream(response.getOutputStream());
+		//DataOutputStream out = new DataOutputStream(response.getOutputStream());
+		PrintWriter out = response.getWriter();
 		try{
 			//获取数据
 			BusinessServiceImpl businessService = new BusinessServiceImpl();
@@ -57,11 +58,11 @@ public class CinemaServlet extends HttpServlet {
 			topMap.put("result", resultObject);
 			JSONObject jsonObject = JSONObject.fromObject(topMap);
 			//写数据到
-			out.writeUTF(jsonObject.toString());
+			out.write(jsonObject.toString());
 			out.flush();
 		}catch(Exception e){
 			e.printStackTrace();
-			out.writeUTF(e.getMessage());
+			out.write(e.getMessage());
 			out.flush();
 		}
 		finally{

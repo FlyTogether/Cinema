@@ -26,8 +26,8 @@ public class UserDAOImpl implements UserDAO
 	{
 		try{
 			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
-			String sql = "insert into tb_user(Username,Phone,Gender,Vip,Password,Email,Birthday) values(?,?,?,?,?,?,?) ";
-			Object params[] = {user.getUsername(),user.getPhone(),user.getGender(),user.getVip(),user.getPassword(),user.getEmail(),user.getBirthday()};
+			String sql = "insert into tb_user(Username,Phone,Gender,Password,Email,Birthday) values(?,?,?,?,?,?) ";
+			Object params[] = {user.getUsername(),user.getPhone(),user.getGender(),user.getPassword(),user.getEmail(),user.getBirthday()};
 			qr.update(sql, params);
 		}catch(Exception e){
 			throw new RuntimeException(e);
@@ -169,7 +169,7 @@ public class UserDAOImpl implements UserDAO
 	public void updatePassword(String newpassword , int id){
 		try{
 			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
-			String sql = "update TB_User set Password=? where User_id=?";
+			String sql = "update tb_user set Password=? where id=?";
 			Object params[] = {newpassword,id};
 			qr.update(sql, params);
 		}catch(Exception e){

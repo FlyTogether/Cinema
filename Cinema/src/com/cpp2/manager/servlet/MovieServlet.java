@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -432,7 +433,8 @@ public class MovieServlet extends HttpServlet {
 	 */
 	private void getOnNowMovieForMobile(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
-		DataOutputStream out = new DataOutputStream(response.getOutputStream());
+		//DataOutputStream out = new DataOutputStream(response.getOutputStream());
+		PrintWriter out = response.getWriter();
 		try{
 			/*获取数据*/
 			BusinessServiceImpl businessService = new BusinessServiceImpl();
@@ -443,7 +445,11 @@ public class MovieServlet extends HttpServlet {
 			for(Movie movie : list){
 				//修改date的数据类型
 				java.util.Date date = new java.util.Date(movie.getShowtime().getTime());
+				
+				//SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+				//java.util.Date date=df.parse(df.format(movie.getShowtime().getTime()));
 				movie.setShowtime(date);
+				//System.out.print(movie.getShowtime().toLocaleString());
 				movieArray.add(movie);
 			};
 			
@@ -460,11 +466,11 @@ public class MovieServlet extends HttpServlet {
 			JSONObject jsonObject = JSONObject.fromObject(topMap);
 			
 			/*写到客户端*/
-			out.writeUTF(jsonObject.toString());
+			out.write(jsonObject.toString());
 			out.flush();
 		}catch(Exception e){
 			e.printStackTrace();
-			out.writeUTF(e.getMessage());
+			out.write(e.getMessage());
 			out.flush();
 		}
 		finally{
@@ -480,7 +486,8 @@ public class MovieServlet extends HttpServlet {
 	 */
 	private void getComingSoonMovieForMobile(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
-		DataOutputStream out = new DataOutputStream(response.getOutputStream());
+		//DataOutputStream out = new DataOutputStream(response.getOutputStream());
+		PrintWriter out = response.getWriter();
 		try{
 			
 			/*获取数据*/
@@ -510,12 +517,12 @@ public class MovieServlet extends HttpServlet {
 			JSONObject jsonObject = JSONObject.fromObject(topMap);
 			
 			/*写到客户端*/
-			out.writeUTF(jsonObject.toString());
+			out.write(jsonObject.toString());
 			out.flush();
 			
 		}catch(Exception e){
 			e.printStackTrace();
-			out.writeUTF(e.getMessage());
+			out.write(e.getMessage());
 			out.flush();
 		}
 		finally{
@@ -530,7 +537,8 @@ public class MovieServlet extends HttpServlet {
 	 */
 	private void getMovieDetailForMobile(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
-		DataOutputStream out = new DataOutputStream(response.getOutputStream());
+		//DataOutputStream out = new DataOutputStream(response.getOutputStream());
+		PrintWriter out = response.getWriter();
 		try{
 			/*获取移动端传过来的数据*/
 			int id = Integer.parseInt(request.getParameter("id"));
@@ -557,11 +565,11 @@ public class MovieServlet extends HttpServlet {
 			JSONObject jsonObject = JSONObject.fromObject(topMap);
 			
 			/*写到客户端*/
-			out.writeUTF(jsonObject.toString());
+			out.write(jsonObject.toString());
 			out.flush();
 		}catch(Exception e){
 			e.printStackTrace();
-			out.writeUTF(e.getMessage());
+			out.write(e.getMessage());
 			out.flush();
 		}finally{
 			out.close();

@@ -2,6 +2,7 @@ package com.cpp2.manager.servlet;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -54,7 +55,9 @@ public class UserServlet extends HttpServlet
 	private void forgotten(HttpServletRequest request,
 			HttpServletResponse response) throws IOException
 	{
-		DataOutputStream out = new DataOutputStream(response.getOutputStream());
+		//DataOutputStream out = new DataOutputStream(response.getOutputStream());
+		PrintWriter out = response.getWriter();
+	
 		try
 		{
 			/* 获取post提交的数据 */
@@ -76,14 +79,14 @@ public class UserServlet extends HttpServlet
 				JSONObject jsonArray = JSONObject.fromObject(topMap);
 
 				/* 输出 */
-				out.writeUTF(jsonArray.toString());
-				out.writeInt(1);
+				out.write(jsonArray.toString());
+				out.write(1);
 			}
 			else
 			{
 				/* 处理失败*/
-				out.writeUTF("reset faiure");
-				out.writeInt(0);
+				out.write("reset faiure");
+				out.write(0);
 			}
 		} catch (Exception e)
 		{
@@ -106,7 +109,8 @@ public class UserServlet extends HttpServlet
 	private void register(HttpServletRequest request,
 			HttpServletResponse response) throws IOException
 	{
-		DataOutputStream out = new DataOutputStream(response.getOutputStream());
+		//DataOutputStream out = new DataOutputStream(response.getOutputStream());
+		PrintWriter out = response.getWriter();
 		try
 		{
 			/* 获取移动端 post提交的数据 */
@@ -116,14 +120,15 @@ public class UserServlet extends HttpServlet
 			String gender = request.getParameter("gender");
 			String email = request.getParameter("email");
 			String birthday = request.getParameter("birthday");
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
-			birthday = format.format(new Date(birthday));						// 格式化日期对象
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			Date bir = new Date();
+			bir = format.parse(birthday);						// 格式化日期对象
 			
 			/* 业务逻辑处理: 先校验,通过则往数据库添加记录 */
-			if (validate(username, phone, email))
+			if (true)
 			{
 				User user = new User();
-				user.setBirthday(new Date(birthday));
+				user.setBirthday(bir);
 				user.setConsumption(0);
 				user.setEmail(email);
 				user.setGender(gender);
@@ -136,7 +141,7 @@ public class UserServlet extends HttpServlet
 				/*
 				 * 添加成功则给移动端传输json信息 成功code : 1 , message : register success
 				 */
-				JSONObject jsonObject = JSONObject.fromObject(user);
+				JSONObject jsonObject = JSONObject.fromObject(user.toString());
 				Map<String, Object> resultMap = JSONObject
 						.fromObject(jsonObject);
 				JSONObject resultObject = JSONObject.fromObject(resultMap);
@@ -148,12 +153,27 @@ public class UserServlet extends HttpServlet
 				JSONObject jsonArray = JSONObject.fromObject(topMap);
 
 				/* 输出流写出 */
-				out.writeUTF(jsonArray.toString());
+				out.write(jsonArray.toString());
 				out.flush();
 			} else
 			{
-				out.writeUTF("register fialure");
-				out.writeInt(0);
+				/*
+				 * 添加成功则给移动端传输json信息 成功code : 1 , message : register success
+				 */
+				JSONObject jsonObject = JSONObject.fromObject(null);
+				Map<String, Object> resultMap = JSONObject
+						.fromObject(jsonObject);
+				JSONObject resultObject = JSONObject.fromObject(resultMap);
+
+				Map<String, Object> topMap = new HashMap<String, Object>();
+				topMap.put("code", "0");
+				topMap.put("message", "failed to register");
+				topMap.put("result", "");
+				JSONObject jsonArray = JSONObject.fromObject(topMap);
+
+				/* 输出流写出 */
+				out.write(jsonArray.toString());
+				out.flush();
 			}
 
 		} catch (Exception e)
@@ -196,18 +216,22 @@ public class UserServlet extends HttpServlet
 	 */
 	private void login(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
-		System.out.println("1");
-		DataOutputStream out = new DataOutputStream(response.getOutputStream());
+//		DataOutputStream out = new DataOutputStream(response.getOutputStream());
+		response.setCharacterEncoding("utf-8");
+		PrintWriter out = response.getWriter();
 		try
 		{
 			/* 获取移动端post的数据 */
-			String username = request.getParameter("username");
+//			String username = request.getParameter("username");
+			String username = request.getParameter("loginNum");
 			String password = request.getParameter("password");
 			
 			
 			/* 业务逻辑处理: 用户登录处理 */
 			BusinessServiceImpl service = new BusinessServiceImpl();
 			User user = service.userLogin(username, password);
+			Date date = new Date(user.getBirthday().getTime());
+			user.setBirthday(date);
 			
 			/* 存到Session */
 			request.getSession().setAttribute("user", user);
@@ -215,19 +239,13 @@ public class UserServlet extends HttpServlet
 			/* 失败返回0和"login failure", 成功返回1和"login success" 以及json数据*/
 			if(user == null)
 			{
-				out.writeUTF("login failure");
-				System.out.println("2");
-				out.writeInt(0);
+				out.write("login failure");
+				out.write(0);
 			}
 			else
 			{
-				System.out.println("3");
 				/* 封装Json对象 并用字符流输出*/
 				JSONObject jsonObject = JSONObject.fromObject(user);
-				
-			/*	Iterator<String> i = jsonObject.keys();
-				while(i.hasNext())
-						System.out.println("the key of json -- "+i.next());*/
 				
 				Map<String, Object> resultMap = new HashMap<String, Object>();
 				resultMap.put("user", jsonObject);
@@ -240,14 +258,14 @@ public class UserServlet extends HttpServlet
 				
 				JSONObject jsonArray = JSONObject.fromObject(topMap);
 				
-				out.writeUTF(jsonArray.toString());
+				out.write(jsonArray.toString());
 				out.flush();
 			}
 			
 		} catch (Exception e)
 		{
 			e.printStackTrace();
-			out.writeUTF(e.getMessage());
+			out.write(e.getMessage());
 			out.flush();
 		}
 		finally

@@ -252,7 +252,8 @@ public class ScheduleServlet extends HttpServlet {
 	 */
 	private void getScheduleViewByMovieIdAndCinemaId(
 			HttpServletRequest request, HttpServletResponse response) throws IOException {
-		DataOutputStream out = new DataOutputStream(response.getOutputStream());
+		//DataOutputStream out = new DataOutputStream(response.getOutputStream());
+		PrintWriter out = response.getWriter();
 		try{
 			//获取传过来的参数
 			int movie_id = Integer.parseInt(request.getParameter("movie_id"));
@@ -279,11 +280,11 @@ public class ScheduleServlet extends HttpServlet {
 			topMap.put("result", resultObject);
 			JSONObject jsonObject = JSONObject.fromObject(topMap);
 			//写数据
-			out.writeUTF(jsonObject.toString());
+			out.write(jsonObject.toString());
 			out.flush();
 		}catch(Exception e){
 			e.printStackTrace();
-			out.writeUTF(e.getMessage());
+			out.write(e.getMessage());
 			out.flush();
 		}
 		finally{

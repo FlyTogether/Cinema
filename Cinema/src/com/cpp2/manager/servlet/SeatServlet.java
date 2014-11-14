@@ -37,7 +37,8 @@ public class SeatServlet extends HttpServlet {
 	 */
 	private void getAllSeatByScheduleId(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
-		DataOutputStream out = new DataOutputStream(response.getOutputStream());
+		//DataOutputStream out = new DataOutputStream(response.getOutputStream());
+		PrintWriter out = response.getWriter();
 		try{
 			//获得参数
 			int schedule_id = Integer.parseInt(request.getParameter("schedule_id"));
@@ -64,12 +65,12 @@ public class SeatServlet extends HttpServlet {
 			JSONObject jsonObject = JSONObject.fromObject(topMap);
 			
 			/*写到客户端*/
-			out.writeUTF(jsonObject.toString());
+			out.write(jsonObject.toString());
 			out.flush();
 			
 		}catch(Exception e){
 			e.printStackTrace();
-			out.writeUTF(e.getMessage());
+			out.write(e.getMessage());
 			out.flush();
 		}
 		finally{

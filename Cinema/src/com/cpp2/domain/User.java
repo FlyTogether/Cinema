@@ -31,6 +31,22 @@ public class User
 	{
 		return state;
 	}
+	@Override
+	public String toString() {
+		return "{"+
+				"'id':"+getId()+
+				",'username':'"+getUsername()+
+				"','phone':'"+getPhone()+
+				"','gender':'"+getGender()+
+				"','vip':'"+getVip()+
+				"','password':'"+getPassword()+
+				"','state':'"+getState()+
+				"','birthday':'"+getBirthday()+
+				"','email':'"+getEmail()+
+				"','consumption':"+getConsumption()+
+				"}";
+
+	}
 	public void setState(String state)
 	{
 		this.state = state;

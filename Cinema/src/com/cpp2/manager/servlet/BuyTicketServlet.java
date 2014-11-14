@@ -2,11 +2,16 @@ package com.cpp2.manager.servlet;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONObject;
 
 import com.cpp2.domain.Cart;
 import com.cpp2.domain.Movie;
@@ -19,7 +24,8 @@ public class BuyTicketServlet extends HttpServlet
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException
 	{
-		DataOutputStream out = new DataOutputStream(response.getOutputStream());
+		//DataOutputStream out = new DataOutputStream(response.getOutputStream());
+		PrintWriter out = response.getWriter();
 		try
 		{
 			/* 获取移动端get过来的数据 */
@@ -48,14 +54,28 @@ public class BuyTicketServlet extends HttpServlet
 			}
 			/* 返回json数据给用户  */
 			
-			out.writeUTF("购买成功");
-			out.writeInt(1);
+			/* 处理成功,返回json数据给移动端 */
+			Map<String, Object> topMap = new HashMap<String, Object>();
+			topMap.put("code", "1");
+			topMap.put("message", "buy success");
+			topMap.put("result", "");
+			JSONObject jsonArray = JSONObject.fromObject(topMap);
+
+			/* 输出 */
+			out.write(jsonArray.toString());
 			
 		} catch (Exception e)
 		{
 			e.printStackTrace();
-			out.writeUTF("购买失败");
-			out.writeInt(0);
+			/* 处理成功,返回json数据给移动端 */
+			Map<String, Object> topMap = new HashMap<String, Object>();
+			topMap.put("code", "0");
+			topMap.put("message", "failed to buy");
+			topMap.put("result", "");
+			JSONObject jsonArray = JSONObject.fromObject(topMap);
+
+			/* 输出 */
+			out.write(jsonArray.toString());
 		}
 		finally
 		{

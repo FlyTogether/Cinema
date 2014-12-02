@@ -234,6 +234,7 @@ public class MovieDAOImpl implements MovieDAO {
 		}
 	}
 	
+	
 	/**
 	 * 更新电影热度
 	 * @param popularity

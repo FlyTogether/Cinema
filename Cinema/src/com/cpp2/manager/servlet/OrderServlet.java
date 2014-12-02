@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.cpp2.domain.Order;
+import com.cpp2.domain.OrderItem;
 import com.cpp2.service.impl.BusinessServiceImpl;
 import com.cpp2.utils.Page;
 import com.cpp2.utils.Result;
@@ -85,6 +86,11 @@ public class OrderServlet extends HttpServlet
 			String orderid = request.getParameter("orderid");
 			BusinessServiceImpl service = new BusinessServiceImpl();
 			service.confirmOrder(Integer.parseInt(orderid));							// 更改订单状态为已发货
+			Order order = service.retrieveOrder(Integer.parseInt(orderid));
+			OrderItem orderItem= (OrderItem) order.getOrderitem();
+			int movieId = orderItem.getMovie().getId();
+			int quantity = orderItem.getQuantity();
+			service.updatePopularity(quantity, movieId);	//更新影片的热度
 			request.setAttribute("msg", "状态改为发货,请及时发货");
 		} catch (Exception e)
 		{

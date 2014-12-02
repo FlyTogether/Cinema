@@ -105,4 +105,11 @@ public interface MovieDAO {
 	 * @return
 	 */
 	public abstract Movie findMovieByName(String name);
+	
+	/**
+	 * 更新电影热度
+	 * @param popularity
+	 * @param id
+	 */
+	public abstract void updatePopularity(double popularity,int id);
 }

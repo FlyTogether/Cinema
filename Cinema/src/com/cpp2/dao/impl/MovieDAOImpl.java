@@ -233,4 +233,21 @@ public class MovieDAOImpl implements MovieDAO {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	/**
+	 * 更新电影热度
+	 * @param popularity
+	 * @param id
+	 */
+	public void updatePopularity(double popularity,int id){
+		try {
+			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
+			String sql = "update tb_movie set popularity=? where id=? ";
+			Object params[] = {popularity,id};
+			qr.update(sql, params);
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw new RuntimeException(e);
+		}
+	}
 }

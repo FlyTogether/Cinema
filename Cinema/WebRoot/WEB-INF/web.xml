@@ -109,6 +109,16 @@
     <servlet-name>SeatServlet</servlet-name>
     <servlet-class>com.cpp2.manager.servlet.SeatServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>CommentServlet</servlet-name>
+    <servlet-class>com.cpp2.manager.servlet.CommentServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>CollectionServlet</servlet-name>
+    <servlet-class>com.cpp2.manager.servlet.CollectionServlet</servlet-class>
+  </servlet>
+
+
 
 
 
@@ -173,5 +183,13 @@
   <servlet-mapping>
     <servlet-name>SeatServlet</servlet-name>
     <url-pattern>/manager/SeatServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>CommentServlet</servlet-name>
+    <url-pattern>/manager/CommentServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>CollectionServlet</servlet-name>
+    <url-pattern>/manager/CollectionServlet</url-pattern>
   </servlet-mapping>
 </web-app>

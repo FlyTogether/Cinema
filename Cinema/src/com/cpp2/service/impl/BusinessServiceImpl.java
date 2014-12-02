@@ -7,6 +7,8 @@ import java.util.Map;
 
 import com.cpp2.dao.AdminDAO;
 import com.cpp2.dao.CinemaDAO;
+import com.cpp2.dao.CollectionDAO;
+import com.cpp2.dao.CommentDAO;
 import com.cpp2.dao.MovieDAO;
 import com.cpp2.dao.OrderDAO;
 import com.cpp2.dao.ScheduleDAO;
@@ -18,6 +20,8 @@ import com.cpp2.domain.Admin;
 import com.cpp2.domain.Cart;
 import com.cpp2.domain.CartItem;
 import com.cpp2.domain.Cinema;
+import com.cpp2.domain.Collection;
+import com.cpp2.domain.Comment;
 import com.cpp2.domain.Movie;
 import com.cpp2.domain.Order;
 import com.cpp2.domain.OrderItem;
@@ -46,6 +50,9 @@ public class BusinessServiceImpl
 	private CinemaDAO cDAO = DAOFactory.getInstance().createDAO("com.cpp2.dao.impl.CinemaDAOImpl", CinemaDAO.class);
 	private ScheduleViewDAO svDAO = DAOFactory.getInstance().createDAO("com.cpp2.dao.impl.ScheduleViewDAOImpl", ScheduleViewDAO.class);
 	private SeatDAO seatDAO = DAOFactory.getInstance().createDAO("com.cpp2.dao.impl.SeatDAOImpl", SeatDAO.class);
+	private CommentDAO commentDAO = DAOFactory.getInstance().createDAO("com.cpp2.dao.impl.CommentDAOImpl", CommentDAO.class);
+	private CollectionDAO collectionDAO = DAOFactory.getInstance().createDAO("com.cpp2.dao.impl.CollectionDAOImpl", CollectionDAO.class);
+	
 	/**
 	 * 后台登陆处理,检查数据库是否存在该管理员
 	 * @param admin
@@ -537,4 +544,73 @@ public class BusinessServiceImpl
 	public List<Seat> getAllSeatByScheduleId(int schedule_id){
 		return seatDAO.getAllSeatByScheduleId(schedule_id);
 	}
-}
+	/**
+	 * 新增评论
+	 * @param comment
+	 */
+	public void addComment(Comment comment){
+		commentDAO.addComment(comment);
+	}
+	/**
+	 * 获得影片的分页数据
+	 * @param everyPage
+	 * @param currentPage
+	 * @param movie_id
+	 * @return
+	 */
+	public Result getCommentPageData(int everyPage,int currentPage,int movie_id){
+		Result result = new Result();
+		int totalRecord = commentDAO.getTotalRecord(movie_id);
+		Page page = PageUtil.createPage(everyPage, totalRecord, currentPage);
+		List<Comment> list = commentDAO.showComment(movie_id, page.getBeginIndex(), everyPage);
+		result.setList(list);
+		result.setPage(page);
+		return result;
+	}
+	
+	/**
+	 * 收藏电影
+	 * @param movie_id
+	 * @param user_id
+	 */
+	public void collectMovie(Collection collection) {
+		collectionDAO.collectMovie(collection);
+	}
+	/**
+	 * 获取用户收藏的所有电影
+	 * @param user_id
+	 * @return
+	 */
+	public Result getAllCollection(int user_id,int everyPage,int currentPage){
+		Result result = new Result();
+		int totalRecord = collectionDAO.getTotalRecord(user_id);
+		Page page = PageUtil.createPage(everyPage, totalRecord, currentPage);
+		List<Collection> list = collectionDAO.showCollection(user_id, page.getBeginIndex(), everyPage);
+		result.setList(list);
+		result.setPage(page);
+		return result;
+	}
+	/**
+	 * 检查电影是否已收藏
+	 * @param movie_id
+	 * @param user_id
+	 * @return
+	 */
+	public boolean checkCollection(int movie_id,int user_id){
+			return collectionDAO.checkCollection(movie_id,user_id);
+	}
+	/**
+	 * 更新电影热度
+	 * @param popularity
+	 * @param id
+	 */
+	public void updatePopularity(int num,int id){
+		double popularity = 0;
+		int totalRecord = oDAO.getTotalRecord();
+		popularity = 7.5 + ((int)(totalRecord+num)/20)*0.1;
+		if(popularity>10){
+			popularity=10.0;
+		}
+		movieDAO.updatePopularity(popularity, id);
+	}
+	}

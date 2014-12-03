@@ -34,7 +34,7 @@ public class MovieDAOImpl implements MovieDAO {
 	public void delete(int id){
 		try{
 			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
-			String sql = "update tb_movie set State='ÒÑÉ¾³ý' where id=?";
+			String sql = "update tb_movie set State='deleted' where id=?";
 			qr.update(sql, id);
 		}catch(Exception e){
 			throw new RuntimeException(e);
@@ -47,7 +47,7 @@ public class MovieDAOImpl implements MovieDAO {
 	public void restore(int id){
 		try{
 			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
-			String sql = "update tb_movie set State='Î´É¾³ý' where id=?";
+			String sql = "update tb_movie set State='undeleted' where id=?";
 			qr.update(sql, id);
 		}catch(Exception e){
 			throw new RuntimeException(e);
@@ -103,7 +103,7 @@ public class MovieDAOImpl implements MovieDAO {
 		try{
 			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
 			Date currentTime = new Date();
-			String sql = "select count(*) from tb_movie where Showtime<=? and State='Î´É¾³ý'";
+			String sql = "select count(*) from tb_movie where Showtime<=? and State='undeleted'";
 			long l = (Long)qr.query(sql, currentTime, new ScalarHandler());
 			return (int)l;
 		}catch(Exception e){
@@ -118,7 +118,7 @@ public class MovieDAOImpl implements MovieDAO {
 		try{
 			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
 			Date currentTime = new Date();
-			String sql = "select count(*) from tb_movie where Showtime>? and State='Î´É¾³ý'";
+			String sql = "select count(*) from tb_movie where Showtime>? and State='undeleted'";
 			long l = (Long)qr.query(sql, currentTime, new ScalarHandler());
 			return (int)l;
 		}catch(Exception e){
@@ -151,7 +151,7 @@ public class MovieDAOImpl implements MovieDAO {
 		try{
 			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
 			Date currentTime = new Date();
-			String sql = "select * from tb_movie where Showtime<=? and State='Î´É¾³ý' order by Showtime limit ?,?";
+			String sql = "select * from tb_movie where Showtime<=? and State='undeleted' order by Showtime limit ?,?";
 			Object params[] = {currentTime,beginIndex,everyPage};
 			return (List<Movie>)qr.query(sql, params, new BeanListHandler(Movie.class));
 		}catch(Exception e){
@@ -168,7 +168,7 @@ public class MovieDAOImpl implements MovieDAO {
 		try{
 			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
 			Date currentTime = new Date();
-			String sql = "select * from tb_movie where Showtime>? and State='Î´É¾³ý' order by Showtime limit ?,?";
+			String sql = "select * from tb_movie where Showtime>? and State='undeleted' order by Showtime limit ?,?";
 			Object params[] = {currentTime,beginIndex,everyPage};
 			return (List<Movie>)qr.query(sql, params, new BeanListHandler(Movie.class));
 		}catch(Exception e){
@@ -199,7 +199,7 @@ public class MovieDAOImpl implements MovieDAO {
 		try{
 			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
 			Date currentTime = new Date();
-			String sql = "select * from tb_movie where Showtime<=? and State='Î´É¾³ý' order by Showtime";
+			String sql = "select * from tb_movie where Showtime<=? and State='undeleted' order by Showtime";
 			return (List<Movie>)qr.query(sql, currentTime, new BeanListHandler(Movie.class));
 		}catch(Exception e){
 			throw new RuntimeException(e);
@@ -213,7 +213,7 @@ public class MovieDAOImpl implements MovieDAO {
 		try{
 			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
 			Date currentTime = new Date();
-			String sql = "select * from tb_movie where Showtime>? and State='Î´É¾³ý' order by Showtime";
+			String sql = "select * from tb_movie where Showtime>? and State='undeleted' order by Showtime";
 			return (List<Movie>)qr.query(sql, currentTime, new BeanListHandler(Movie.class));
 		}catch(Exception e){
 			throw new RuntimeException(e);

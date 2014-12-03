@@ -47,8 +47,8 @@
   					<td><a href="${pageContext.request.contextPath }/manager/MovieServlet?method=showMovieDetail&id=${movie.id}">查看详情</a></td>
   					<td><a href="${pageContext.request.contextPath }/manager/MovieServlet?method=showEditableMovieDetail&id=${movie.id}">修改</a></td>
   					<td>
-						<c:if test="${movie.state eq '已删除'}"><a href="${pageContext.request.contextPath }/manager/MovieServlet?method=restore&id=${movie.id}">恢复</a></c:if>
-						<c:if test="${movie.state eq '未删除'}"><a href="${pageContext.request.contextPath }/manager/MovieServlet?method=delete&id=${movie.id}">删除</a></c:if>
+						<c:if test="${movie.state eq 'deleted'}"><a href="${pageContext.request.contextPath }/manager/MovieServlet?method=restore&id=${movie.id}">恢复</a></c:if>
+						<c:if test="${movie.state eq 'undeleted'}"><a href="${pageContext.request.contextPath }/manager/MovieServlet?method=delete&id=${movie.id}">删除</a></c:if>
 					</td>
   				</tr>
   			</c:forEach>

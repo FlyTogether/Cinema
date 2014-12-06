@@ -117,6 +117,26 @@
     <servlet-name>CollectionServlet</servlet-name>
     <servlet-class>com.cpp2.manager.servlet.CollectionServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>Home</servlet-name>
+    <servlet-class>com.cpp2.client.servlet.Home</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Logout</servlet-name>
+    <servlet-class>com.cpp2.client.servlet.Logout</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>TheaterServlet</servlet-name>
+    <servlet-class>com.cpp2.client.servlet.TheaterServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>WanhuatongServlet</servlet-name>
+    <servlet-class>com.cpp2.client.servlet.WanhuatongServlet</servlet-class>
+  </servlet>
+
+
+
+
 
 
 
@@ -191,5 +211,21 @@
   <servlet-mapping>
     <servlet-name>CollectionServlet</servlet-name>
     <url-pattern>/manager/CollectionServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Home</servlet-name>
+    <url-pattern>/client/Home</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Logout</servlet-name>
+    <url-pattern>/client/Logout</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>TheaterServlet</servlet-name>
+    <url-pattern>/client/TheaterServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>WanhuatongServlet</servlet-name>
+    <url-pattern>/client/WanhuatongServlet</url-pattern>
   </servlet-mapping>
 </web-app>

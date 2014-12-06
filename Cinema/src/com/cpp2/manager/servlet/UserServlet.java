@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.beanutils.BeanUtils;
+
 import net.sf.json.JSONObject;
 
 import com.cpp2.domain.User;
@@ -43,6 +45,56 @@ public class UserServlet extends HttpServlet
 		else if("forgotten".equals(method))
 		{
 			forgotten(request, response);							// 忘记密码
+		}else if("loginFromWeb".equals(method)){
+			loginFromWeb(request,response);
+		}else if("registerFromWeb".equals(method)){
+			registerFromWeb(request,response);
+		}
+	}
+	
+	/**
+	 * 从web前端注册
+	 * @param request
+	 * @param response
+	 * @throws IOException 
+	 * @throws ServletException 
+	 */
+	private void registerFromWeb(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		try {
+			  User user = new User();
+			  Map map = request.getParameterMap();  
+		      BeanUtils.populate(user, map);
+		      BusinessServiceImpl service = new BusinessServiceImpl();
+		      service.register(user);
+		      request.setAttribute("msg", "注册成功");
+		} catch (Exception e) {
+			// TODO: handle exception
+			request.setAttribute("msg", "注册失败");
+		}  
+		request.getRequestDispatcher("/msg.jsp").forward(request, response);
+	}
+
+	/**
+	 * 从web前端登录
+	 * @param request
+	 * @param response
+	 * @throws IOException 
+	 * @throws ServletException 
+	 */
+	private void loginFromWeb(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		try{
+			String username = request.getParameter("username");  
+			String password = request.getParameter("password");
+			BusinessServiceImpl service = new BusinessServiceImpl();
+			User user = service.userLogin(username, password);
+			request.getSession().setAttribute("user", user);
+			request.getRequestDispatcher("/client/Home").forward(request, response);
+		} catch (Exception e)
+		{
+			request.setAttribute("msg", "登录失败");
+			request.getRequestDispatcher("/msg.jsp").forward(request, response);
 		}
 	}
 

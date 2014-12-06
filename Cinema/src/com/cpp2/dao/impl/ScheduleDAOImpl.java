@@ -10,6 +10,7 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 
 
+
 import com.cpp2.dao.ScheduleDAO;
 import com.cpp2.dao.SeatDAO;
 import com.cpp2.domain.Schedule;
@@ -149,6 +150,22 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
 			String sql = "select * from tb_schedule  where id=?";
 			return (Schedule)qr.query(sql, id, new BeanHandler(Schedule.class));
+		}catch(Exception e){
+			throw new RuntimeException(e);
+		}
+	}
+	/**
+	 * 获取排期数据给移动端
+	 * @param movie_id
+	 * @param cinema_id
+	 * @return
+	 */
+	public List<Schedule> getScheduleForMobile(int movie_id,int cinema_id){
+		try{
+			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
+			String sql = "select tb_schedule.* from tb_schedule,tb_cinema,tb_videohall,tb_movie where tb_cinema.id=tb_videohall.cinema_id and tb_movie.id=tb_schedule.movie_id and tb_schedule.videohall_id=tb_videohall.id and tb_movie.id=? and tb_cinema.id=?";
+			Object params [] = {movie_id,cinema_id};
+			return qr.query(sql, params, new BeanListHandler(Schedule.class));
 		}catch(Exception e){
 			throw new RuntimeException(e);
 		}

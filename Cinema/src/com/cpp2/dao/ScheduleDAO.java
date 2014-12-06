@@ -67,4 +67,12 @@ public interface ScheduleDAO {
 	 * @return
 	 */
 	public abstract Schedule getScheduleById(int id);
+	
+	/**
+	 * 获取排期数据给移动端
+	 * @param movie_id
+	 * @param cinema_id
+	 * @return
+	 */
+	public abstract List<Schedule> getScheduleForMobile(int movie_id,int cinema_id);
 }

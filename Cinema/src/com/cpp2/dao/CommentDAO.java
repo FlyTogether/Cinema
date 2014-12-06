@@ -27,4 +27,10 @@ public interface CommentDAO {
 	 * @return
 	 */
 	public abstract int getTotalRecord(int movie_id);
+	
+	/**
+	 * 获取最新评论
+	 * @return
+	 */
+	public abstract List<Comment> getLatestComment();
 }

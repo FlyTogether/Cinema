@@ -19,6 +19,7 @@ public class LogoutServlet extends HttpServlet
 	{
 		/* 移除Session的admin标志 */
 		request.getSession().removeAttribute("admin");
+		request.getSession().removeAttribute("user");
 		
 		/* 重定向 */
 //		response.setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY); 						// 设置状态码为302

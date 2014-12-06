@@ -6,6 +6,7 @@ import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
+import org.junit.Test;
 
 import com.cpp2.dao.ScheduleViewDAO;
 import com.cpp2.domain.Schedule;
@@ -49,7 +50,7 @@ public class ScheduleViewDAOImpl implements ScheduleViewDAO {
 	public List<ScheduleView> getScheduleViewByMovieIdAndCinemaId(int movie_id,int cinema_id){
 		try{
 			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
-			String sql = "select * from v_scheduleview where movie_id=? and cinema_id=?";
+			String sql = "select schedule_id,airtime,remanent,videohall_name from v_scheduleview where movie_id=? and cinema_id=?";
 			Object params[] = {movie_id,cinema_id};
 			return (List<ScheduleView>)qr.query(sql, params, new BeanListHandler(ScheduleView.class));
 		}catch(Exception e){

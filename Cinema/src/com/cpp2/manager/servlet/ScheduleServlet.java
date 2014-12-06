@@ -51,7 +51,13 @@ public class ScheduleServlet extends HttpServlet {
 		if("getScheduleViewByMovieIdAndCinemaId".equals(method)){
 			getScheduleViewByMovieIdAndCinemaId(request,response);
 		}
+		if("getScheduleForMobile".equals(method)){
+			getScheduleForMobile(request,response);
+		}
 	}
+
+
+
 
 
 
@@ -292,6 +298,54 @@ public class ScheduleServlet extends HttpServlet {
 		}
 	}
 
+
+	/**
+	 * 获取排期数据给移动端
+	 * @param request
+	 * @param response
+	 * @throws IOException 
+	 */
+	private void getScheduleForMobile(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		PrintWriter out = response.getWriter();
+		try {
+			
+			int movie_id =  Integer.parseInt(request.getParameter("movie_id"));
+			int cinema_id =  Integer.parseInt(request.getParameter("cinema_id"));
+			
+			BusinessServiceImpl service = new BusinessServiceImpl();
+			List<Schedule> list = service.getScheduleForMobile(movie_id, cinema_id);
+			
+			//封装到json
+			JSONArray scheduleViewArray = new JSONArray();
+			for(Schedule schedule:list){
+				//修改date的数据类型
+				java.util.Date date = new java.util.Date(schedule.getAirtime().getTime());
+				schedule.setAirtime(date);
+				scheduleViewArray.add(schedule);
+			}
+			//封装到结果集
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap.put("schedule.list", scheduleViewArray);
+			JSONObject resultObject = JSONObject.fromObject(resultMap);
+			//封装到顶层json
+			Map<String, Object> topMap = new HashMap<String, Object>();
+			topMap.put("code", "1");
+			topMap.put("message", "get all schedule success");
+			topMap.put("result", resultObject);
+			JSONObject jsonObject = JSONObject.fromObject(topMap);
+			//写数据
+			out.write(jsonObject.toString());
+			out.flush();
+		}catch(Exception e){
+			e.printStackTrace();
+			out.write(e.getMessage());
+			out.flush();
+		}
+		finally{
+			out.close();
+		}
+	}
 
 
 

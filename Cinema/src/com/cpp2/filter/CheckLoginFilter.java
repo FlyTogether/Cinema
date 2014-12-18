@@ -37,7 +37,7 @@ public class CheckLoginFilter implements Filter
 		if(null == admin)
 		{
 			request.setAttribute("messag", "ÇëÏÈµÇÂ½ÔÙ²Ù×÷");
-			request.getRequestDispatcher("/manager/login.jsp").forward(request, response);
+			request.getRequestDispatcher("/manager_login.jsp").forward(request, response);
 			return ;
 		}
 		

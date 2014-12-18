@@ -3,6 +3,7 @@ package com.cpp2.dao;
 import java.util.List;
 
 import com.cpp2.domain.Schedule;
+import com.cpp2.vo.V_schedule;
 
 public interface ScheduleDAO {
 
@@ -74,5 +75,5 @@ public interface ScheduleDAO {
 	 * @param cinema_id
 	 * @return
 	 */
-	public abstract List<Schedule> getScheduleForMobile(int movie_id,int cinema_id);
+	public abstract List<V_schedule> getScheduleForMobile(int movie_id,int cinema_id);
 }

@@ -31,7 +31,7 @@ public class SeatDAOImpl implements SeatDAO {
 	public void orderSeat(int id){
 		try{
 			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
-			String sql = "update tb_seat_schedule set State='ÒÑÊÛ³ö' where id=?";
+			String sql = "update tb_seat_schedule set State='sold' where id=?";
 			qr.update(sql, id);
 		}catch(Exception e){
 			throw new RuntimeException(e);

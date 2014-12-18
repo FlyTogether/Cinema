@@ -11,10 +11,12 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 
 
+
 import com.cpp2.dao.ScheduleDAO;
 import com.cpp2.dao.SeatDAO;
 import com.cpp2.domain.Schedule;
 import com.cpp2.utils.JDBCUtils;
+import com.cpp2.vo.V_schedule;
 
 public class ScheduleDAOImpl implements ScheduleDAO {
 	/**
@@ -131,7 +133,7 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 		try{
 			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
 			String sql = "select remanent from tb_schedule where id=?";
-			long l = qr.query(sql, new ScalarHandler());
+			int l = qr.query(sql,id, new ScalarHandler());
 			int remanent = (int)l-num;
 			sql = "update  tb_schedule set Remanent=? where id=?";
 			Object params[] = {remanent,id};
@@ -160,12 +162,12 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 	 * @param cinema_id
 	 * @return
 	 */
-	public List<Schedule> getScheduleForMobile(int movie_id,int cinema_id){
+	public List<V_schedule> getScheduleForMobile(int movie_id,int cinema_id){
 		try{
 			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
-			String sql = "select tb_schedule.* from tb_schedule,tb_cinema,tb_videohall,tb_movie where tb_cinema.id=tb_videohall.cinema_id and tb_movie.id=tb_schedule.movie_id and tb_schedule.videohall_id=tb_videohall.id and tb_movie.id=? and tb_cinema.id=?";
+			String sql = "select tb_schedule.id,tb_schedule.airtime,tb_schedule.totalTicket,tb_videohall.name as videohallName,tb_schedule.remanent from tb_schedule,tb_cinema,tb_videohall,tb_movie where tb_cinema.id=tb_videohall.cinema_id and tb_movie.id=tb_schedule.movie_id and tb_schedule.videohall_id=tb_videohall.id and tb_movie.id=? and tb_cinema.id=?";
 			Object params [] = {movie_id,cinema_id};
-			return qr.query(sql, params, new BeanListHandler(Schedule.class));
+			return qr.query(sql, params, new BeanListHandler(V_schedule.class));
 		}catch(Exception e){
 			throw new RuntimeException(e);
 		}

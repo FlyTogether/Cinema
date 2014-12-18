@@ -9,7 +9,7 @@ public class Collection {
 	private int user_id;
 	private Date collectionTime;
 	private String image;
-	private String moveiName;
+	private String movieName;
 	
 	
 	public Date getCollectionTime() {
@@ -24,11 +24,11 @@ public class Collection {
 	public void setImage(String image) {
 		this.image = image;
 	}
-	public String getMoveiName() {
-		return moveiName;
+	public String getMovieName() {
+		return movieName;
 	}
-	public void setMoveiName(String moveiName) {
-		this.moveiName = moveiName;
+	public void setMovieName(String movieName) {
+		this.movieName = movieName;
 	}
 	public int getId() {
 		return id;

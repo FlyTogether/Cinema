@@ -104,7 +104,7 @@ public class CollectionServlet extends HttpServlet {
 			Collection collection = new Collection();
 			collection.setCollectionTime(new Date());
 			collection.setImage(movie.getImage());
-			collection.setMoveiName(movie.getName());
+			collection.setMovieName(movie.getName());
 			collection.setMovie_id(movie_id);
 			collection.setUser_id(user_id);
 			if(bs.checkCollection(movie_id,user_id)){

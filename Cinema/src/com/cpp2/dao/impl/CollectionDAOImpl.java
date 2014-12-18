@@ -23,7 +23,7 @@ public class CollectionDAOImpl implements CollectionDAO {
 		try {
 			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
 			String sql = "insert into tb_collection(movie_id,user_id,collectionTime,movieName,image) values(?,?,?,?,?)";
-			Object params[] = { collection.getMovie_id(), collection.getUser_id() ,collection.getCollectionTime(),collection.getMoveiName(),collection.getImage()};
+			Object params[] = { collection.getMovie_id(), collection.getUser_id() ,collection.getCollectionTime(),collection.getMovieName(),collection.getImage()};
 			qr.update(sql, params);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -40,7 +40,7 @@ public class CollectionDAOImpl implements CollectionDAO {
 			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
 			String sql = "select * from  tb_collection where user_id=? order by collectiontime limit ?,?";
 			Object params[] = {user_id,beginIndex,everyPage};
-			return (List<Collection>)qr.query(sql, params, new BeanListHandler(Movie.class));
+			return (List<Collection>)qr.query(sql, params, new BeanListHandler(Collection.class));
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

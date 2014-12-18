@@ -29,8 +29,8 @@ public class BuyTicketServlet extends HttpServlet
 		try
 		{
 			/* 获取移动端get过来的数据 */
-			String movieid = request.getParameter("movieid");
-			String ScheduleID = request.getParameter("ScheduleID");
+			String movieid = request.getParameter("movieID");
+			String ScheduleID = request.getParameter("scheduleID");
 			String seatID = request.getParameter("seatID");
 			/* 业务逻辑处理: 查找到该电影 */
 			BusinessServiceImpl service = new BusinessServiceImpl();

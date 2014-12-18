@@ -34,6 +34,7 @@ import com.cpp2.factory.DAOFactory;
 import com.cpp2.utils.Page;
 import com.cpp2.utils.PageUtil;
 import com.cpp2.utils.Result;
+import com.cpp2.vo.V_schedule;
 
 /**
  * 业务逻辑处理类
@@ -722,7 +723,7 @@ public class BusinessServiceImpl {
 	 * @param cinema_id
 	 * @return
 	 */
-	public List<Schedule> getScheduleForMobile(int movie_id,int cinema_id){
+	public List<V_schedule> getScheduleForMobile(int movie_id,int cinema_id){
 		return sDAO.getScheduleForMobile(movie_id, cinema_id);
 	}
 }

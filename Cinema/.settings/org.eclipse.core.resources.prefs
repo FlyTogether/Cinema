@@ -1,8 +1,14 @@
 eclipse.preferences.version=1
 encoding//WebRoot/js/getDate.js=UTF-8
 encoding//WebRoot/js/index.js=UTF-8
+encoding//src/com/cpp2/dao/impl=GBK
+encoding//src/com/cpp2/dao/impl/AdminDAOImpl.java=GBK
+encoding//src/com/cpp2/dao/impl/CinemaDAOImpl.java=GBK
+encoding//src/com/cpp2/dao/impl/CommentDAOImpl.java=GBK
 encoding//src/com/cpp2/dao/impl/OrderDAOImpl.java=UTF-8
 encoding//src/com/cpp2/dao/impl/UserDAOImpl.java=UTF-8
 encoding//src/com/cpp2/filter/CharacterEncodingFilter.java=UTF-8
 encoding//src/com/cpp2/filter/HTMLCharacterFilter.java=UTF-8
 encoding//src/com/cpp2/manager/servlet/UserServlet.java=UTF-8
+encoding/<project>=GBK
+separateDerivedEncodings=true

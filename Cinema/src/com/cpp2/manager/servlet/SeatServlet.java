@@ -26,7 +26,6 @@ public class SeatServlet extends HttpServlet {
 		String method = request.getParameter("method");
 		if("getAllSeatByScheduleId".equals(method)){
 			getAllSeatByScheduleId(request,response);
-			System.out.println(123);
 		}
 	}
 	/**

@@ -24,6 +24,7 @@ import com.cpp2.domain.ScheduleView;
 import com.cpp2.domain.Videohall;
 import com.cpp2.service.impl.BusinessServiceImpl;
 import com.cpp2.utils.Result;
+import com.cpp2.vo.V_schedule;
 
 public class ScheduleServlet extends HttpServlet {
 
@@ -314,11 +315,11 @@ public class ScheduleServlet extends HttpServlet {
 			int cinema_id =  Integer.parseInt(request.getParameter("cinema_id"));
 			
 			BusinessServiceImpl service = new BusinessServiceImpl();
-			List<Schedule> list = service.getScheduleForMobile(movie_id, cinema_id);
+			List<V_schedule> list = service.getScheduleForMobile(movie_id, cinema_id);
 			
 			//封装到json
 			JSONArray scheduleViewArray = new JSONArray();
-			for(Schedule schedule:list){
+			for(V_schedule schedule:list){
 				//修改date的数据类型
 				java.util.Date date = new java.util.Date(schedule.getAirtime().getTime());
 				schedule.setAirtime(date);

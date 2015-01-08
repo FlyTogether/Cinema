@@ -40,14 +40,12 @@ public class LoginServlet extends HttpServlet
 			if(null == admin)
 			{
 				request.setAttribute("message", "帐号或密码错误");
-				System.out.println("登陆失败");
-				request.getRequestDispatcher("/manager/login.jsp").forward(request, response);
+				request.getRequestDispatcher("/login.jsp").forward(request, response);
 				return ;
 			}
 			/* 4.若存在则跳转到后台首页 */
-			System.out.println("登陆成功");
 			request.getSession().setAttribute("admin", admin); 							// 登陆标志
-			request.getRequestDispatcher("/index.jsp").forward(request, response);
+			request.getRequestDispatcher("/manager/index.jsp").forward(request, response);
 			
 		} catch (Exception e)
 		{

@@ -167,7 +167,7 @@ function switchTab(tabpage, tabid) {
 			"resourceOrder" : 0,
 			"resourceType" : ""
 		}, {
-			"accessPath" : "./manager/MovieServlet?method=showAll",
+			"accessPath" : "./MovieServlet?method=showAll",
 			"checked" : false,
 			"delFlag" : 0,
 			"parentID" : 3,
@@ -179,7 +179,7 @@ function switchTab(tabpage, tabid) {
 			"resourceOrder" : 0,
 			"resourceType" : ""
 		}, {
-			"accessPath" : "./manager/MovieServlet?method=showComingSoonMovie",
+			"accessPath" : "./MovieServlet?method=showComingSoonMovie",
 			"checked" : false,
 			"delFlag" : 0,
 			"parentID" : 3,
@@ -191,7 +191,7 @@ function switchTab(tabpage, tabid) {
 			"resourceOrder" : 0,
 			"resourceType" : ""
 		}, {
-			"accessPath" : "./manager/MovieServlet?method=showOnNowMovie",
+			"accessPath" : "./MovieServlet?method=showOnNowMovie",
 			"checked" : false,
 			"delFlag" : 0,
 			"parentID" : 3,
@@ -227,7 +227,7 @@ function switchTab(tabpage, tabid) {
 			"resourceOrder" : 0,
 			"resourceType" : ""
 		} ,{
-			"accessPath":"./manager/addMovie.jsp",
+			"accessPath":"./addMovie.jsp",
 			"checked":false,
 			"delFlag":0,
 			"parentID":3,
@@ -239,7 +239,7 @@ function switchTab(tabpage, tabid) {
 			"resourceOrder":0,
 			"resourceType":""
 		},{
-				"accessPath" : "./manager/OrderServlet?method=showUnsend",
+				"accessPath" : "./OrderServlet?method=showUnsend",
 				"checked" : false,
 				"delFlag" : 0,
 				"parentID" : 36,
@@ -251,7 +251,7 @@ function switchTab(tabpage, tabid) {
 				"resourceOrder" : 0,
 				"resourceType" : ""
 			},{
-				"accessPath" : "./manager/OrderServlet?method=showSend",
+				"accessPath" : "./OrderServlet?method=showSend",
 				"checked" : false,
 				"delFlag" : 0,
 				"parentID" : 36,
@@ -263,7 +263,7 @@ function switchTab(tabpage, tabid) {
 				"resourceOrder" : 0,
 				"resourceType" : ""
 			},{
-				"accessPath" : "./manager/ScheduleServlet?method=getAll",
+				"accessPath" : "./ScheduleServlet?method=getAll",
 				"checked" : false,
 				"delFlag" : 0,
 				"parentID" : 34,
@@ -275,7 +275,7 @@ function switchTab(tabpage, tabid) {
 				"resourceOrder" : 0,
 				"resourceType" : ""
 			},{
-				"accessPath" : "./manager/ScheduleServlet?method=getInfo",
+				"accessPath" : "./ScheduleServlet?method=getInfo",
 				"checked" : false,
 				"delFlag" : 0,
 				"parentID" : 34,

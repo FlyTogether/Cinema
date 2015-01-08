@@ -27,7 +27,7 @@ public class AdminDAOImpl implements AdminDAO
 		try
 		{
 			QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
-			String sql = "select * from TB_Admin where AdminName=? and Password=?";
+			String sql = "select * from TB_Admin where Username=? and Password=?";
 			Object params[] = {username, password};
 			Admin admin = (Admin)qr.query(sql, params, new BeanHandler(Admin.class));
 			

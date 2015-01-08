@@ -256,16 +256,16 @@
 													</a>
 												</div>
 												<div class="moiveInfo floatLeft"
-													style="padding: 5px 0 5px 8px;">
-													<ul>
-														<li><h3>
-																<a href="#">${movie.name } </a>
-															</h3>&nbsp;<span>${movie.popularity }</span></li>
-														<li>导演：${movie.director }</li>
-														<li>类型：${movie.type }</li>
-														<li>时长：${movie.runtime }</li>
-														<li>主演：${movie.castActor }</li>
-														<li><a class="button" style="color: #ffffff"
+													style="padding: 5px 0 0px 5px; width: 165px;">
+													<ul >
+														<li style="font-size: 12px;"><h3>
+																<a href="#" >${movie.name } </a>
+															</h3>&nbsp;<span style="font-size: 14px;">${movie.popularity }</span></li>
+														<li style="font-size: 10px; margin-top: 15px;">导演：${movie.director }</li>
+														<li style="font-size: 10px;">类型：${movie.type }</li>
+														<li style="font-size: 10px;">时长：${movie.runtime }</li>
+														<li style="font-size: 10px;">主演：${movie.castActor }</li>
+														<li style="font-size: 10px;"><a class="button" style="color: #ffffff"
 															href="${pageContext.request.contextPath}/jsp/home/SelectSeatUI.jsp">选座购票</a></li>
 													</ul>
 												</div>
@@ -293,14 +293,14 @@
 												<div class="moiveInfo floatLeft"
 													style="padding: 5px 0 5px 8px;">
 													<ul>
-														<li><h3>
+														<li style="font-size: 12px;"><h3>
 																<a href="#">${movie.name } </a>
 															</h3></li>
-														<li>首映：${movie.showtime }</li>
-														<li>导演：${movie.director }</li>
-														<li>时长：${movie.runtime }</li>
-														<li>主演：${movie.castActor }</li>
-														<li><div>
+														<li style="font-size: 10px;">首映：${movie.showtime }</li>
+														<li style="font-size: 10px;">导演：${movie.director }</li>
+														<li style="font-size: 10px; margin-top: 15px;">时长：${movie.runtime }</li>
+														<li style="font-size: 10px;">主演：${movie.castActor }</li>
+														<li style="font-size: 10px;"><div>
 																<a href="#">[查看影讯]</a>
 															</div></li>
 													</ul>
